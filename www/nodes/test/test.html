@@ -15,7 +15,19 @@
 
 <script>
 
-var topbar = new CuiTopbar();
+var topbar = new CuiTopbar({
+    appName: "CanopyCS",
+    items: [{
+        content: "Devices",
+        value: "devices"
+    }, {
+        content: "Visualization",
+        value: "visualization"
+    }, {
+        content: "Account",
+        value: "account"
+    } ]
+});
 $("#main").html(cuiCompose([topbar]));
 topbar.live();
 

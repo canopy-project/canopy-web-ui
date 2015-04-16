@@ -16,6 +16,25 @@
 
 /*
  * Responsive top menu bar for Canopy web applications.
+ *
+ * params:
+ *  {
+ *      appName : string (shows up on left side)
+ *      cssClass : css class
+ *      items : [{
+ *          content:
+ *          value:
+ *      }, ...]
+ *      user : CanopyUser object, or null
+ *  }
+ *
+ *  css:
+ *
+ *     cssClass .cui_outer
+ *     cssClass .cui_left_section
+ *     cssClass .cui_middle_section
+ *     cssClass .cui_right_section
+ *     cssClass .cui_right_section
  */
 function CuiTopbar(params) {
     cuiInitNode(this);
@@ -26,29 +45,27 @@ function CuiTopbar(params) {
         cuiLive([optionNode]);
     }
     this.onConstruct = function() {
-        var $appDropdown = $("<div class=cui_topbar_left>\
-                <div class=cui_topbar_app_dropdown>Device Manager</div>\
+        var $appDropdown = $("<div class=cui_left_section>\
+                <div class=cui_topbar_app_dropdown>" + params.appName + "</div>\
             </div>");
-        var $acctDropdown = $("<div class=cui_topbar_right>\
+        var $acctDropdown = $("<div class=cui_right_section>\
                 <div class=cui_topbar_acct_dropdown>Leela</div>\
             </div>");
+        var items = [];
+        for (var i = 0; i < params.items.length; i++) {
+            items.push({
+                content: cuiCompose([
+                    "<div class='cui_topbar_menu_item_inner'>",
+                        params.items[i].content,
+                    "</div>"]),
+                value: + params.items[i].value
+            });
+        }
         optionNode = new CuiOption({
-            outerClass: "cui_topbar_middle",
-            itemSelectedClass: "cui_topbar_menu_item_selected",
-            itemNotSelectedClass: "cui_topbar_menu_item",
-            items: [{
-                content: $("<div class='cui_topbar_menu_item_inner'>Devices</div>"),
-                value: "Devices"
-            },{
-                content: $("<div class='cui_topbar_menu_item_inner'>Visualization</div>"),
-                value: "Cow"
-            },{
-                content: $("<div class='cui_topbar_menu_item_inner'>Apps</div>"),
-                value: "Apps"
-            },{
-                content: $("<div class='cui_topbar_menu_item_inner'>Account</div>"),
-                value: "Account"
-            }],
+            outerClass: "cui_middle_section",
+            itemSelectedClass: "cui_menu_item_selected",
+            itemNotSelectedClass: "cui_menu_item",
+            items: items,
             selectedIdx: 0
         });
 
