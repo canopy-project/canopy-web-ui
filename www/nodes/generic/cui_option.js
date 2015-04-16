@@ -45,14 +45,33 @@ function CuiOption(origParams) {
     var $items;
     var toggles;
     var selectedIdx = params.selectedIdx;
+    var valueToIdx = {};
+    for (var i = 0; i < params.items.length; i++) {
+        valueToIdx[params.items[i].value] = i;
+    }
 
     this.onLive = function($me) {
         cuiLive(toggles);
     }
 
-    this.select = function(idx) {
+    // Select by name or value.
+    // Triggers callback.
+    // Does not .refresh().
+    this.select = function(_idx) {
+        var idx = _idx;
+        if (!params.items[idx]) {
+            idx = valueToIdx[idx];
+        }
+        if (idx === undefined) {
+            console.log("cui_option: bad idx: " + _idx);
+            return this;
+        }
         selectedIdx = idx;
-        this.refresh();
+        var value = params.items[idx].value;
+        if (params.onSelect) {
+            params.onSelect(idx, value);
+        }
+        return this;
     }
 
     this.onConstruct = function() {
@@ -68,10 +87,7 @@ function CuiOption(origParams) {
                     onClick: function() {
                         var value = params.items[idx].value;
                         if (!params.onClick || params.onClick(idx, value)) {
-                            self.select(idx);
-                            if (params.onSelect) {
-                                params.onSelect(idx, value);
-                            }
+                            self.select(idx).refresh();
                         }
                         return false; 
                     }
@@ -82,7 +98,7 @@ function CuiOption(origParams) {
         return $("<div class='" + params.outerClass + "'></div>").html($inner);
     }
 
-    this.refresh = function($me) {
+    this.onRefresh = function($me) {
         for (var i = 0; i < toggles.length; i++) {
             toggles[i].toggle((selectedIdx === i));
         }

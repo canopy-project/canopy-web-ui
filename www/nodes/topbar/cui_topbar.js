@@ -24,7 +24,10 @@
  *      items : [{
  *          content:
  *          value:
- *      }, ...]
+ *      }, ...],
+ *      navState: used for query-string navigation
+ *      navStateName: used for query-string navigation
+ *
  *      user : CanopyUser object, or null
  *  }
  *
@@ -73,6 +76,9 @@ function CuiTopbar(params) {
             },
             selectedIdx: 0
         });
+        if (params.navState && params.navStateName) {
+            optionNode.select(params.navState.get(params.navStateName));
+        }
 
         return cuiCompose([
             "<div class='cui_topbar'>",
