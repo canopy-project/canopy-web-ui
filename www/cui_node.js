@@ -84,6 +84,7 @@ function CuiNodeBase(name) {
             $outer.css('display', $inner.css('display'));
             $outer.append("<div style='background: #a000d0; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div>");
             $outer.append($inner);
+            this.refresh();
             return $outer;
         }
         if (this.onConstruct) {
@@ -92,6 +93,7 @@ function CuiNodeBase(name) {
             $outer = $("<div>");
         }
         $inner = $outer;
+        this.refresh();
         return $outer;
     }
 

@@ -40,26 +40,34 @@ function CuiToggle(origParams) {
     }, origParams);
 
     var self = this;
-    var $me = null;
     var value = params.default;
 
-    this.onLive = function() {
+    this.toggle = function(_value) {
+        if (_value === undefined) {
+            _value = !value;
+        }
+        value = _value;
+        this.refresh();
+    }
+
+    this.onLive = function($me) {
         $me.off('click').on('click', function() {
             if (!params.onClick || params.onClick()) {
                 value = !value;
-                self.refresh(); // TODO: returned DOM object dangles!
+                self.refresh();
             }
         });
     }
 
-    this.onRefresh = function() {
-        if ($me == null) {
-            $me = cuiCompose([
-                "<div class='" + params.baseClass + "'>",
-                    params.content,
-                "</div>"
-            ]);
-        }
+    this.onConstruct = function() {
+        return cuiCompose([
+            "<div class='" + params.baseClass + "'>",
+                params.content,
+            "</div>"
+        ]);
+    }
+
+    this.onRefresh = function($me) {
         if (value) {
             $me.removeClass(params.offClass);
             $me.addClass(params.onClass);

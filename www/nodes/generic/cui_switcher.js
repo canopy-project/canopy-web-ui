@@ -65,19 +65,15 @@ function CuiSwitcher(params) {
     }
 
     // initialize
-    var init = function() {
-        if (params.navState) {
-            var state = params.navState.get(params.navStateName);
-            if (state !== undefined) {
-                self.select(state);
-                self.refresh();
-                return;
-            }
+    if (params.navState) {
+        var state = params.navState.get(params.navStateName);
+        if (state !== undefined) {
+            self.select(state);
+            return;
         }
-        if (params.default) {
-            self.select(params.default);
-            self.refresh();
-        }
-    }();
+    }
+    if (params.default) {
+        self.select(params.default);
+    }
 }
 
