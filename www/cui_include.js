@@ -23,8 +23,9 @@ function includeCssFile(filename) {
 includeJsFile("/cui_nav_state.js");
 includeJsFile("/cui_node.js");
 includeJsFile("/nodes/generic/cui_switcher.js");
-includeJsFile("/nodes/generic/cui_toggle.js");
 includeJsFile("/nodes/generic/cui_option.js");
+includeJsFile("/nodes/generic/cui_toggle.js");
+includeJsFile("/nodes/generic/cui_wrapper.js");
 includeJsFile("/nodes/test/cui_hello.js");
 includeJsFile("/nodes/test/cui_hello_list.js");
 

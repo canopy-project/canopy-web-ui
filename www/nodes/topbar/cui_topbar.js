@@ -58,7 +58,7 @@ function CuiTopbar(params) {
                     "<div class='cui_menu_item_inner'>",
                         params.items[i].content,
                     "</div>"]),
-                value: + params.items[i].value
+                value: params.items[i].value
             });
         }
         optionNode = new CuiOption({
@@ -66,6 +66,11 @@ function CuiTopbar(params) {
             itemSelectedClass: "cui_menu_item_selected",
             itemNotSelectedClass: "cui_menu_item",
             items: items,
+            onSelect: function(idx, value) {
+                if (params.onSelect) {
+                    params.onSelect(value);
+                }
+            },
             selectedIdx: 0
         });
 

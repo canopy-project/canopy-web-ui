@@ -54,6 +54,7 @@ function CuiNodeBase(name) {
         if (this.onLive) {
             this.onLive(this.get$());
         }
+        return this;
     }
 
     this.get$ = function() {
@@ -110,6 +111,7 @@ function CuiNodeBase(name) {
         if (this.onRefresh) {
             this.onRefresh(this.get$());
         }
+        return this;
     }
 }
 
