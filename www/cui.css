@@ -1,0 +1,9 @@
+.cui_topbar_app_dropdown {
+    display: inline-block;
+    background: #3060b0;
+    font-weight: 700;
+    font-size: 20px;
+    padding: 8px;
+    color: #ffffff;
+    width: 244px;
+}

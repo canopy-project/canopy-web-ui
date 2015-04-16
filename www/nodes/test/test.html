@@ -17,6 +17,12 @@
 
 var list = new CuiHelloList();
 var hello = new CuiHello();
+var topbar = new CuiTopbar();
+var toggle = new CuiToggle({
+    onClass: "s",
+    offClass: "xxl",
+    content: "Spaceship"
+});
 var switcher = new CuiSwitcher({
     children: {
         "list" : list,
@@ -27,18 +33,10 @@ var switcher = new CuiSwitcher({
     navStateName: "page"
 });
 
-$("#main").html(switcher.refresh());
+$("#main").html(cuiCompose([topbar, toggle, switcher]));
+topbar.live();
 switcher.live();
-setTimeout(function() {
-    switcher.select("hello");
-    $("#main").html(switcher.refresh());
-    switcher.live();
-}, 4000);
-setTimeout(function() {
-    switcher.select("list");
-    $("#main").html(switcher.refresh());
-    switcher.live();
-}, 8000);
+toggle.live();
 
 </script>
 

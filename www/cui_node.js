@@ -43,7 +43,7 @@
  *
  */
 function CuiNodeBase(name) {
-    var debug = true;
+    var debug = cuiNavState.get("cui_debug") == "1";
 
     this.children = [];
 
@@ -65,7 +65,9 @@ function CuiNodeBase(name) {
         if (debug) {
             console.log("live " + name);
         }
-        return this.onLive();
+        if (this.onLive) {
+            this.onLive();
+        }
     }
 
     this.refresh = function() {
