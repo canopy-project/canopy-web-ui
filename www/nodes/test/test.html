@@ -17,7 +17,19 @@
 
 var list = new CuiHelloList();
 var hello = new CuiHello();
-var topbar = new CuiTopbar();
+var switcher = new CuiSwitcher({
+    children: {
+        "list" : list,
+        "hello" : hello
+    },
+    default: "list",
+    navState: cuiNavState,
+    navStateName: "page"
+});
+$("#main").html(switcher.get$());
+switcher.live();
+
+/*var topbar = new CuiTopbar();
 var toggle = new CuiToggle({
     onClass: "s",
     offClass: "xxl",
@@ -36,7 +48,7 @@ var switcher = new CuiSwitcher({
 $("#main").html(cuiCompose([topbar, toggle, switcher]));
 topbar.live();
 switcher.live();
-toggle.live();
+toggle.live();*/
 
 </script>
 

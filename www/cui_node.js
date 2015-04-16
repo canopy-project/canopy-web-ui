@@ -44,75 +44,63 @@
  */
 function CuiNodeBase(name) {
     var debug = cuiNavState.get("cui_debug") == "1";
-
-    this.children = [];
-
-    this.addChild = function(child) {
-        this.children.push(child);
-    }
-
-    this.get$ = function() {
-        return this.$me;
-    }
-
-    this.render = function($container) {
-        $container.html(this.get$());
-        this.onLive();
-        return this;
-    }
+    var $outer = null;
+    var $inner = null;
 
     this.live = function() {
         if (debug) {
             console.log("live " + name);
         }
         if (this.onLive) {
-            this.onLive();
+            this.onLive(this.getInner$());
         }
+    }
+
+    this.getInner$ = function() {
+        if ($inner == null) {
+            this.construct();
+        }
+        return $inner;
+    }
+
+    this.getOuter$ = function() {
+        if ($outer == null) {
+            return this.construct();
+        }
+        return $outer;
+    }
+
+    this.get$ = this.getOuter$;
+
+    this.construct = function() {
+        if (debug) {
+            console.log("construct " + name);
+            $outer = $("<div style='border: 1px solid #ff00ff;'></div>");
+            if (this.onConstruct) {
+                $inner = this.onConstruct();
+            } else {
+                $inner = $("<div>");
+            }
+            $outer.css('display', $inner.css('display'));
+            $outer.append("<div style='background: #a000d0; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div>");
+            $outer.append($inner);
+            return $outer;
+        }
+        if (this.onConstruct) {
+            $outer = this.onConstruct();
+        } else {
+            $outer = $("<div>");
+        }
+        $inner = $outer;
+        return $outer;
     }
 
     this.refresh = function() {
         if (debug) {
-            console.log("Refreshing " + name);
-            var out = $("<div style='border: 1px solid #ff00ff;'></div>");
-            var content = this.onRefresh();
-            out.css('display', content.css('display'));
-            out.append("<div style='background: #a000d0; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div>");
-            out.append(content);
-            return out;
+            console.log("refresh " + name);
         }
-        return this.onRefresh();
-    }
-
-    this.appendTo = function($container) {
-        $container.append(this.get$());
-        this.onLive();
-        return this;
-    }
-
-    this.hide = function() {
-        if (this.onHide) {
-            this.onHide();
-        }
-        else {
-            this.get$().hide();
-        }
-    }
-
-    this.prependTo = function($container) {
-        $container.append(this.get$());
-        this.onLive();
-        return this;
-    }
-
-    this.show = function() {
-        if (this.onPreShow) {
-            this.onPreShow();
-        }
-        if (this.onShow) {
-            this.onShow();
-        }
-        else {
-            this.get$().show();
+        if (this.onRefresh) {
+            this.onRefresh(this.getInner$());
         }
     }
 }
@@ -138,13 +126,13 @@ function cuiCompose(segments) {
             out.push(segments[i]);
         }
         else if (typeof segments[i] === "object") {
-            if (segments[i].refresh) {
+            if (segments[i].construct) {
                 /* CuiNode object probably.  Create placeholder */
                 var placeholderId = "_tmpid_" + placeholderCnt;
                 out.push("<div id=" + placeholderId + "/>");
                 placeholders.push({
                     id: placeholderId,
-                    $segment: segments[i].refresh()
+                    $segment: segments[i].construct()
                 });
                 placeholderCnt++;
             }

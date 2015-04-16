@@ -32,8 +32,7 @@ function CuiSwitcher(params) {
     cuiInitNode(this);
     var selected = null;
     var selectedName = null;
-    var active = null;
-    var $me = null;
+    var self=this;
 
     this.select = function(name) {
         selected = params.children[name];
@@ -44,14 +43,14 @@ function CuiSwitcher(params) {
         return this;
     }
 
-    this.onLive = function() {
+    this.onLive = function($me) {
         cuiLive([selected]);
     }
 
-    this.onRefresh = function() {
+    this.onRefresh = function($me) {
         if (!selected) {
             console.log("Switcher Error: You must select a child first!");
-            return $("<div>SWITCHER ERROR</div>");
+            $me.html($("<div>SWITCHER ERROR</div>"));
         }
         if (params.navState) {
             var state = params.navState.get(params.navStateName);
@@ -61,17 +60,24 @@ function CuiSwitcher(params) {
                 params.navState.set(params.navStateName, selectedName);
             }
         }
-        return selected.refresh();
+        $me.html(selected.get$());
+        selected.refresh();
     }
 
-    if (params.default) {
-        this.select(params.default);
-    }
-    if (params.navState) {
-        var state = params.navState.get(params.navStateName);
-        if (state !== undefined) {
-            this.select(state);
+    // initialize
+    var init = function() {
+        if (params.navState) {
+            var state = params.navState.get(params.navStateName);
+            if (state !== undefined) {
+                self.select(state);
+                self.refresh();
+                return;
+            }
         }
-    }
+        if (params.default) {
+            self.select(params.default);
+            self.refresh();
+        }
+    }();
 }
 
