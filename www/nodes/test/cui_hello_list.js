@@ -21,6 +21,10 @@ function CuiHelloList(params) {
     var helloNode1 = new CuiHello();
     var helloNode2 = new CuiHello();
 
+    this.onLive = function() {
+        cuiLive([helloNode0, helloNode1, helloNode2]);
+    }
+
     this.onRefresh = function() {
         return cuiCompose([helloNode0, helloNode1, helloNode2]);
     }

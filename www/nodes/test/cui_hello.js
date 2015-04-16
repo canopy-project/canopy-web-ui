@@ -18,6 +18,12 @@ function CuiHello(params) {
     cuiInitNode(this);
     var $me = null;
 
+    this.onLive = function() {
+        $me.off('click').on('click', function() {
+            alert("hello");
+        });
+    }
+
     this.onRefresh = function() {
         if ($me === null) {
             $me = $("<div>hello CUI</div>");

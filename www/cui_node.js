@@ -61,6 +61,13 @@ function CuiNodeBase(name) {
         return this;
     }
 
+    this.live = function() {
+        if (debug) {
+            console.log("live " + name);
+        }
+        return this.onLive();
+    }
+
     this.refresh = function() {
         if (debug) {
             console.log("Refreshing " + name);
@@ -110,6 +117,12 @@ function CuiNodeBase(name) {
 
 function cuiInitNode(obj, name) {
     $.extend(obj, new CuiNodeBase(obj.constructor.name));
+}
+
+function cuiLive(children) {
+    for (var i = 0; i < children.length; i++) {
+        children[i].live();
+    }
 }
 
 function cuiCompose(segments) {
