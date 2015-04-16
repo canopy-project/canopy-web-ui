@@ -43,17 +43,21 @@ function CuiTopbar(params) {
     cuiInitNode(this);
 
     var optionNode;
+    var userDropdown;
 
-    this.onLive = function() {
-        cuiLive([optionNode]);
-    }
     this.onConstruct = function() {
         var $appDropdown = $("<div class=cui_left_section>\
                 <div class=cui_app_dropdown>" + params.appName + "</div>\
             </div>");
-        var $acctDropdown = $("<div class=cui_right_section>\
-                <div class=cui_acct_dropdown>Leela</div>\
-            </div>");
+
+        userDropdown = new CuiUserDropdown({});
+        var $rightSection = cuiCompose([
+            "<div class=cui_right_section>",
+                userDropdown,
+            "</div>"
+        ]);
+
+
         var items = [];
         for (var i = 0; i < params.items.length; i++) {
             items.push({
@@ -70,14 +74,25 @@ function CuiTopbar(params) {
             itemNotSelectedClass: "cui_menu_item",
             items: items,
             onSelect: function(idx, value) {
+                if (params.navState) {
+                    var state = params.navState.get(params.navStateName);
+                    if (state === undefined) {
+                        params.navState.replace(params.navStateName, value);
+                    } else {
+                        params.navState.set(params.navStateName, value);
+                    }
+                }
                 if (params.onSelect) {
                     params.onSelect(value);
                 }
             },
             selectedIdx: 0
         });
-        if (params.navState && params.navStateName) {
-            optionNode.select(params.navState.get(params.navStateName));
+        if (params.navState) {
+            var state = params.navState.get(params.navStateName);
+            if (state !== undefined) {
+                optionNode.select(params.navState.get(params.navStateName));
+            }
         }
 
         return cuiCompose([
@@ -85,9 +100,13 @@ function CuiTopbar(params) {
                 "<div class='" + params.cssClass + "'>",
                     $appDropdown, 
                     optionNode,
-                    $acctDropdown, 
+                    $rightSection, 
                 "</div>",
             "</div>"
         ]);
+    }
+
+    this.onLive = function() {
+        cuiLive([optionNode, userDropdown]);
     }
 }

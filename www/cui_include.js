@@ -30,8 +30,10 @@ includeJsFile("/nodes/test/cui_hello.js");
 includeJsFile("/nodes/test/cui_hello_list.js");
 
 includeJsFile ("/nodes/topbar/cui_topbar.js");
+includeJsFile ("/nodes/topbar/cui_user_dropdown.js");
 includeCssFile("/nodes/topbar/cui_topbar.css");
 includeCssFile("/nodes/topbar/cui_topbar_submenu.css");
+includeCssFile("/nodes/topbar/cui_user_dropdown.css");
 
 includeCssFile("/cui_base.css");
 

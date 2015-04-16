@@ -79,8 +79,6 @@ function CuiNodeBase(name) {
             ];
             var color = colors[cui_debug_recursive_depth % colors.length];
             var align = aligns[cui_debug_recursive_depth % aligns.length];
-            console.log(cui_debug_recursive_depth);
-            console.log(color);
             console.log("construct " + name);
             if (this.onConstruct) {
                 $me = this.onConstruct();
@@ -90,7 +88,7 @@ function CuiNodeBase(name) {
             $me.addClass("cui_debug");
             $me.css('box-shadow', "inset 0px -1px 0px 1px " + color);
             $me.css('border-top', "4px solid " + color);
-            $me.prepend("<div style='position: relative; top:-4px;'><div style='position:absolute; " + align + "; padding-right:3px; display:inline-block; background: " + color + "; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div></div>");
+            $me.prepend("<div style='position: relative; top:-0px;'><div style='position:absolute; " + align + "; padding-right:3px; display:inline-block; background: " + color + "; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div></div>");
             this.refresh();
             cui_debug_recursive_depth--;
             return $me;
@@ -115,7 +113,7 @@ function CuiNodeBase(name) {
     }
 }
 
-function cuiInitNode(obj, name) {
+function cuiInitNode(obj) {
     $.extend(obj, new CuiNodeBase(obj.constructor.name));
 }
 
@@ -159,7 +157,7 @@ function cuiCompose(segments) {
         }
     }
 
-    outString = "<div>" + out.join("") + "</div>";
+    outString = "<span>" + out.join("") + "</span>";
     $out = $(outString);
 
     /* replace placeholders with actual content */

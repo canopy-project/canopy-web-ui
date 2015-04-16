@@ -42,19 +42,24 @@ function CuiToggle(origParams) {
     var self = this;
     var value = params.default;
 
-    this.toggle = function(_value) {
-        if (_value === undefined) {
-            _value = !value;
+    this.toggle = function(newValue) {
+        if (newValue === undefined) {
+            newValue = !value;
         }
-        value = _value;
+        if (value != newValue) {
+            value = newValue;
+            if (params.onChange) {
+                params.onChange(newValue);
+            }
+        }
         this.refresh();
+        return this;
     }
 
     this.onLive = function($me) {
         $me.off('click').on('click', function() {
             if (!params.onClick || params.onClick()) {
-                value = !value;
-                self.refresh();
+                self.toggle();
             }
         });
     }
