@@ -17,6 +17,7 @@
 
 var topbar = new CuiTopbar({
     appName: "CanopyCS",
+    cssClass : "",
     items: [{
         content: "Devices",
         value: "devices"
@@ -28,8 +29,19 @@ var topbar = new CuiTopbar({
         value: "account"
     } ]
 });
-$("#main").html(cuiCompose([topbar]));
-topbar.live();
+var topbar2 = new CuiTopbar({
+    appName: "PLANETEXPRESS",
+    cssClass : "cui_topbar_submenu",
+    items: [{
+        content: "Dashboard",
+        value: "dashboard"
+    }, {
+        content: "Maps",
+        value: "maps"
+    } ]
+});
+$("#main").html(cuiCompose([topbar, topbar2]));
+cuiLive([topbar, topbar2]);
 
 </script>
 

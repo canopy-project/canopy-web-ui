@@ -1,0 +1,19 @@
+.cui_topbar .cui_topbar_submenu .cui_left_section,
+.cui_topbar .cui_topbar_submenu .cui_middle_section, 
+.cui_topbar .cui_topbar_submenu .cui_middle_section .cui_menu_item,
+.cui_topbar .cui_topbar_submenu .cui_right_section {
+    background: #d8d8d8;
+    color: #202020;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.cui_topbar .cui_topbar_submenu .cui_middle_section .cui_menu_item_selected {
+    background: #c8c8c8;
+    color: #202020;
+}
+
+@media (max-width : 640px) {
+    .cui_topbar .cui_topbar_submenu .cui_right_section {
+        display: none
+    }
+}

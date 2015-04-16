@@ -46,16 +46,16 @@ function CuiTopbar(params) {
     }
     this.onConstruct = function() {
         var $appDropdown = $("<div class=cui_left_section>\
-                <div class=cui_topbar_app_dropdown>" + params.appName + "</div>\
+                <div class=cui_app_dropdown>" + params.appName + "</div>\
             </div>");
         var $acctDropdown = $("<div class=cui_right_section>\
-                <div class=cui_topbar_acct_dropdown>Leela</div>\
+                <div class=cui_acct_dropdown>Leela</div>\
             </div>");
         var items = [];
         for (var i = 0; i < params.items.length; i++) {
             items.push({
                 content: cuiCompose([
-                    "<div class='cui_topbar_menu_item_inner'>",
+                    "<div class='cui_menu_item_inner'>",
                         params.items[i].content,
                     "</div>"]),
                 value: + params.items[i].value
@@ -71,9 +71,11 @@ function CuiTopbar(params) {
 
         return cuiCompose([
             "<div class='cui_topbar'>",
-                $appDropdown, 
-                optionNode,
-                $acctDropdown, 
+                "<div class='" + params.cssClass + "'>",
+                    $appDropdown, 
+                    optionNode,
+                    $acctDropdown, 
+                "</div>",
             "</div>"
         ]);
     }

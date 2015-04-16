@@ -11,6 +11,13 @@
     vertical-align: top;
 }
 
+.cui_topbar .cui_left_section .cui_app_dropdown {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 20px;
+    padding: 8px;
+}
+
 .cui_topbar .cui_middle_section {
     display: inline-block;
     width: 60%;
@@ -36,6 +43,11 @@
     color: #90d0ff;
 }
 
+.cui_topbar .cui_middle_section .cui_menu_item_inner {
+    padding: 8px;
+    padding-left: 16px;
+}
+
 .cui_topbar .cui_middle_section .cui_menu_item_selected {
     background: #505050;
     font-weight: 800;
@@ -48,6 +60,7 @@
     vertical-align: top;
 }
 
+
 .cui_topbar .cui_right_section {
     display: inline-block;
     width: 20%;
@@ -58,15 +71,7 @@
     text-align: right;
 }
 
-
-.cui_topbar_app_dropdown {
-    display: inline-block;
-    font-weight: 700;
-    font-size: 20px;
-    padding: 8px;
-}
-
-.cui_topbar_acct_dropdown {
+.cui_topbar .cui_right_section .cui_acct_dropdown {
     display: inline-block;
     font-weight: 400;
     font-size: 18px;
@@ -75,15 +80,10 @@
 }
 
 
-.cui_topbar_menu_item_inner {
-    padding: 8px;
-    padding-left: 16px;
-}
-
 
 /* Topbar Responsive Design */
 @media (min-width: 720px) and (max-width : 960px) {
-    .cui_topbar_app_dropdown {
+    .cui_topbar .cui_left_section .cui_app_dropdown {
         font-size: 18px;
     }
 
@@ -97,12 +97,12 @@
 }
 
 @media (max-width : 720px) {
-    .cui_topbar_app_dropdown {
-        font-size: 15px;
-    }
-
     .cui_topbar .cui_left_section {
         height: 32px;
+    }
+
+    .cui_topbar .cui_left_section .cui_app_dropdown {
+        font-size: 15px;
     }
 
     .cui_topbar .cui_middle_section, 
@@ -116,7 +116,7 @@
         height: 32px;
     }
 
-    .cui_topbar_acct_dropdown {
+    .cui_topbar .cui_right_section .cui_acct_dropdown {
         font-size: 13px;
     }
 }
@@ -126,10 +126,12 @@
         width: 100%;
 
     }
+
     .cui_topbar .cui_middle_section {
         width: 100%;
 
     }
+
     .cui_topbar .cui_right_section {
         position: absolute;
         top: 0px;
@@ -138,7 +140,7 @@
         width: 25%;
     }
 
-    .cui_topbar_acct_dropdown {
+    .cui_topbar .cui_right_section .cui_acct_dropdown {
         padding-right: 16px;
     }
 }
