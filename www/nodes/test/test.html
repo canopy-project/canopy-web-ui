@@ -22,7 +22,9 @@ var switcher = new CuiSwitcher({
         "list" : list,
         "hello" : hello
     },
-    default: "list"
+    default: "list",
+    navState: cuiNavState,
+    navStateName: "page"
 });
 
 $("#main").html(switcher.refresh());

@@ -23,16 +23,21 @@
  *  .children : {
  *      name : node
  *  }
- *  .default : name (defaults to null):
+ *  .default : name (defaults to null)
+ *  .navState : CuiNavState object (optional)
+ *  .navStateName : If provided, this name will be added to the query string
+ *      for saving/loading the navigation state.
  */
 function CuiSwitcher(params) {
     cuiInitNode(this);
     var selected = null;
+    var selectedName = null;
     var active = null;
     var $me = null;
 
     this.select = function(name) {
         selected = params.children[name];
+        selectedName = name;
         if (!selected) {
             console.log("Switcher Error: Child not found with name " + name);
         }
@@ -48,11 +53,25 @@ function CuiSwitcher(params) {
             console.log("Switcher Error: You must select a child first!");
             return $("<div>SWITCHER ERROR</div>");
         }
+        if (params.navState) {
+            var state = params.navState.get(params.navStateName);
+            if (state === undefined) {
+                params.navState.replace(params.navStateName, selectedName);
+            } else {
+                params.navState.set(params.navStateName, selectedName);
+            }
+        }
         return selected.refresh();
     }
 
     if (params.default) {
         this.select(params.default);
+    }
+    if (params.navState) {
+        var state = params.navState.get(params.navStateName);
+        if (state !== undefined) {
+            this.select(state);
+        }
     }
 }
 
