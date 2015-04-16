@@ -42,59 +42,65 @@
  * You can also create composite nodes:
  *
  */
+var cui_debug_recursive_depth=-1;
 function CuiNodeBase(name) {
     var debug = cuiNavState.get("cui_debug") == "1";
-    var $outer = null;
-    var $inner = null;
+    var $me = null;
 
     this.live = function() {
         if (debug) {
             console.log("live " + name);
         }
         if (this.onLive) {
-            this.onLive(this.getInner$());
+            this.onLive(this.get$());
         }
     }
 
-    this.getInner$ = function() {
-        if ($inner == null) {
-            this.construct();
-        }
-        return $inner;
-    }
-
-    this.getOuter$ = function() {
-        if ($outer == null) {
+    this.get$ = function() {
+        if ($me == null) {
             return this.construct();
         }
-        return $outer;
+        return $me;
     }
-
-    this.get$ = this.getOuter$;
 
     this.construct = function() {
         if (debug) {
+            cui_debug_recursive_depth++;
+            var colors = [
+                "#ff0080",
+                "#b000ff",
+                "#0080ff",
+                "#00ff80",
+            ];
+            var aligns = [
+                "left: 0px",
+                "right: 0px",
+            ];
+            var color = colors[cui_debug_recursive_depth % colors.length];
+            var align = aligns[cui_debug_recursive_depth % aligns.length];
+            console.log(cui_debug_recursive_depth);
+            console.log(color);
             console.log("construct " + name);
-            $outer = $("<div style='display: inline-block; border: 1px solid #ff00ff;'></div>");
             if (this.onConstruct) {
-                $inner = this.onConstruct();
+                $me = this.onConstruct();
             } else {
-                $inner = $("<div>");
+                $me = $("<div>");
             }
-            //$outer.css('display', $inner.css('display'));
-            $outer.append("<div style='position: relative;'><div style='position:absolute; display:inline-block; background: #a000d0; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div></div>");
-            $outer.append($inner);
+            $me.addClass("cui_debug");
+            $me.css('box-shadow', "inset 0px -1px 0px 1px " + color);
+            $me.css('border-top', "4px solid " + color);
+            $me.prepend("<div style='position: relative; top:-4px;'><div style='position:absolute; " + align + "; padding-right:3px; display:inline-block; background: " + color + "; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div></div>");
             this.refresh();
-            return $outer;
+            cui_debug_recursive_depth--;
+            return $me;
         }
         if (this.onConstruct) {
-            $outer = this.onConstruct();
+            $me = this.onConstruct();
         } else {
-            $outer = $("<div>");
+            $me = $("<div>");
         }
-        $inner = $outer;
         this.refresh();
-        return $outer;
+        return $me;
     }
 
     this.refresh = function() {
@@ -102,7 +108,7 @@ function CuiNodeBase(name) {
             console.log("refresh " + name);
         }
         if (this.onRefresh) {
-            this.onRefresh(this.getInner$());
+            this.onRefresh(this.get$());
         }
     }
 }
@@ -151,7 +157,7 @@ function cuiCompose(segments) {
         }
     }
 
-    outString = "<dummy>" + out.join("") + "</dummy>";
+    outString = "<div>" + out.join("") + "</div>";
     $out = $(outString);
 
     /* replace placeholders with actual content */
