@@ -75,14 +75,14 @@ function CuiNodeBase(name) {
     this.construct = function() {
         if (debug) {
             console.log("construct " + name);
-            $outer = $("<div style='border: 1px solid #ff00ff;'></div>");
+            $outer = $("<div style='display: inline-block; border: 1px solid #ff00ff;'></div>");
             if (this.onConstruct) {
                 $inner = this.onConstruct();
             } else {
                 $inner = $("<div>");
             }
-            $outer.css('display', $inner.css('display'));
-            $outer.append("<div style='background: #a000d0; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div>");
+            //$outer.css('display', $inner.css('display'));
+            $outer.append("<div style='position: relative;'><div style='position:absolute; display:inline-block; background: #a000d0; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div></div>");
             $outer.append($inner);
             this.refresh();
             return $outer;

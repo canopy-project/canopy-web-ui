@@ -1,0 +1,64 @@
+/* Topbar Responsive Design */
+
+/*   Do not use fixed positioning on mobile because zooming behaves poorly. */
+/*@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {*/
+@media (min-width: 720px) and (max-width : 960px) {
+    .cui_topbar_app_dropdown {
+        font-size: 18px;
+    }
+    .cui_topbar_menu_item {
+        font-size: 16px;
+    }
+    .cui_topbar_menu_item_selected {
+        font-size: 16px;
+    }
+    .cui_topbar_acct_dropdown {
+        font-size: 16px;
+    }
+}
+
+@media (max-width : 720px) {
+    .cui_topbar_app_dropdown {
+        font-size: 15px;
+    }
+    .cui_topbar_menu_item {
+        font-size: 13px;
+        height: 32px;
+    }
+    .cui_topbar_menu_item_selected {
+        font-size: 13px;
+        height: 32px;
+    }
+    .cui_topbar_acct_dropdown {
+        font-size: 13px;
+    }
+    .cui_topbar_left {
+        height: 32px;
+    }
+    .cui_topbar_middle {
+        height: 32px;
+    }
+    .cui_topbar_right {
+        height: 32px;
+    }
+}
+
+@media (max-width : 640px) {
+    .cui_topbar_left {
+        width: 100%;
+    }
+    .cui_topbar_middle {
+        width: 100%;
+    }
+
+    .cui_topbar_right {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        background: #3060b0;
+        width: 25%;
+    }
+    .cui_topbar_acct_dropdown {
+        padding-right: 16px;
+    }
+}

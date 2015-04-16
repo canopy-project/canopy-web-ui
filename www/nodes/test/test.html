@@ -15,69 +15,9 @@
 
 <script>
 
-var list = new CuiHelloList();
-var hello = new CuiHello();
-var switcher = new CuiSwitcher({
-    children: {
-        "list" : list,
-        "hello" : hello
-    },
-    default: "list",
-    navState: cuiNavState,
-    navStateName: "page"
-});
-$("#main").html(switcher.get$());
-switcher.live();
-var toggle = new CuiToggle({
-    onClass: "s",
-    offClass: "xxl",
-    content: "Spaceship"
-});
-$("#main").append(toggle.get$());
-toggle.live();
-
-var option = new CuiOption({
-    itemSelectedClass: "w800",
-    itemNotSelectedClass: "xl",
-    selectedIdx : 1,
-    onSelect: function(idx, value) {
-        alert(value + " selected");
-    },
-    items: [{
-        content: "moon",
-        value: "moon"
-    }, {
-        content: "sun",
-        value: "sun"
-    }, {
-        content: $("<div>star</div>"),
-        value: "star"
-    },
-    ]
-});
-$("#main").append(option.get$());
-option.live();
-
-/*var topbar = new CuiTopbar();
-var toggle = new CuiToggle({
-    onClass: "s",
-    offClass: "xxl",
-    content: "Spaceship"
-});
-var switcher = new CuiSwitcher({
-    children: {
-        "list" : list,
-        "hello" : hello
-    },
-    default: "list",
-    navState: cuiNavState,
-    navStateName: "page"
-});
-
-$("#main").html(cuiCompose([topbar, toggle, switcher]));
+var topbar = new CuiTopbar();
+$("#main").html(cuiCompose([topbar]));
 topbar.live();
-switcher.live();
-toggle.live();*/
 
 </script>
 
