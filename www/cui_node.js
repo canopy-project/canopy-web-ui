@@ -63,12 +63,12 @@ function CuiNodeBase(name) {
 
     this.refresh = function() {
         if (debug) {
+            console.log("Refreshing " + name);
             var out = $("<div style='border: 1px solid #ff00ff;'></div>");
             var content = this.onRefresh();
             out.css('display', content.css('display'));
             out.append("<div style='background: #a000d0; color: #ffffff; font-size:9px; font-family: sans-serif;'>" + name + "</div>");
             out.append(content);
-            console.log("Refreshing " + name);
             return out;
         }
         return this.onRefresh();

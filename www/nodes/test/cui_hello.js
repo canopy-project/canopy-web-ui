@@ -16,12 +16,12 @@
 
 function CuiHello(params) {
     cuiInitNode(this);
-    var $me = $("<div>hello world</div>");
+    var $me = null;
 
     this.onRefresh = function() {
+        if ($me === null) {
+            $me = $("<div>hello CUI</div>");
+        }
         return $me;
     }
 }
-
-
-
