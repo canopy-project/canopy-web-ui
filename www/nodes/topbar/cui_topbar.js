@@ -17,7 +17,7 @@
 /*
  * Responsive top menu bar for Canopy web applications.
  *
- * params:
+ * PARAMS:
  *  {
  *      appName : string (shows up on left side)
  *      cssClass : css class
@@ -31,13 +31,17 @@
  *      user : CanopyUser object, or null
  *  }
  *
- *  css:
+ *  CSS:
  *
  *     cssClass .cui_outer
  *     cssClass .cui_left_section
  *     cssClass .cui_middle_section
  *     cssClass .cui_right_section
  *     cssClass .cui_right_section
+ *
+ *  METHODS:
+ *
+ *      .setUser
  */
 function CuiTopbar(params) {
     cuiInitNode(this);
@@ -45,12 +49,23 @@ function CuiTopbar(params) {
     var optionNode;
     var userDropdown;
 
+    var user;
+    var userDirty = false;
+
+    this.setUser = function(_user) {
+        user = _user;
+        userDirty = true;
+        return this;
+    }
+
     this.onConstruct = function() {
         var $appDropdown = $("<div class=cui_left_section>\
                 <div class=cui_app_dropdown>" + params.appName + "</div>\
             </div>");
 
-        userDropdown = new CuiUserDropdown({});
+        userDropdown = new CuiUserDropdown({
+            user: params.user
+        });
         var $rightSection = cuiCompose([
             "<div class=cui_right_section>",
                 userDropdown,
@@ -108,5 +123,15 @@ function CuiTopbar(params) {
 
     this.onLive = function() {
         cuiLive([optionNode, userDropdown]);
+    }
+
+    this.onRefresh = function($me, force) {
+        if (force || userDirty) {
+            userDropdown.setUser(user).refresh();
+            userDirty = false;
+        }
+        if (force) {
+            optionNode.refresh();
+        }
     }
 }

@@ -17,11 +17,12 @@
 /*
  * User dropdown part of top bar.
  *
- * params:
- *  {
- *      user : CanopyUser object, or null
- *  }
+ *  PARAMS:
+ *      none
  *
+ *  METHODS:
+ *
+ *      .setUser
  */
 function CuiUserDropdown(params) {
     cuiInitNode(this);
@@ -29,19 +30,27 @@ function CuiUserDropdown(params) {
     var self=this;
     var button;
     var $dialog;
+    var $username;
     var expanded = false;
     var opening = false;
 
-    this.expand = function() {
+    var user;
+    var userDirty = false;
+
+    this.setUser = function(_user) {
+        user = _user;
+        userDirty = true;
+        return this;
+    }
+
+    function expand() {
         opening = true;
         setTimeout(function() {opening = false}, 500);
         $dialog.show();
-        expand = true;
     }
 
-    this.collapse = function() {
+    function collapse() {
         $dialog.hide();
-        expand = false;
         opening = false;
     }
 
@@ -54,15 +63,20 @@ function CuiUserDropdown(params) {
             "</div>"
         ]).hide();
 
+        $username = $("<span>Not signed in</span>");
         button = new CuiToggle({
             onClass: "cui_menu_item_selected",
             offClass: "cui_menu_item",
-            content: "<div class=cui_menu_item_inner>Leela</div>",
+            content: cuiCompose([
+                "<div class=cui_menu_item_inner>",
+                    $username,
+                "</div>"
+            ]),
             onChange: function(value) {
                 if (value) {
-                    self.expand();
+                    expand();
                 } else {
-                    self.collapse();
+                    collapse();
                 }
             }
         });
@@ -85,9 +99,13 @@ function CuiUserDropdown(params) {
     this.onLive = function($me) {
         cuiLive([button]);
         $dialog.off('click').on('click', function(event) {
-            window.location.replace("../../login.html");
-            event.preventDefault();
-            return false;
+            user.remote().logout().onDone(function(result, responseData) {
+                if (result != CANOPY_SUCCESS) {
+                    alert("Problem logging out");
+                    return;
+                }
+                window.location.replace("../../login.html");
+            });
         });
 
         // determine when to close the window, a bit hacky
@@ -99,6 +117,10 @@ function CuiUserDropdown(params) {
     }
 
     this.onRefresh = function($me) {
+        if (userDirty) {
+            $username.html(user.username());
+            userDirty = false;
+        }
     }
 }
 
