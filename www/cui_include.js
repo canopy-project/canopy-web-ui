@@ -49,5 +49,3 @@ includeJsFile ("/nodes/viz/cui_map.js");
 includeCssFile("/nodes/viz/cui_map.css");
 
 includeCssFile("/cui_base.css");
-
-google.maps.event.addDomListener(window, 'load', function(){alert("google ready")});

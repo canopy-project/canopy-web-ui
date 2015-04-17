@@ -50,6 +50,10 @@ function CuiOption(origParams) {
         valueToIdx[params.items[i].value] = i;
     }
 
+    this.hasChild = function(name) {
+        return (valueToIdx[name] !== undefined);
+    }
+
     this.onLive = function($me) {
         cuiLive(toggles);
     }
@@ -59,11 +63,10 @@ function CuiOption(origParams) {
     // Does not .refresh().
     this.select = function(_idx) {
         var idx = _idx;
-        if (!params.items[idx]) {
+        if (typeof _idx != 'number') {
             idx = valueToIdx[idx];
         }
         if (idx === undefined) {
-            console.log("cui_option: bad idx: " + _idx);
             return this;
         }
         selectedIdx = idx;

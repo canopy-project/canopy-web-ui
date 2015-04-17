@@ -42,6 +42,7 @@
  *  METHODS:
  *
  *      .setUser
+ *      .select(idxOrValue)
  */
 function CuiTopbar(params) {
     cuiInitNode(this);
@@ -89,6 +90,7 @@ function CuiTopbar(params) {
             itemNotSelectedClass: "cui_menu_item",
             items: items,
             onSelect: function(idx, value) {
+                console.lo("Told to select" + idx + " - " + value);
                 if (params.navState) {
                     var state = params.navState.get(params.navStateName);
                     if (state === undefined) {
@@ -103,10 +105,11 @@ function CuiTopbar(params) {
             },
             selectedIdx: 0
         });
+
         if (params.navState) {
             var state = params.navState.get(params.navStateName);
-            if (state !== undefined) {
-                optionNode.select(params.navState.get(params.navStateName));
+            if (state !== undefined && optionNode.hasChild(state)) {
+                optionNode.select(state);
             }
         }
 
@@ -142,4 +145,16 @@ function CuiTopbar(params) {
             optionNode.refresh();
         }
     }
+
+    // initialize
+    /*if (params.navState) {
+        var state = params.navState.get(params.navStateName);
+        if (state !== undefined) {
+            self.select(state);
+            return;
+        }
+    }
+    if (params.default) {
+        self.select(params.default);
+    }*/
 }

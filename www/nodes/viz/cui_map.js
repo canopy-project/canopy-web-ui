@@ -17,6 +17,10 @@
 /*
  * CuiMap shows a google map.
  *
+ *  PARAMS:
+ *
+ *      .showPlaceholder -- Set to true to display a static placeholder 
+ *
  *  CSS:
  *
  *      <your outer class> .cui_map_canvas -- Set this to where the map should go
@@ -45,10 +49,16 @@ function CuiMap(params) {
     }
 
     this.onRefresh = function() {
-        map = new google.maps.Map($canvas[0], {
-            center: { lat: 37.708333, lng: -122.280278},
-            zoom: 10,
-            streetViewControl: false
-        });
+        if (params.showPlaceholder) {
+            $canvas.css("background", "#808080");
+            return;
+        }
+        if (!map) {
+            map = new google.maps.Map($canvas[0], {
+                center: { lat: 37.708333, lng: -122.280278},
+                zoom: 10,
+                streetViewControl: false
+            });
+        }
     }
 }

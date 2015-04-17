@@ -34,11 +34,18 @@ function CuiSwitcher(params) {
     var selectedName = null;
     var self=this;
 
+    this.hasChild = function(name) {
+        return params.children[name] !== undefined;
+    }
+
     this.select = function(name) {
         selected = params.children[name];
         selectedName = name;
         if (!selected) {
             console.log("Switcher Error: Child not found with name " + name);
+            console.log("Falling back to first child");
+            selected = params.children[0];
+            selectedName = params.children[0].name;
         }
         return this;
     }
@@ -51,6 +58,7 @@ function CuiSwitcher(params) {
         if (!selected) {
             console.log("Switcher Error: You must select a child first!");
             $me.html($("<div>SWITCHER ERROR</div>"));
+            return;
         }
         if (params.navState) {
             var state = params.navState.get(params.navStateName);

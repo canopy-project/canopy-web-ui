@@ -82,6 +82,9 @@ function CuiNodeBase(name) {
             console.log("construct " + name);
             if (this.onConstruct) {
                 $me = this.onConstruct();
+                if ($.isArray($me)) {
+                    $me = cuiCompose($me);
+                }
             } else {
                 $me = $("<div>");
             }
@@ -95,6 +98,9 @@ function CuiNodeBase(name) {
         }
         if (this.onConstruct) {
             $me = this.onConstruct();
+            if ($.isArray($me)) {
+                $me = cuiCompose($me);
+            }
         } else {
             $me = $("<div>");
         }
