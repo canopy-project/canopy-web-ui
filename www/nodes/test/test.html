@@ -40,8 +40,9 @@ var topbar2 = new CuiTopbar({
         value: "maps"
     } ]
 });
-$("#main").html(cuiCompose([topbar, topbar2]));
-cuiLive([topbar, topbar2]);
+var map = new CuiMap();
+$("#main").html(cuiCompose([topbar, topbar2, map]));
+cuiLive([topbar, topbar2, map]);
 
 </script>
 

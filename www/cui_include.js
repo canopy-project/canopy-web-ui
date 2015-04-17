@@ -5,6 +5,13 @@ function includeJsFile(filename) {
             '" type="text/javascript"><\/script>'
     );
 }
+function includeAbsJsFile(filename) {
+    document.write(
+        '<script src="' 
+            + filename + 
+            '" type="text/javascript"><\/script>'
+    );
+}
 function includeAbsCssFile(filename) {
     document.write(
         '<link href="'
@@ -19,6 +26,9 @@ function includeCssFile(filename) {
         '" rel="stylesheet" type="text/css">'
     );
 }
+
+includeAbsJsFile("https://maps.googleapis.com/maps/api/js?key=AIzaSyCRMz0xxBvCrYp4K_iYu1ncN8lHM6ITnYY");
+includeAbsCssFile("//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700|ABeeZee|Titillium+Web:200,300,400,700");
 
 includeJsFile("/cui_nav_state.js");
 includeJsFile("/cui_node.js");
@@ -35,6 +45,9 @@ includeCssFile("/nodes/topbar/cui_topbar.css");
 includeCssFile("/nodes/topbar/cui_topbar_submenu.css");
 includeCssFile("/nodes/topbar/cui_user_dropdown.css");
 
+includeJsFile ("/nodes/viz/cui_map.js");
+includeCssFile("/nodes/viz/cui_map.css");
+
 includeCssFile("/cui_base.css");
 
-includeAbsCssFile("//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700|ABeeZee|Titillium+Web:200,300,400,700");
+google.maps.event.addDomListener(window, 'load', function(){alert("google ready")});
