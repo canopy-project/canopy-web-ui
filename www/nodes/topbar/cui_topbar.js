@@ -110,7 +110,7 @@ function CuiTopbar(params) {
             }
         }
 
-        return cuiCompose([
+        var out = cuiCompose([
             "<div class='cui_topbar'>",
                 "<div class='" + params.cssClass + "'>",
                     $appDropdown, 
@@ -119,6 +119,8 @@ function CuiTopbar(params) {
                 "</div>",
             "</div>"
         ]);
+        userDropdown.get$().hide();
+        return out;
     }
 
     this.onLive = function() {
@@ -127,7 +129,13 @@ function CuiTopbar(params) {
 
     this.onRefresh = function($me, force) {
         if (force || userDirty) {
-            userDropdown.setUser(user).refresh();
+            if (user) {
+                userDropdown.get$().show();
+                userDropdown.setUser(user).refresh();
+            } else {
+                userDropdown.get$().hide();
+                userDropdown.setUser(null).refresh();
+            }
             userDirty = false;
         }
         if (force) {
