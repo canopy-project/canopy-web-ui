@@ -36,6 +36,7 @@ includeJsFile("/nodes/generic/cui_switcher.js");
 includeJsFile("/nodes/generic/cui_option.js");
 includeJsFile("/nodes/generic/cui_toggle.js");
 includeJsFile("/nodes/generic/cui_wrapper.js");
+includeJsFile("/nodes/layout/cui_quad_layout.js");
 includeJsFile("/nodes/test/cui_hello.js");
 includeJsFile("/nodes/test/cui_hello_list.js");
 
@@ -47,5 +48,7 @@ includeCssFile("/nodes/topbar/cui_user_dropdown.css");
 
 includeJsFile ("/nodes/viz/cui_map.js");
 includeCssFile("/nodes/viz/cui_map.css");
+
+includeCssFile("/nodes/layout/cui_layout.css");
 
 includeCssFile("/cui_base.css");

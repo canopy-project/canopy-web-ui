@@ -163,8 +163,13 @@ function cuiCompose(segments) {
         }
     }
 
-    outString = "<span>" + out.join("") + "</span>";
+    //outString = "<span>" + out.join("") + "</span>";
+    //outString = "<div>" + out.join("") + "</div>";
+    outString =  out.join("");
     $out = $(outString);
+    if ($out.length > 1) {
+        $out = $("<span>" + outString + "</span>");
+    }
 
     /* replace placeholders with actual content */
     for (i = 0; i < placeholderCnt; i++) {

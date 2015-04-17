@@ -1,0 +1,56 @@
+/*
+ * Copyright 2015 Canopy Services, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.cui_layout_cell {
+    box-shadow: inset 0px 0px 1px 0px #404040;
+}
+
+.cui_quad_layout {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+.cui_quad_layout .cui_quad_layout_top {
+    position: absolute;
+    top: 0px;
+    height: 50%;
+    width: 100%;
+}
+.cui_quad_layout .cui_quad_layout_bottom {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    bottom: 0px;
+}
+.cui_quad_layout .cui_quad_layout_topleft,
+.cui_quad_layout .cui_quad_layout_bottomleft {
+    position: absolute;
+    left: 0px;
+    width: 50%;
+    height: 100%;
+}
+.cui_quad_layout .cui_quad_layout_topright {
+    position: absolute;
+    left: 50%;
+    right: 0px;
+    height: 100%;
+}
+.cui_quad_layout .cui_quad_layout_bottomright {
+    position: absolute;
+    left: 50%;
+    right: 0px;
+    height: 100%;
+}
