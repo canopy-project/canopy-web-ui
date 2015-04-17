@@ -15,7 +15,8 @@
  */
 
 .cui_layout_cell {
-    box-shadow: inset 0px 0px 1px 0px #404040;
+    /*box-shadow: inset 0px 0px 1px 0px #404040;
+     */
 }
 
 .cui_quad_layout {
@@ -49,6 +50,36 @@
     height: 100%;
 }
 .cui_quad_layout .cui_quad_layout_bottomright {
+    position: absolute;
+    left: 50%;
+    right: 0px;
+    height: 100%;
+}
+
+.cui_u_layout {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+.cui_u_layout .cui_u_layout_top {
+    position: absolute;
+    top: 0px;
+    height: 50%;
+    width: 100%;
+}
+.cui_u_layout .cui_u_layout_bottom {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    bottom: 0px;
+}
+.cui_u_layout .cui_u_layout_topleft {
+    position: absolute;
+    left: 0px;
+    width: 50%;
+    height: 100%;
+}
+.cui_u_layout .cui_u_layout_topright {
     position: absolute;
     left: 50%;
     right: 0px;
