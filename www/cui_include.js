@@ -32,6 +32,7 @@ includeAbsCssFile("//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400
 
 includeJsFile("/cui_nav_state.js");
 includeJsFile("/cui_node.js");
+includeJsFile("/nodes/generic/cui_button.js");
 includeJsFile("/nodes/generic/cui_switcher.js");
 includeJsFile("/nodes/generic/cui_option.js");
 includeJsFile("/nodes/generic/cui_toggle.js");

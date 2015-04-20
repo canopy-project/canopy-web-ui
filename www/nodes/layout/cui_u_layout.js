@@ -72,6 +72,12 @@ function CuiULayout(params) {
             "</div>"
         ];
     }
+
+    this.onLive = function() {
+        cuiLive([params.topLeft, params.topRight, params.bottom]);
+    }
+
     this.onRefresh = function() {
+        cuiRefresh([params.topLeft, params.topRight, params.bottom]);
     }
 }

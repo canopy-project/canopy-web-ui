@@ -126,9 +126,20 @@ function cuiInitNode(obj) {
 
 function cuiLive(children) {
     for (var i = 0; i < children.length; i++) {
-        children[i].live();
+        if (children[i].live) {
+            children[i].live();
+        }
     }
 }
+
+function cuiRefresh(children) {
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].refresh) {
+            children[i].refresh();
+        }
+    }
+}
+
 
 function cuiCompose(segments) {
     var out = [];
