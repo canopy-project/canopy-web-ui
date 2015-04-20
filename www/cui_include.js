@@ -41,6 +41,8 @@ includeJsFile("/nodes/layout/cui_u_layout.js");
 includeJsFile("/nodes/test/cui_hello.js");
 includeJsFile("/nodes/test/cui_hello_list.js");
 
+includeJsFile ("/nodes/cloudvar_widget/cui_cloudvar_widget.js");
+includeCssFile ("/nodes/cloudvar_widget/cui_cloudvar_widget.css");
 includeJsFile ("/nodes/topbar/cui_topbar.js");
 includeJsFile ("/nodes/topbar/cui_user_dropdown.js");
 includeCssFile("/nodes/topbar/cui_topbar.css");
