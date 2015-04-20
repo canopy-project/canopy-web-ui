@@ -60,8 +60,6 @@ function CuiCloudVarWidget(params) {
     }
 
     this.setCloudVar = function(_cloudVar) {
-        console.log("cloudvar set to");
-        console.log(_cloudVar);
         cloudVar = _cloudVar;
         cloudVarDirty = true;
         return this;

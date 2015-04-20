@@ -69,9 +69,10 @@ function CuiNodeBase(name) {
             cui_debug_recursive_depth++;
             var colors = [
                 "#ff0080",
-                "#b000ff",
-                "#0080ff",
                 "#00c080",
+                "#b000ff",
+                "#c0c000",
+                "#0080ff",
             ];
             var aligns = [
                 "left: 0px",
@@ -89,7 +90,7 @@ function CuiNodeBase(name) {
                 $me = $("<div>");
             }
             $me.addClass("cui_debug");
-            $me.css('box-shadow', "inset 0px -1px 0px 1px " + color);
+            $me.css('box-shadow', "inset 0px 0px 0px 1px " + color);
             $me.css('border-top', "4px solid " + color);
             $me.prepend("<div style='position: relative; top:-0px;'><div style='position:absolute; " + align + "; padding-right:3px; display:inline-block; background: " + color + "; color: #ffffff; font-size:9px; font-weight:700; font-family: sans-serif;'>" + name + "</div></div>");
             this.refresh();
