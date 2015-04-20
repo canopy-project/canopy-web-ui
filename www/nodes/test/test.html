@@ -40,9 +40,17 @@ var topbar2 = new CuiTopbar({
         value: "maps"
     } ]
 });
-var map = new CuiMap();
-$("#main").html(cuiCompose([topbar, topbar2, map]));
-cuiLive([topbar, topbar2, map]);
+
+var canvas = new CuiCanvas({
+    resfreshOnWindowResize: true,
+    contents: "Hello",
+    preceededBy: topbar2
+});
+$(function() {
+    $("#main").html(cuiCompose([topbar, topbar2, canvas]));
+    canvas.refresh();
+    cuiLive([topbar, topbar2, canvas]);
+});
 
 </script>
 

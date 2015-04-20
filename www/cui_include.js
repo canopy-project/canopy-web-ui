@@ -37,6 +37,7 @@ includeJsFile("/nodes/generic/cui_option.js");
 includeJsFile("/nodes/generic/cui_toggle.js");
 includeJsFile("/nodes/generic/cui_wrapper.js");
 includeJsFile("/nodes/layout/cui_quad_layout.js");
+includeJsFile("/nodes/layout/cui_canvas.js");
 includeJsFile("/nodes/layout/cui_u_layout.js");
 includeJsFile("/nodes/test/cui_hello.js");
 includeJsFile("/nodes/test/cui_hello_list.js");

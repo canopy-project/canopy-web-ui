@@ -19,6 +19,12 @@
      */
 }
 
+.cui_canvas {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
 .cui_quad_layout {
     position: relative;
     height: 100%;
