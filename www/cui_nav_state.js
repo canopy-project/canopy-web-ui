@@ -85,7 +85,10 @@ function CuiNavState() {
 }
 
 window.onpopstate = function(event) {
-    location.reload();
+    console.log(event);
+
+    // TODO: This causes infinite refresh on Safari & Chrome.
+    //location.reload();
 };
 
 cuiNavState = new CuiNavState();
