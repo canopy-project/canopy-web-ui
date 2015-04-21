@@ -72,7 +72,7 @@ function CuiNodeBase(name) {
         // For example:
         //      this.markDirty("title", "content");
         this.markDirty = function() {
-            dirty["__base"] == true;
+            dirty["__base"] = true;
             for (var i = 0; i < arguments.length; i++) {
                 dirty[arguments[i]] = true;
             }
@@ -80,6 +80,10 @@ function CuiNodeBase(name) {
     }
 
     var dirtyTracker = new DirtyTracker();
+    this.markDirty = function() {
+        dirtyTracker.markDirty.apply(dirtyTracker, arguments);
+        return this;
+    }
 
     this.construct = function() {
         if (debug) {
@@ -173,13 +177,17 @@ function CuiNodeBase(name) {
     }
 
     this.refresh = function(isLive) {
+        if (isLive == undefined) {
+            isLive = liveState;
+        }
         var liveStatus = getLiveStatus(liveState, isLive);
 
         if (debug) {
             cui_debug_recursive_depth++;
             var pre;
+            var msg = (dirtyTracker.isDirty() ? " refresh " : " (refresh) ");
             console.log(new Array(cui_debug_recursive_depth*4).join(" ")
-                    + debugLiveStatusString(liveStatus) + " refresh " + name);
+                    + debugLiveStatusString(liveStatus) + msg + " " + name);
         }
 
         // Trigger the teardown callback when:

@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
     <title>CUI Test</title>
@@ -27,6 +28,28 @@
             $(function() {
                 $("#cui_button").html(button.get$());
                 button.live();
+            });
+        </script>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiToggle - nodes/generic/cui_toggle.js</div>
+        <div class='desc'>Generic 2-state button that can be toggled on/off.</div>
+        <div id=cui_toggle>
+        </div>
+        <script>
+            var toggle = new CuiToggle({
+                content : "Toggle Me",
+                baseClass : "cui_toggle",
+                onClass : "cui_toggle_on",
+                offClass : "cui_toggle_off",
+                onChange: function(value) {
+                }
+            });
+
+            $(function() {
+                $("#cui_toggle").html(toggle.get$());
+                toggle.live();
             });
         </script>
     </div>

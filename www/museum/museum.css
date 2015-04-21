@@ -22,10 +22,28 @@ body {
     padding-bottom: 16px;
 }
 
+
 .museum .cui_button {
     display: inline-block;
     background: #3060b0;
     color: #ffff00;
     font-weight: 800;
     cursor: pointer;
+    padding: 8px;
+}
+
+.museum .cui_toggle {
+    display: inline-block;
+    padding: 8px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.museum .cui_toggle_off {
+    color: #a0a0a0;
+    background: #ffffff;
+}
+.museum .cui_toggle_on {
+    color: #ff00ff;
+    background: #00ff00;
 }
