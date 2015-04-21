@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>CUI Test</title>
+    <title>CUI Museum</title>
     <script>
         var CUI_INCLUDE_PATH = "../"
     </script>
@@ -61,6 +61,25 @@
         <div id=cui_option>
         </div>
         <script>
+            var horseToggle = new CuiToggle({
+                content : "Horse",
+                baseClass : "cui_toggle",
+                onClass : "cui_toggle_on",
+                offClass : "cui_toggle_off",
+                onChange: function(value) {
+                    alert("naaaay");
+                }
+            });
+
+            var switcher = new CuiSwitcher({
+                children : {
+                    "cow" : new CuiWrapper("<h2>COW</h2>"),
+                    "horse" : horseToggle,
+                    "fox" : new CuiWrapper("<h2>FOX</h2>"),
+                },
+                default : "cow"
+            });
+
             var option = new CuiOption({
                 items : [{
                     content: "Cow",
@@ -76,7 +95,7 @@
                 itemSelectedClass : "cui_option_selected",
                 itemNotSelectedClass : "cui_option_not_selected",
                 onSelect: function(idx, value) {
-                    alert("You selected: " + value);
+                    switcher.select(value).refresh();
                 },
                 selectedIdx : 0
             });
@@ -85,7 +104,20 @@
                 $("#cui_option").html(option.get$());
                 option.live();
             });
+
+            $(function() {
+                $("#cui_switcher").html(switcher.get$());
+                switcher.live();
+            });
         </script>
     </div>
-</body>
-</html>
+
+    <div class='section'>
+        <div class='title'>CuiSwitcher - nodes/generic/cui_switcher.js</div>
+        <div class='desc'>Displays one of several children.  This example is
+        linked to the option node above.</div>
+        <div id=cui_switcher>
+        </div>
+        <script>
+        </script>
+    </div>

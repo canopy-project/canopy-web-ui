@@ -43,33 +43,40 @@ function CuiSwitcher(params) {
         selectedName = name;
         if (!selected) {
             console.log("Switcher Error: Child not found with name " + name);
-            console.log("Falling back to first child");
-            selected = params.children[0];
-            selectedName = params.children[0].name;
         }
-        return this;
+        return this.markDirty();
     }
 
-    this.onLive = function($me) {
-        cuiLive([selected]);
-    }
+    this.onRefresh = function($me, dirty, live) {
+        if (dirty()) {
 
-    this.onRefresh = function($me) {
-        if (!selected) {
-            console.log("Switcher Error: You must select a child first!");
-            $me.html($("<div>SWITCHER ERROR</div>"));
-            return;
-        }
-        if (params.navState) {
-            var state = params.navState.get(params.navStateName);
-            if (state === undefined) {
-                params.navState.replace(params.navStateName, selectedName);
-            } else {
-                params.navState.set(params.navStateName, selectedName);
+            if (!selected) {
+                console.log("Switcher Error: You must select a child first!");
+                $me.html($("<div>SWITCHER ERROR</div>"));
+                return;
+            }
+            if (params.navState) {
+                var state = params.navState.get(params.navStateName);
+                if (state === undefined) {
+                    params.navState.replace(params.navStateName, selectedName);
+                } else {
+                    params.navState.set(params.navStateName, selectedName);
+                }
+            }
+            $me.html(selected.get$());
+            // Mark other children as "dead"
+            for (childName in params.children) {
+                if (params.children.hasOwnProperty(childName)) {
+                    if (childName !== selectedName) {
+                        params.children[childName].dead();
+                    } else {
+                        params.children[childName].live();
+                    }
+                }
             }
         }
-        $me.html(selected.get$());
-        selected.refresh();
+
+        selected.refresh(live);
     }
 
     // initialize
