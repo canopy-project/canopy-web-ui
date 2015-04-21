@@ -118,6 +118,20 @@
         linked to the option node above.</div>
         <div id=cui_switcher>
         </div>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiWrapper - nodes/generic/cui_wrapper.js</div>
+        <div class='desc'>Wraps HTML code as a CuiNode.</div>
+        <div id=cui_wrapper>
+        </div>
         <script>
+            var wrapper = new CuiWrapper("<b>Hello</b> <i>World</i>");
+            $(function() {
+                $("#cui_wrapper").html(wrapper.get$());
+                wrapper.live();
+            });
         </script>
     </div>
+</body>
+</html>
