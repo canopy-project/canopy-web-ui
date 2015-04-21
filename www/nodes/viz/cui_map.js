@@ -27,16 +27,43 @@
  *
  *  METHODS:
  *
- *      .jumpTo
+ *      .jumpTo(lat, lng)
+ *      .addMarker(lat, lng, title, infoContent) -> Returns marker
  */
 function CuiMap(params) {
     cuiInitNode(this);
 
     var map;
     var $canvas;
+    var infoWindow;
+    var marker;
 
     this.jumpTo = function(lat, lng) {
         map.panTo(new google.maps.LatLng(lat, lng));
+    }
+
+    this.addMarker = function(lat, lng, title, infoContent) {
+        var myLatLng = new google.maps.LatLng(lat, lng);
+
+        if (infoContent) {
+            infoWindow = new google.maps.InfoWindow({
+                content: infoContent,
+                //pixelOffset: new google.maps.Size(100, 0)
+            });
+        }
+
+        marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: title,
+            optimized: false
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+            infoWindow.open(map, marker);
+        });
+
+        return marker;
     }
 
     this.onConstruct = function() {
@@ -55,10 +82,13 @@ function CuiMap(params) {
         }
         if (!map) {
             map = new google.maps.Map($canvas[0], {
-                center: { lat: 37.708333, lng: -122.280278},
-                zoom: 10,
+                center: { lat: 37.769154, lng: -122.430367},
+                zoom: 12,
                 streetViewControl: false
             });
+        }
+        if (infoWindow) {
+            infoWindow.open(map, marker);
         }
     }
 }
