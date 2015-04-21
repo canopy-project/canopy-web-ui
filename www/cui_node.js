@@ -43,26 +43,43 @@
  *
  */
 var cui_debug_recursive_depth=-1;
+var CUI_LIVE_STATUS_DEAD = 0;
+var CUI_LIVE_STATUS_TRANSITION_TO_LIVE = 1;
+var CUI_LIVE_STATUS_LIVE = 2;
+var CUI_LIVE_STATUS_TRANSITION_TO_DEAD = 3;
+
 function CuiNodeBase(name) {
     var debug = cuiNavState.get("cui_debug") == "1";
     var $me = null;
+    var liveState = false;
 
-    this.live = function() {
-        if (debug) {
-            console.log("live " + name);
+    function DirtyTracker() {
+        var dirty = {};
+
+        this.clearDirty = function() {
+            dirty = {};
         }
-        if (this.onLive) {
-            this.onLive(this.get$());
+
+        this.isDirty = function(key) {
+            return dirty[(key ? key : "__base")];
         }
-        return this;
+
+        // Mark this node as "dirty".  This information is passed along to
+        // onRefresh().
+        //
+        // Optionally specify one or more keys for fine-grained dirty flags.
+        //
+        // For example:
+        //      this.markDirty("title", "content");
+        this.markDirty = function() {
+            dirty["__base"] == true;
+            for (var i = 0; i < arguments.length; i++) {
+                dirty[arguments[i]] = true;
+            }
+        }
     }
 
-    this.get$ = function() {
-        if ($me == null) {
-            return this.construct();
-        }
-        return $me;
-    }
+    var dirtyTracker = new DirtyTracker();
 
     this.construct = function() {
         if (debug) {
@@ -80,7 +97,7 @@ function CuiNodeBase(name) {
             ];
             var color = colors[cui_debug_recursive_depth % colors.length];
             var align = aligns[cui_debug_recursive_depth % aligns.length];
-            console.log("construct " + name);
+            console.log(new Array(cui_debug_recursive_depth*4).join(" ") + "construct " + name);
             if (this.onConstruct) {
                 $me = this.onConstruct();
                 if ($.isArray($me)) {
@@ -93,7 +110,6 @@ function CuiNodeBase(name) {
             $me.css('box-shadow', "inset 0px 0px 0px 1px " + color);
             $me.css('border-top', "4px solid " + color);
             $me.prepend("<div style='position: relative; top:-0px;'><div style='position:absolute; " + align + "; padding-right:3px; display:inline-block; background: " + color + "; color: #ffffff; font-size:9px; font-weight:700; font-family: sans-serif;'>" + name + "</div></div>");
-            this.refresh();
             cui_debug_recursive_depth--;
             return $me;
         }
@@ -105,19 +121,124 @@ function CuiNodeBase(name) {
         } else {
             $me = $("<div>");
         }
-        this.refresh();
         return $me;
     }
 
-    this.refresh = function() {
-        if (debug) {
-            console.log("refresh " + name);
+    this.dead = function() {
+        return this.refresh(false);
+    }
+
+    this.get$ = function() {
+        if ($me == null) {
+            return this.construct();
         }
+        return $me;
+    }
+
+    this.isLive = function() {
+        // TODO: implement
+        return true;
+    }
+
+    this.live = function() {
+        return this.refresh(true);
+    }
+
+    function getLiveStatus(prev, current) {
+        if (prev == false && current == false) {
+            return CUI_LIVE_STATUS_DEAD;
+        } else if (prev == false && current == true) {
+            return CUI_LIVE_STATUS_TRANSITION_TO_LIVE;
+        } else if (prev == true && current == false) {
+            return CUI_LIVE_STATUS_TRANSITION_TO_DEAD;
+        } else if (prev == true && current == true) {
+            return CUI_LIVE_STATUS_LIVE;
+        }
+        console.log("Bad live state: " + prev + " -> " + current);
+        return CUI_LIVE_STATUS_DEAD;
+    }
+
+    function debugLiveStatusString(liveStatus) {
+        if (liveStatus == CUI_LIVE_STATUS_DEAD) {
+            return " D ";
+        } else if (liveStatus == CUI_LIVE_STATUS_LIVE) {
+            return " L ";
+        } else if (liveStatus == CUI_LIVE_STATUS_TRANSITION_TO_LIVE) {
+            return "->L";
+        } else if (liveStatus == CUI_LIVE_STATUS_TRANSITION_TO_DEAD) {
+            return "->D";
+        }
+        console.log("Bad live status: " + liveStatus);
+        return "!!!"
+    }
+
+    this.refresh = function(isLive) {
+        var liveStatus = getLiveStatus(liveState, isLive);
+
+        if (debug) {
+            cui_debug_recursive_depth++;
+            var pre;
+            console.log(new Array(cui_debug_recursive_depth*4).join(" ")
+                    + debugLiveStatusString(liveStatus) + " refresh " + name);
+        }
+
+        // Trigger the teardown callback when:
+        //  - Transitioning from live to dead
+        //  - When live and callbacks are dirty
+        if (liveStatus == CUI_LIVE_STATUS_TRANSITION_TO_DEAD || 
+                (dirtyTracker.isDirty("__callbacks") && isLive())) {
+            this.teardownCallbacks();
+        }
+
         if (this.onRefresh) {
-            this.onRefresh(this.get$());
+            this.onRefresh(this.get$(), dirtyTracker.isDirty, this.isLive());
+        }
+
+        // Trigger the setup callback when:
+        //  - Transitioning from dead to live
+        //  - When live and callbacks are dirty
+        if (liveStatus == CUI_LIVE_STATUS_TRANSITION_TO_LIVE || 
+                (dirtyTracker.isDirty("__callbacks") && isLive())) {
+            this.setupCallbacks();
+        }
+
+        liveState = isLive;
+        dirtyTracker.clearDirty();
+
+        if (debug) {
+            cui_debug_recursive_depth--;
         }
         return this;
     }
+    
+    this.setupCallbacks = function() {
+        if (debug) {
+            cui_debug_recursive_depth++;
+            var msg = (this.onSetupCallbacks ? "setup callbacks " : "(setup callbacks) ");
+            console.log(new Array(cui_debug_recursive_depth*4).join(" ") + msg + name);
+        }
+        if (this.onSetupCallbacks) {
+            this.onSetupCallbacks(this.get$());
+        }
+        if (debug) {
+            cui_debug_recursive_depth--;
+        }
+    }
+
+    this.teardownCallbacks = function() {
+        if (debug) {
+            cui_debug_recursive_depth++;
+            var msg = (this.onTeardownCallbacks ? "teardown callbacks " : "(teardown callbacks) ");
+            console.log(new Array(cui_debug_recursive_depth*4).join(" ") + msg + name);
+        }
+        if (this.onTeardownCallbacks) {
+            this.onTeardownCallbacks(this.get$());
+        }
+        if (debug) {
+            cui_debug_recursive_depth--;
+        }
+    }
+
 }
 
 function cuiInitNode(obj) {
@@ -158,7 +279,7 @@ function cuiCompose(segments) {
                 out.push("<div id=" + placeholderId + "/>");
                 placeholders.push({
                     id: placeholderId,
-                    $segment: segments[i].construct()
+                    $segment: segments[i].get$()
                 });
                 placeholderCnt++;
             }

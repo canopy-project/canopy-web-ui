@@ -15,41 +15,16 @@
 
 <script>
 
-var topbar = new CuiTopbar({
-    appName: "CanopyCS",
-    cssClass : "",
-    items: [{
-        content: "Devices",
-        value: "devices"
-    }, {
-        content: "Visualization",
-        value: "visualization"
-    }, {
-        content: "Account",
-        value: "account"
-    } ]
-});
-var topbar2 = new CuiTopbar({
-    appName: "PLANETEXPRESS",
-    cssClass : "cui_topbar_submenu",
-    items: [{
-        content: "Dashboard",
-        value: "dashboard"
-    }, {
-        content: "Maps",
-        value: "maps"
-    } ]
+var button = new CuiButton({
+    content : "<b>hello</b>",
+    onClick: function() {
+        alert("clicked");
+    }
 });
 
-var canvas = new CuiCanvas({
-    resfreshOnWindowResize: true,
-    contents: "Hello",
-    preceededBy: topbar2
-});
 $(function() {
-    $("#main").html(cuiCompose([topbar, topbar2, canvas]));
-    canvas.refresh();
-    cuiLive([topbar, topbar2, canvas]);
+    $("#main").html(button.get$());
+    button.live();
 });
 
 </script>

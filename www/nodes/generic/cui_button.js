@@ -22,32 +22,43 @@
  *      .onClick
  *      .content -- $div, node, or "html string".
  */
-function CuiButton(origParams) {
+function CuiButton(params) {
     cuiInitNode(this);
 
-    var params = $.extend({}, {
-        cssClass: "",
-        onClick: null,
-        content: ""
-    }, origParams);
-
     var self = this;
-    var value = params.default;
+    var inner;
+    var content = params.content;
+    var cssClass = params.cssClass ? params.cssClass : "";
 
-    this.onLive = function($me) {
-        $me.off('click').on('click', function() {
+    this.setContent = function(_content) {
+        var content = _content;
+        return this.markDirty();
+    }
+
+    this.onConstruct = function() {
+        inner = cuiCompose(content);
+        return [
+            "<div class='" + params.cssClass + "'>",
+                inner,
+            "</div>"
+        ];
+    }
+
+    this.onRefresh = function($me, dirty, live) {
+        if (dirty()) {
+            inner.html(cuiCompose(content));
+        }
+    }
+
+    this.onSetupCallbacks = function($me) {
+        $me.on('click', function() {
             if (params.onClick) {
                 params.onClick();
             }
         });
     }
 
-    this.onConstruct = function() {
-        return cuiCompose([
-            "<div class='" + params.cssClass + "'>",
-                params.content,
-            "</div>"
-        ]);
+    this.onTeardownCallbacks = function($me) {
+        $me.off('click');
     }
 }
-

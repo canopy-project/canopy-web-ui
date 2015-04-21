@@ -68,19 +68,22 @@ function CuiMap(params) {
 
     this.onConstruct = function() {
         $canvas = $("<div class=cui_map_canvas></div>");
+        console.log("Constructing map");
         return $canvas;
     }
 
     this.onLive = function() {
-        return cuiCompose(content);
+        console.log("OnLive Map");
     }
 
     this.onRefresh = function() {
+        console.log("Map refresh");
         if (params.showPlaceholder) {
             $canvas.css("background", "#808080");
             return;
         }
         if (!map) {
+            console.log("Creating map");
             map = new google.maps.Map($canvas[0], {
                 center: { lat: 37.769154, lng: -122.430367},
                 zoom: 12,
