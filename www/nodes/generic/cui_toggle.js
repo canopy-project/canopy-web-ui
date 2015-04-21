@@ -42,6 +42,7 @@ function CuiToggle(origParams) {
     var self = this;
     var value = params.default;
 
+    // Marks dirty, does not refresh
     this.toggle = function(newValue) {
         if (newValue === undefined) {
             newValue = !value;
@@ -51,7 +52,7 @@ function CuiToggle(origParams) {
             if (params.onChange) {
                 params.onChange(newValue);
             }
-            self.markDirty().refresh();
+            self.markDirty();
         }
         return self;
     }
@@ -80,7 +81,7 @@ function CuiToggle(origParams) {
     this.onSetupCallbacks = function($me) {
         $me.on('click', function() {
             if (!params.onClick || params.onClick()) {
-                self.toggle();
+                self.toggle().refresh();
             }
         });
     }

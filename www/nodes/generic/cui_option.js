@@ -54,15 +54,12 @@ function CuiOption(origParams) {
         return (valueToIdx[name] !== undefined);
     }
 
-    this.onLive = function($me) {
-        cuiLive(toggles);
-    }
-
     // Select by name or value.
     // Triggers callback.
     // Does not .refresh().
     this.select = function(_idx) {
         var idx = _idx;
+        this.markDirty();
         if (typeof _idx != 'number') {
             idx = valueToIdx[idx];
         }
@@ -101,9 +98,9 @@ function CuiOption(origParams) {
         return $("<div class='" + params.outerClass + "'></div>").html($inner);
     }
 
-    this.onRefresh = function($me) {
+    this.onRefresh = function($me, dirty, live) {
         for (var i = 0; i < toggles.length; i++) {
-            toggles[i].toggle((selectedIdx === i));
+            toggles[i].toggle((selectedIdx === i)).refresh(live);
         }
     }
 }

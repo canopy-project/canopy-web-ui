@@ -53,5 +53,39 @@
             });
         </script>
     </div>
+
+    <div class='section'>
+        <div class='title'>CuiOption - nodes/generic/cui_option.js</div>
+        <div class='desc'>Sequence of DIVs, only one of which can be selected
+        at a time</div>
+        <div id=cui_option>
+        </div>
+        <script>
+            var option = new CuiOption({
+                items : [{
+                    content: "Cow",
+                    value: "cow"
+                }, {
+                    content: "Horse",
+                    value: "horse"
+                }, {
+                    content: "Fox",
+                    value: "fox"
+                }],
+                outerClass : "cui_option",
+                itemSelectedClass : "cui_option_selected",
+                itemNotSelectedClass : "cui_option_not_selected",
+                onSelect: function(idx, value) {
+                    alert("You selected: " + value);
+                },
+                selectedIdx : 0
+            });
+
+            $(function() {
+                $("#cui_option").html(option.get$());
+                option.live();
+            });
+        </script>
+    </div>
 </body>
 </html>
