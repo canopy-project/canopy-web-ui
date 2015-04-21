@@ -300,7 +300,7 @@ function cuiCompose(segments) {
     //outString = "<div>" + out.join("") + "</div>";
     outString =  out.join("");
     $out = $(outString);
-    if ($out.length > 1) {
+    if ($out.length != 1) {
         $out = $("<span>" + outString + "</span>");
     }
 

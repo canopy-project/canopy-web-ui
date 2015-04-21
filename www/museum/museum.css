@@ -1,0 +1,31 @@
+body {
+}
+
+.museum {
+}
+
+.museum .section {
+    padding: 16px;
+    border-bottom: 1px solid #a0a0a0;
+}
+
+.museum .section .desc {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 400;
+    color: #808080;
+    padding-bottom: 16px;
+}
+
+.museum .section .title {
+    font-size: 32px;
+    padding-bottom: 16px;
+}
+
+.museum .cui_button {
+    display: inline-block;
+    background: #3060b0;
+    color: #ffff00;
+    font-weight: 800;
+    cursor: pointer;
+}

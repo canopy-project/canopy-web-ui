@@ -18,7 +18,7 @@
  * A cui_button is a clickable button.
  *
  * params:
- *      .cssClass
+ *      .cssClass -- defaults to "cui_button"
  *      .onClick
  *      .content -- $div, node, or "html string".
  */
@@ -28,7 +28,7 @@ function CuiButton(params) {
     var self = this;
     var inner;
     var content = params.content;
-    var cssClass = params.cssClass ? params.cssClass : "";
+    var cssClass = params.cssClass ? params.cssClass : "cui_button";
 
     this.setContent = function(_content) {
         var content = _content;
@@ -36,7 +36,7 @@ function CuiButton(params) {
     }
 
     this.onConstruct = function() {
-        inner = cuiCompose(content);
+        inner = cuiCompose([content]);
         return [
             "<div class='" + params.cssClass + "'>",
                 inner,
@@ -46,7 +46,7 @@ function CuiButton(params) {
 
     this.onRefresh = function($me, dirty, live) {
         if (dirty()) {
-            inner.html(cuiCompose(content));
+            inner.html(cuiCompose([content]));
         }
     }
 
