@@ -57,6 +57,7 @@ function CuiToggle(origParams) {
     }
 
     this.onConstruct = function() {
+        this.markDirty();
         return cuiCompose([
             "<div class='" + params.baseClass + "'>",
                 params.content,

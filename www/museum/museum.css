@@ -42,8 +42,10 @@ body {
 .museum .cui_toggle_off {
     color: #a0a0a0;
     background: #ffffff;
+    border: 1px solid #808080;
 }
 .museum .cui_toggle_on {
     color: #ff00ff;
     background: #00ff00;
+    border: 1px solid #ffffff;
 }
