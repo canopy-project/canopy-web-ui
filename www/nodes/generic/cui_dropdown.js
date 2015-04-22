@@ -43,8 +43,7 @@ function CuiDropdown(params) {
     this.onConstruct = function() {
         toggle = new CuiToggle({
             onChange: function(value) {
-                if (self.isLive()) {
-                    alert(toggle.get$().width());
+                if (params.uniformWidth && self.isLive()) {
                     popup.get$().css('width', toggle.get$().width() + "px");
                 }
                 popup.toggle(value);

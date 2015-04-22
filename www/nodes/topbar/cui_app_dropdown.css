@@ -1,0 +1,40 @@
+.cui_app_dropdown .cui_dropdown {
+}
+
+.cui_app_dropdown .cui_dropdown .cui_popup {
+}
+
+.cui_app_dropdown .cui_dropdown .cui_popup .cui_inner {
+    padding: 0px;
+}
+
+.cui_app_dropdown .cui_dropdown .cui_button {
+    padding: 8px;
+    background: #3060b0;
+    color: #ffffff;
+}
+
+.cui_app_dropdown .cui_dropdown .cui_off {
+    background: #3060b0;
+}
+
+.cui_app_dropdown .cui_dropdown .cui_on {
+    background: #4080f0;
+}
+
+.cui_app_dropdown .cui_dropdown .cui_option .cui_button {
+    display: block;
+    font-size: 16px;
+    background: inherit;
+    color: #808080;
+    white-space: nowrap;
+}
+
+.cui_app_dropdown .cui_dropdown .cui_option .cui_button:hover {
+    color: #404040;
+}
+
+.cui_app_dropdown .cui_dropdown .cui_option .cui_button .cui_off {
+    background: inherit;
+    color: #808080;
+}
