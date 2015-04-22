@@ -14,13 +14,13 @@
 <body class='museum'>
     <div class='section'>
         <div class='title'>CuiButton - nodes/generic/cui_button.js</div>
-        <div class='desc'>Generic clickable button.</div>
+        <div class='desc'>Generic clickable button.  params.cssStyle=""</div>
         <div id=cui_button>
         </div>
         <script>
             var button = new CuiButton({
-                content : "Click Me",
-                cssClass : "cui_button",
+                content : "CLICK ME",
+                cssClass : "",
                 onClick: function() {
                     alert("clicked");
                 }
@@ -31,43 +31,123 @@
                 button.live();
             });
         </script>
+
+        <div class='desc'>params.cssStyle="cui_default"</div>
+        <div id=cui_button2>
+        </div>
+        <script>
+            var button2 = new CuiButton({
+                content : "CLICK ME",
+                cssClass : "cui_default",
+                onClick: function() {
+                    alert("clicked");
+                }
+            });
+
+            $(function() {
+                $("#cui_button2").html(button2.get$());
+                button2.live();
+            });
+        </script>
+
+        <div class='desc'>Customized: params.cssStyle="cui_default museum_button"</div>
+        <div id=cui_button3>
+        </div>
+        <script>
+            var button3 = new CuiButton({
+                content : "CLICK ME",
+                cssClass : "cui_default museum_button",
+                onClick: function() {
+                    alert("clicked");
+                }
+            });
+
+            $(function() {
+                $("#cui_button3").html(button3.get$());
+                button3.live();
+            });
+        </script>
+
+
     </div>
 
     <div class='section'>
         <div class='title'>CuiToggle - nodes/generic/cui_toggle.js</div>
-        <div class='desc'>Generic 2-state button that can be toggled on/off.</div>
-        <div id=cui_toggle>
-        </div>
+        <div class='desc'>Generic 2-state button that can be toggled on/off. params.cssStyle=""</div>
+        <div id=cui_toggle> </div>
+        <div class='desc'>params.cssStyle="cui_default"</div>
+        <div id=cui_toggle2> </div>
+        <div class='desc'>params.cssStyle="cui_default museum_toggle"</div>
+        <div id=cui_toggle3> </div>
     </div>
     <div class='section'>
         <div class='title'>CuiPopup - nodes/generic/cui_popup.js</div>
-        <div class='desc'>A generic popup dialog.</div>
+        <div class='desc'>A generic popup dialog. params.cssStyle=""</div>
         (Before) <div id=cui_popup style='display: inline-block'></div> (After)
+
+        <br><br><div class='desc'>params.cssStyle="cui_default"</div>
+        (Before) <div id=cui_popup2 style='display: inline-block'></div> (After)
+
+        <br><br><div class='desc'>params.cssStyle="cui_default museum_popup"</div>
+        (Before) <div id=cui_popup3 style='display: inline-block'></div> (After)
     </div>
     <script>
         var toggle = new CuiToggle({
+            content : "On/Off",
+            cssClass : "",
+            onChange: function(value) {
+                alert(value);
+            }
+        });
+
+        var toggle2 = new CuiToggle({
+            content : "ON/OFF",
+            cssClass : "cui_default",
+            onChange: function(value) {
+            }
+        });
+
+        var toggle3 = new CuiToggle({
             content : "Show/Hide",
-            baseClass : "cui_toggle",
-            onClass : "cui_toggle_on",
-            offClass : "cui_toggle_off",
+            cssClass : "cui_default museum_toggle",
             onChange: function(value) {
                 popup.toggle(value);
+                popup2.toggle(value);
+                popup3.toggle(value);
             }
         });
 
         $(function() {
             $("#cui_toggle").html(toggle.get$());
             toggle.live();
+            $("#cui_toggle2").html(toggle2.get$());
+            toggle2.live();
+            $("#cui_toggle3").html(toggle3.get$());
+            toggle3.live();
         });
 
         var popup = new CuiPopup({
             content : "Pop!",
-            cssClass : "museum_popup",
+            cssClass : "",
+        });
+
+        var popup2 = new CuiPopup({
+            content : "Pop!",
+            cssClass : "cui_default",
+        });
+
+        var popup3 = new CuiPopup({
+            content : "Pop!",
+            cssClass : "cui_default museum_popup",
         });
 
         $(function() {
             $("#cui_popup").html(popup.get$());
             popup.live();
+            $("#cui_popup2").html(popup2.get$());
+            popup2.live();
+            $("#cui_popup3").html(popup3.get$());
+            popup3.live();
         });
     </script>
 

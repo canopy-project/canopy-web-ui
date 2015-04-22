@@ -20,31 +20,25 @@
  *
  * PARAMS:
  *      .cssClass
- *      .baseClass (deprecated)
- *      .onClass (deprecated)
- *      .offClass (deprecated)
  *      .onChange
  *      .onClick -- return false to not toggle
  *      .content -- $div, node, or "html string".
  *      .default -- true/false.  The default defaults to false.
  *
  *  CSS:
- *      Customize with:
- *      .myClass .cui_button
- *      .myClass .cui_button .cui_on
- *      .myClass .cui_button .cui_off
+ *      params.cssClass:
+ *          ""                      - no style
+ *          "cui_default"           - default style
+ *          "MYCLASS"               - Your custom style
+ *          "cui_default MYCLASS"   - Your custom style, based on the default
+ *
+ *      Customize by writing CSS for:
+ *          .MYCLASS.cui_toggle
+ *          .MYCLASS.cui_toggle.cui_on
+ *          .MYCLASS.cui_toggle.cui_off
  */
-function CuiToggle(origParams) {
+function CuiToggle(params) {
     cuiInitNode(this);
-
-    var params = $.extend({}, {
-        baseClass: "",
-        onClass: "",
-        offClass: "",
-        onClick: null,
-        default: false,
-        content: ""
-    }, origParams);
 
     var self = this;
     var value = params.default;
@@ -67,7 +61,7 @@ function CuiToggle(origParams) {
     this.onConstruct = function() {
         this.markDirty();
         return cuiCompose([
-            "<div class='cui_button " + params.baseClass + "'>",
+            "<div class='cui_toggle " + params.cssClass + "'>",
                 params.content,
             "</div>"
         ]);

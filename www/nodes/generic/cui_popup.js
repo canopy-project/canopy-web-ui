@@ -29,9 +29,15 @@
  *
  * CSS:
  *
- *      Customize with:
- *          .myclass .cui_popup { ... my styles ... }
- *          .myclass .cui_popup .cui_inner { ... my styles ... }
+ *      params.cssClass:
+ *
+ *          ""                      - no style
+ *          "cui_default"           - default canopy popup
+ *          "MYCLASS"               - Your custom style
+ *          "cui_default MYCLASS"   - Your custom style, based on the default
+ *
+ *      Customize by writing CSS for:
+ *          .MYCLASS.cui_popup .cui_inner
  */
 function CuiPopup(params) {
     cuiInitNode(this);
@@ -63,18 +69,14 @@ function CuiPopup(params) {
     
     this.onConstruct = function() {
         $popup = cuiCompose([
-            "<div class=cui_popup>",
+            "<div class='cui_popup " + params.cssClass + "'>",
                 "<div class=cui_inner>",
                     params.content,
                 "</div>",
             "</div>",
         ]);
         $popup.hide();
-        return [
-            "<div class='" + params.cssClass + "'>",
-                $popup,
-            "</div>"
-        ];
+        return $popup;
     }
 
     this.onRefresh = function($me, dirty, live) {

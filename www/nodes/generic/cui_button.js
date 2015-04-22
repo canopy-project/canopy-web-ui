@@ -17,10 +17,24 @@
 /*
  * A cui_button is a clickable button.
  *
- * params:
- *      .cssClass -- defaults to "cui_button"
+ * PARAMS:
+ *      .cssClass -- defaults to ""
  *      .onClick
  *      .content -- $div, node, or "html string".
+ *
+ * METHODS:
+ *      .setContent
+ *
+ *  CSS:
+ *      params.cssClass:
+ *          ""                    - no style
+ *          "cui_default"         - default Canopy button
+ *          "MYCLASS"             - Your custom style
+ *          "cui_default MYCLASS" - Your custom style, based on the default
+ *
+ *      Customize by writing CSS for:
+ *          .MYCLASS.cui_button
+ *          .MYCLASS.cui_button:hover
  */
 function CuiButton(params) {
     cuiInitNode(this);
@@ -28,7 +42,6 @@ function CuiButton(params) {
     var self = this;
     var inner;
     var content = params.content;
-    var cssClass = params.cssClass ? params.cssClass : "cui_button";
 
     this.setContent = function(_content) {
         var content = _content;
@@ -38,9 +51,9 @@ function CuiButton(params) {
     this.onConstruct = function() {
         inner = cuiCompose([content]);
         return [
-            "<div class='" + params.cssClass + "'>",
+            "<div class='cui_button " + params.cssClass + "'>",
                 inner,
-            "</div>"
+            "<div>",
         ];
     }
 

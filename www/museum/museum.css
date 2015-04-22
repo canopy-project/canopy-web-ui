@@ -1,7 +1,21 @@
 body {
 }
 
+
 .museum {
+}
+
+.museum_button.cui_button {
+    color: #ffff00;
+    width: 400px;
+    font-size: 40px;
+    text-align: center;
+}
+
+.museum_button.cui_button:hover {
+    color: #ffffa0;
+    width: 400px;
+    text-align: center;
 }
 
 .museum .section {
@@ -23,28 +37,19 @@ body {
 }
 
 
-.museum .cui_button {
+.museum_toggle.cui_toggle {
     display: inline-block;
-    background: #3060b0;
-    color: #ffff00;
-    font-weight: 800;
-    cursor: pointer;
-    padding: 8px;
+    padding: 16px;
 }
 
-.museum .cui_toggle {
-    display: inline-block;
-    padding: 8px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.museum .cui_toggle_off {
+.museum_toggle.cui_toggle.cui_off,
+.museum_toggle.cui_toggle.cui_off:hover {
     color: #a0a0a0;
     background: #ffffff;
     border: 1px solid #808080;
 }
-.museum .cui_toggle_on {
+.museum_toggle.cui_toggle.cui_on,
+.museum_toggle.cui_toggle.cui_on:hover {
     color: #ff00ff;
     background: #00ff00;
     border: 1px solid #ffffff;
@@ -68,4 +73,13 @@ body {
     display: inline-block;
     color: #808080;
     background: #f0f0f0;
+}
+
+.museum_popup.cui_popup .cui_inner{
+    padding: 16px;
+    background: rgba(40, 80, 160, 0.7);
+    border-radius: 6px;
+    font-weight: 800;
+    color: #ffffff;
+
 }
