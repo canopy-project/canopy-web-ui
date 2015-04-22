@@ -18,14 +18,21 @@
  * A cui_toggle is an element that can be in one of two states, with different
  * CSS depending on the state.
  *
- * params:
- *      .baseClass
- *      .onClass
- *      .offClass
+ * PARAMS:
+ *      .cssClass
+ *      .baseClass (deprecated)
+ *      .onClass (deprecated)
+ *      .offClass (deprecated)
  *      .onChange
  *      .onClick -- return false to not toggle
  *      .content -- $div, node, or "html string".
  *      .default -- true/false.  The default defaults to false.
+ *
+ *  CSS:
+ *      Customize with:
+ *      .myClass .cui_button
+ *      .myClass .cui_button .cui_on
+ *      .myClass .cui_button .cui_off
  */
 function CuiToggle(origParams) {
     cuiInitNode(this);
@@ -60,7 +67,7 @@ function CuiToggle(origParams) {
     this.onConstruct = function() {
         this.markDirty();
         return cuiCompose([
-            "<div class='" + params.baseClass + "'>",
+            "<div class='cui_button " + params.baseClass + "'>",
                 params.content,
             "</div>"
         ]);
@@ -70,10 +77,14 @@ function CuiToggle(origParams) {
         if (dirty()) {
             if (value) {
                 $me.removeClass(params.offClass);
+                $me.removeClass("cui_off");
                 $me.addClass(params.onClass);
+                $me.addClass("cui_on");
             } else {
                 $me.removeClass(params.onClass);
+                $me.removeClass("cui_on");
                 $me.addClass(params.offClass);
+                $me.addClass("cui_off");
             }
         }
     }

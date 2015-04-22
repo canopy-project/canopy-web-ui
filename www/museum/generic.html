@@ -67,30 +67,27 @@
 
         $(function() {
             $("#cui_popup").html(popup.get$());
-            button.live();
+            popup.live();
         });
     </script>
-
 
     <div class='section'>
         <div class='title'>CuiDropdown - nodes/generic/cui_dropdown.js</div>
         <div class='desc'>Button that pops up a dialog.</div>
-        <div id=cui_button>
-        </div>
+        <div id=cui_dropdown></div>
         <script>
-            var button = new CuiButton({
-                content : "Click Me",
-                cssClass : "cui_button",
-                onClick: function() {
-                    alert("clicked");
-                }
+            var dropdown = new CuiDropdown({
+                buttonContent : "Dropdown",
+                popupContent : "Option 1<br>Option 2",
+                uniformWidth: true,
             });
 
             $(function() {
-                $("#cui_button").html(button.get$());
-                button.live();
+                $("#cui_dropdown").html(dropdown.get$());
+                dropdown.live();
             });
         </script>
+        </div>
     </div>
 
     <div class='section'>

@@ -123,7 +123,7 @@ function CuiNodeBase(name) {
             $me.addClass("cui_debug");
             $me.css('box-shadow', "inset 0px 0px 0px 1px " + color);
             $me.css('border-top', "4px solid " + color);
-            $me.prepend("<div style='position: relative; top:-0px;'><div style='position:absolute; " + align + "; padding-right:3px; display:inline-block; background: " + color + "; color: #ffffff; font-size:9px; font-weight:700; font-family: sans-serif;'>" + name + "</div></div>");
+            $me.prepend("<div style='position: relative; top:-0px;'><div style='position:absolute; " + align + "; padding-right:3px; display:inline-block; z-index: 10000; background: " + color + "; color: #ffffff; font-size:9px; font-weight:700; font-family: sans-serif;'>" + name + "</div></div>");
             cui_debug_recursive_depth--;
             return $me;
         }
