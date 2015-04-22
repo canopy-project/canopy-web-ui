@@ -33,7 +33,7 @@
  *      .bottomRight    - abid
  *
  *      .leftRightAmt   - % or px
- *      .bottomTopAmt   - % or px
+ *      .topBottomAmt   - % or px
  *
  */
 function CuiQuadLayout(params) {
@@ -83,7 +83,13 @@ function CuiQuadLayout(params) {
             "</div>"
         ];
     }
-    this.onRefresh = function() {
+    this.onRefresh = function($me, dirty, live) {
+        cuiRefresh([
+            params.topLeft, 
+            params.bottomLeft, 
+            params.topRight, 
+            params.bottomRight
+        ], live);
     }
 }
 

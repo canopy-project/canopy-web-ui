@@ -261,10 +261,10 @@ function cuiLive(children) {
     }
 }
 
-function cuiRefresh(children) {
+function cuiRefresh(children, live) {
     for (var i = 0; i < children.length; i++) {
         if (children[i].refresh) {
-            children[i].refresh();
+            children[i].refresh(live);
         }
     }
 }
