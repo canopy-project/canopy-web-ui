@@ -1,0 +1,42 @@
+body {
+}
+
+.museum .quad_container {
+    display: inline-block;
+    width: 400px;
+    height: 400px;
+    border: 1px solid #808080;
+}
+
+.museum .quad_container .cui_quad_layout_topleft {
+    background: #ff0000;
+}
+
+.museum .quad_container .cui_quad_layout_topright {
+    background: #00ff00;
+}
+
+.museum .quad_container .cui_quad_layout_bottomleft {
+    background: #ffff00;
+}
+
+.museum .quad_container .cui_quad_layout_bottomright {
+    background: #ff00ff;
+}
+
+.museum .u_container {
+    display: inline-block;
+    width: 400px;
+    height: 400px;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+}
+
+.museum .u_container .cui_layout_cell {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+}
+
+.museum .cui_canvas {
+    border: 1px solid #ff0000;
+}

@@ -43,24 +43,27 @@ function CuiCanvas(params) {
         return ["<div class='cui_canvas'>", params.contents, "</div>"];
     }
 
-    this.onLive = function() {
-        if (params.contents.live) {
-            params.contents.live();
+    this.onRefresh = function($me, dirty, live) {
+        var $prev;
+        if (params.preceededBy.get$) {
+            var $prev = params.preceededBy.get$();
+        } else {
+            $prev = params.preceededBy;
         }
-
-        if (autoRefresh) {
-            $(window).off("resize").on("resize", function() {
-                self.refresh();
-            });
-        }
-    }
-
-    this.onRefresh = function($me, force) {
-        var $prev = params.preceededBy.get$();
         var startY = $prev.offset().top + $prev.height();
         $me.css("top", startY + "px");
-        if (params.contents.refresh) {
-            params.contents.refresh();
-        }
+        cuiRefresh([params.contents], live);
+    }
+
+    this.onSetupCallbacks = function($me) {
+        $(window).on("resize", function() {
+            if (autoRefresh) {
+                self.refresh();
+            }
+        });
+    }
+
+    this.onTeardownCallbacks = function($me) {
+        $(window).off("resize");
     }
 }

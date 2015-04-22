@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+    <title>CUI Museum</title>
+    <script>
+        var CUI_INCLUDE_PATH = "../"
+    </script>
+    <script src="../cui_include.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link href="museum.css" rel="stylesheet" type="text/css">
+    <link href="museum_topbar.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class='museum'>
+    <div class='section'>
+        <div class='title'>CuiTopbar - nodes/topbar/cui_topbar.js</div>
+        <div class='desc'>Generic clickable button.</div>
+        <div id=cui_button>
+        </div>
+        <script>
+            var button = new CuiButton({
+                content : "Click Me",
+                cssClass : "cui_button",
+                onClick: function() {
+                    alert("clicked");
+                }
+            });
+
+            $(function() {
+                $("#cui_button").html(button.get$());
+                button.live();
+            });
+        </script>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiToggle - nodes/generic/cui_toggle.js</div>
+        <div class='desc'>Generic 2-state button that can be toggled on/off.</div>
+        <div id=cui_toggle>
+        </div>
+        <script>
+            var toggle = new CuiToggle({
+                content : "Toggle Me",
+                baseClass : "cui_toggle",
+                onClass : "cui_toggle_on",
+                offClass : "cui_toggle_off",
+                onChange: function(value) {
+                }
+            });
+
+            $(function() {
+                $("#cui_toggle").html(toggle.get$());
+                toggle.live();
+            });
+        </script>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiOption - nodes/generic/cui_option.js</div>
+        <div class='desc'>Sequence of DIVs, only one of which can be selected
+        at a time</div>
+        <div id=cui_option>
+        </div>
+        <script>
+            var horseToggle = new CuiToggle({
+                content : "Horse",
+                baseClass : "cui_toggle",
+                onClass : "cui_toggle_on",
+                offClass : "cui_toggle_off",
+                onChange: function(value) {
+                    alert("naaaay");
+                }
+            });
+
+            var switcher = new CuiSwitcher({
+                children : {
+                    "cow" : new CuiWrapper("<h2>COW</h2>"),
+                    "horse" : horseToggle,
+                    "fox" : new CuiWrapper("<h2>FOX</h2>"),
+                },
+                default : "cow"
+            });
+
+            var option = new CuiOption({
+                items : [{
+                    content: "Cow",
+                    value: "cow"
+                }, {
+                    content: "Horse",
+                    value: "horse"
+                }, {
+                    content: "Fox",
+                    value: "fox"
+                }],
+                outerClass : "cui_option",
+                itemSelectedClass : "cui_option_selected",
+                itemNotSelectedClass : "cui_option_not_selected",
+                onSelect: function(idx, value) {
+                    switcher.select(value).refresh();
+                },
+                selectedIdx : 0
+            });
+
+            $(function() {
+                $("#cui_option").html(option.get$());
+                option.live();
+            });
+
+            $(function() {
+                $("#cui_switcher").html(switcher.get$());
+                switcher.live();
+            });
+        </script>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiSwitcher - nodes/generic/cui_switcher.js</div>
+        <div class='desc'>Displays one of several children.  This example is
+        linked to the option node above.</div>
+        <div id=cui_switcher>
+        </div>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiWrapper - nodes/generic/cui_wrapper.js</div>
+        <div class='desc'>Wraps HTML code as a CuiNode.</div>
+        <div id=cui_wrapper>
+        </div>
+        <script>
+            var wrapper = new CuiWrapper("<b>Hello</b> <i>World</i>");
+            $(function() {
+                $("#cui_wrapper").html(wrapper.get$());
+                wrapper.live();
+            });
+        </script>
+    </div>
+</body>
+</html>

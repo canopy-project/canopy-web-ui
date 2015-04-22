@@ -34,61 +34,84 @@ function CuiMap(params) {
     cuiInitNode(this);
 
     var map;
+    var mapCreated = false;
     var $canvas;
     var infoWindow;
     var marker;
+    var markerData = null;
+    var self = this;
 
     this.jumpTo = function(lat, lng) {
         map.panTo(new google.maps.LatLng(lat, lng));
     }
 
     this.addMarker = function(lat, lng, title, infoContent) {
-        var myLatLng = new google.maps.LatLng(lat, lng);
-
-        if (infoContent) {
-            infoWindow = new google.maps.InfoWindow({
-                content: infoContent,
-                //pixelOffset: new google.maps.Size(100, 0)
-            });
-        }
-
-        marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: title,
-            optimized: false
-        });
-
-        google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.open(map, marker);
-        });
-
-        return marker;
+        markerData = {
+            lat: lat, 
+            lng: lng, 
+            title: title, 
+            infoContent: infoContent
+        };
+        this.markDirty("marker");
     }
 
     this.onConstruct = function() {
         $canvas = $("<div class=cui_map_canvas></div>");
         return $canvas;
     }
+    var cnt = 0;
 
-    this.onLive = function() {
-        return cuiCompose(content);
-    }
-
-    this.onRefresh = function() {
+    this.onRefresh = function($me, dirty, live) {
         if (params.showPlaceholder) {
             $canvas.css("background", "#808080");
-            return;
+            return true;
         }
-        if (!map) {
-            map = new google.maps.Map($canvas[0], {
-                center: { lat: 37.769154, lng: -122.430367},
-                zoom: 12,
-                streetViewControl: false
-            });
+
+        if (dirty("marker") && map && live) {
+            var myLatLng = new google.maps.LatLng(markerData.lat, markerData.lng);
+
+            if (markerData.infoContent) {
+                infoWindow = new google.maps.InfoWindow({
+                    content: markerData.infoContent,
+                });
+            }
+
+            if (map && !marker) {
+                cnt++;
+                marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: markerData.title,
+                });
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    infoWindow.open(map, marker);
+                });
+
+                if (infoWindow) {
+                    infoWindow.open(map, marker);
+                }
+            }
+            this.clearDirty("marker");
         }
-        if (infoWindow) {
-            infoWindow.open(map, marker);
-        }
+        return false; // false = manually clear dirty flags.
+    }
+
+    this.onSetupCallbacks = function() {
+        setTimeout(function() {
+            if (!map) {
+                map = new google.maps.Map($canvas[0], {
+                    center: { lat: 37.769154, lng: -122.430367},
+                    zoom: 12,
+                    streetViewControl: false
+                });
+            }
+            self.markDirty("marker").refresh();
+        }, 1);
+    }
+
+    this.onTeardownCallbacks = function() {
+        /*map = null;
+        $canvas.html("");*/
     }
 }

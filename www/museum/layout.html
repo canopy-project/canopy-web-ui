@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <title>CUI Museum</title>
+    <script>
+        var CUI_INCLUDE_PATH = "../"
+    </script>
+    <script src="../cui_include.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link href="museum.css" rel="stylesheet" type="text/css">
+    <link href="museum_layout.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class='museum'>
+    <div id='pre_canvas'>
+        <div class='section'>
+            <div class='title'>CuiCanvas - nodes/layout/cui_canvas.js</div>
+            <div class='desc'>Starts after a DIV and goes to bottom of page</div>
+        </div>
+    </div>
+    <div id=cui_canvas>
+    </div>
+    <script>
+        var canvas = new CuiCanvas({
+            preceededBy: $("#pre_canvas"),
+            contents: "<b>Inside the canvas</b>"
+        });
+        $(function() {
+            $("#cui_canvas").html(canvas.get$());
+            canvas.live();
+        });
+    </script>
+
+    <div style='position:absolute; top:100%'>
+
+    <div class='section'>
+        <div class='title'>CuiQuadLayout - nodes/layout/cui_quad_layout.js</div>
+        <div class='desc'>Divides containter into 4 quadrants</div>
+        <div class='quad_container' id=cui_quad>
+        </div>
+        <script>
+            var quadButton = new CuiButton({
+                content : "Top Right",
+                cssClass : "cui_button",
+                onClick: function() {
+                    alert("clicked");
+                }
+            });
+            var quad = new CuiQuadLayout({
+                topLeft: "topLeft",
+                topRight: quadButton,
+                bottomLeft: "bottomLeft",
+                bottomRight: "bottomRight",
+                leftRightAmt: "25%",
+                topBottomAmt: "75%",
+            });
+
+            $(function() {
+                $("#cui_quad").html(quad.get$());
+                quad.live();
+            });
+        </script>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiULayout - nodes/layout/cui_u_layout.js</div>
+        <div class='desc'>Divides containter into 3 parts in a "U" shape</div>
+        <div class='u_container' id=cui_u>
+        </div>
+        <script>
+            var uButton = new CuiButton({
+                content : "Top Right",
+                cssClass : "cui_button",
+                onClick: function() {
+                    alert("clicked");
+                }
+            });
+            var uLayout = new CuiULayout({
+                topLeft: "topLeft",
+                topRight: uButton,
+                bottom: "bottom",
+                leftRightAmt: "25%",
+                topBottomAmt: "75%",
+            });
+
+            $(function() {
+                $("#cui_u").html(uLayout.get$());
+                uLayout.live();
+            });
+        </script>
+    </div>
+    </div>
+</body>
+</html>

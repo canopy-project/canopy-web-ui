@@ -65,7 +65,7 @@ function CuiULayout(params) {
                         params.topRight,
                     "</div>",
                 "</div>",
-                "<div class='cui_u_layout_bottom'" + bottomStyle + ">",
+                "<div class='cui_layout_cell cui_u_layout_bottom'" + bottomStyle + ">",
                         params.bottom,
                     "</div>",
                 "</div>",
@@ -73,11 +73,7 @@ function CuiULayout(params) {
         ];
     }
 
-    this.onLive = function() {
-        cuiLive([params.topLeft, params.topRight, params.bottom]);
-    }
-
-    this.onRefresh = function() {
-        cuiRefresh([params.topLeft, params.topRight, params.bottom]);
+    this.onRefresh = function($me, dirty, live) {
+        cuiRefresh([params.topLeft, params.topRight, params.bottom], live);
     }
 }

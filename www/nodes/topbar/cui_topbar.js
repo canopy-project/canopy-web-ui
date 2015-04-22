@@ -51,11 +51,10 @@ function CuiTopbar(params) {
     var userDropdown;
 
     var user;
-    var userDirty = false;
 
     this.setUser = function(_user) {
         user = _user;
-        userDirty = true;
+        this.markDirty("user");
         return this;
     }
 
@@ -73,7 +72,6 @@ function CuiTopbar(params) {
             "</div>"
         ]);
 
-
         var items = [];
         for (var i = 0; i < params.items.length; i++) {
             items.push({
@@ -90,7 +88,7 @@ function CuiTopbar(params) {
             itemNotSelectedClass: "cui_menu_item",
             items: items,
             onSelect: function(idx, value) {
-                console.lo("Told to select" + idx + " - " + value);
+                console.log("Told to select" + idx + " - " + value);
                 if (params.navState) {
                     var state = params.navState.get(params.navStateName);
                     if (state === undefined) {
@@ -126,35 +124,16 @@ function CuiTopbar(params) {
         return out;
     }
 
-    this.onLive = function() {
-        cuiLive([optionNode, userDropdown]);
-    }
-
-    this.onRefresh = function($me, force) {
-        if (force || userDirty) {
+    this.onRefresh = function($me, dirty, live) {
+        if (dirty("user")) {
             if (user) {
                 userDropdown.get$().show();
-                userDropdown.setUser(user).refresh();
+                userDropdown.setUser(user);
             } else {
                 userDropdown.get$().hide();
-                userDropdown.setUser(null).refresh();
+                userDropdown.setUser(null);
             }
-            userDirty = false;
         }
-        if (force) {
-            optionNode.refresh();
-        }
+        cuiRefresh([optionNode, userDropdown], live);
     }
-
-    // initialize
-    /*if (params.navState) {
-        var state = params.navState.get(params.navStateName);
-        if (state !== undefined) {
-            self.select(state);
-            return;
-        }
-    }
-    if (params.default) {
-        self.select(params.default);
-    }*/
 }

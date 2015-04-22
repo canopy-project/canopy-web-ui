@@ -35,11 +35,10 @@ function CuiUserDropdown(params) {
     var opening = false;
 
     var user;
-    var userDirty = false;
 
     this.setUser = function(_user) {
         user = _user;
-        userDirty = true;
+        this.markDirty("user");
         return this;
     }
 
@@ -96,9 +95,15 @@ function CuiUserDropdown(params) {
         return null;
     }
 
-    this.onLive = function($me) {
-        cuiLive([button]);
-        $dialog.off('click').on('click', function(event) {
+    this.onRefresh = function($me, dirty, live) {
+        if (dirty("user")) {
+            $username.html(user.username());
+        }
+        cuiRefresh([button], live);
+    }
+
+    this.onSetupCallbacks = function($me) {
+        $dialog.on('click', function(event) {
             user.remote().logout().onDone(function(result, responseData) {
                 if (result != CANOPY_SUCCESS) {
                     alert("Problem logging out");
@@ -116,11 +121,8 @@ function CuiUserDropdown(params) {
         });
     }
 
-    this.onRefresh = function($me) {
-        if (userDirty) {
-            $username.html(user.username());
-            userDirty = false;
-        }
+    this.onTeardownCallbacks = function($me) {
+        $dialog.off('click');
     }
 }
 

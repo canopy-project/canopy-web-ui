@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+    <title>CUI Museum</title>
+    <script>
+        var CUI_INCLUDE_PATH = "../"
+    </script>
+    <script src="../cui_include.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link href="museum.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class='museum'>
+    <div class='section'>
+        <div class='title'>CuiTopbar - nodes/topbar/cui_topbar.js</div>
+        <div class='desc'>Top menu bar for Canopy applications</div>
+        <div id=cui_topbar>
+        </div>
+        <script>
+            var topbar = new CuiTopbar({
+                appName: "MyApp",
+                cssClass: "",
+                items : [{
+                    content: "Cow",
+                    value: "cow"
+                }, {
+                    content: "Horse",
+                    value: "horse"
+                }, {
+                    content: "Fox",
+                    value: "fox"
+                }],
+            });
+            $(function() {
+                $("#cui_topbar").html(topbar.get$());
+                topbar.live();
+            });
+        </script>
+
+        <div class='desc'>It can easily be styled to look like a submenu</div>
+        <div id=cui_topbar2>
+        </div>
+
+        <script>
+            var topbar2 = new CuiTopbar({
+                appName: "My Sub Menu",
+                cssClass: "cui_topbar_submenu",
+                items : [{
+                    content: "Cow",
+                    value: "cow"
+                }, {
+                    content: "Horse",
+                    value: "horse"
+                }, {
+                    content: "Fox",
+                    value: "fox"
+                }],
+            });
+            $(function() {
+                $("#cui_topbar2").html(topbar2.get$());
+                topbar2.live();
+            });
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+body {
+}
+
+.museum {
+}
+
+.museum .section {
+    padding: 16px;
+    border-bottom: 1px solid #a0a0a0;
+}
+
+.museum .section .desc {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 400;
+    color: #808080;
+    padding-bottom: 16px;
+}
+
+.museum .section .title {
+    font-size: 32px;
+    padding-bottom: 16px;
+}
+
+
+.museum .cui_button {
+    display: inline-block;
+    background: #3060b0;
+    color: #ffff00;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.museum .cui_toggle {
+    display: inline-block;
+    padding: 8px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.museum .cui_toggle_off {
+    color: #a0a0a0;
+    background: #ffffff;
+    border: 1px solid #808080;
+}
+.museum .cui_toggle_on {
+    color: #ff00ff;
+    background: #00ff00;
+    border: 1px solid #ffffff;
+}
+
+.museum .cui_option {
+    display: inline-block;
+    border: 1px solid #d8d8d8;
+    cursor: pointer;
+}
+
+.museum .cui_option_selected {
+    padding: 16px;
+    display: inline-block;
+    color: #303030;
+    font-weight: 800;
+    background: #ffffff;
+}
+.museum .cui_option_not_selected {
+    padding: 16px;
+    display: inline-block;
+    color: #808080;
+    background: #f0f0f0;
+}

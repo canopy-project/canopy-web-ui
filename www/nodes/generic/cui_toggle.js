@@ -42,6 +42,7 @@ function CuiToggle(origParams) {
     var self = this;
     var value = params.default;
 
+    // Marks dirty, does not refresh
     this.toggle = function(newValue) {
         if (newValue === undefined) {
             newValue = !value;
@@ -51,20 +52,13 @@ function CuiToggle(origParams) {
             if (params.onChange) {
                 params.onChange(newValue);
             }
+            self.markDirty();
         }
-        this.refresh();
-        return this;
-    }
-
-    this.onLive = function($me) {
-        $me.off('click').on('click', function() {
-            if (!params.onClick || params.onClick()) {
-                self.toggle();
-            }
-        });
+        return self;
     }
 
     this.onConstruct = function() {
+        this.markDirty();
         return cuiCompose([
             "<div class='" + params.baseClass + "'>",
                 params.content,
@@ -72,15 +66,28 @@ function CuiToggle(origParams) {
         ]);
     }
 
-    this.onRefresh = function($me) {
-        if (value) {
-            $me.removeClass(params.offClass);
-            $me.addClass(params.onClass);
-        } else {
-            $me.removeClass(params.onClass);
-            $me.addClass(params.offClass);
+    this.onRefresh = function($me, dirty, live) {
+        if (dirty()) {
+            if (value) {
+                $me.removeClass(params.offClass);
+                $me.addClass(params.onClass);
+            } else {
+                $me.removeClass(params.onClass);
+                $me.addClass(params.offClass);
+            }
         }
-        return $me;
+    }
+
+    this.onSetupCallbacks = function($me) {
+        $me.on('click', function() {
+            if (!params.onClick || params.onClick()) {
+                self.toggle().refresh();
+            }
+        });
+    }
+
+    this.onTeardownCallbacks = function($me) {
+        $me.off('click');
     }
 }
 
