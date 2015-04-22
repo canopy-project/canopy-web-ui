@@ -57,7 +57,13 @@ function CuiNodeBase(name) {
         var dirty = {};
 
         this.clearDirty = function() {
-            dirty = {};
+            if (arguments.length == 0) {
+                dirty = {};
+            } else {
+                for (var i = 0; i < arguments.length; i++) {
+                    dirty[arguments[i]] = undefined;
+                }
+            }
         }
 
         this.isDirty = function(key) {
@@ -80,6 +86,10 @@ function CuiNodeBase(name) {
     }
 
     var dirtyTracker = new DirtyTracker();
+    this.clearDirty = function() {
+        dirtyTracker.clearDirty.apply(dirtyTracker, arguments);
+        return this;
+    }
     this.markDirty = function() {
         dirtyTracker.markDirty.apply(dirtyTracker, arguments);
         return this;
@@ -140,8 +150,7 @@ function CuiNodeBase(name) {
     }
 
     this.isLive = function() {
-        // TODO: implement
-        return true;
+        return liveState;
     }
 
     this.live = function() {
@@ -177,10 +186,14 @@ function CuiNodeBase(name) {
     }
 
     this.refresh = function(isLive) {
+        var result;
+
         if (isLive == undefined) {
             isLive = liveState;
         }
         var liveStatus = getLiveStatus(liveState, isLive);
+
+        liveState = isLive;
 
         if (debug) {
             cui_debug_recursive_depth++;
@@ -194,24 +207,27 @@ function CuiNodeBase(name) {
         //  - Transitioning from live to dead
         //  - When live and callbacks are dirty
         if (liveStatus == CUI_LIVE_STATUS_TRANSITION_TO_DEAD || 
-                (dirtyTracker.isDirty("__callbacks") && isLive())) {
+                (dirtyTracker.isDirty("__callbacks") && this.isLive())) {
             this.teardownCallbacks();
         }
 
         if (this.onRefresh) {
-            this.onRefresh(this.get$(), dirtyTracker.isDirty, this.isLive());
+            // Return undefined or true to clear all dirty flags.
+            // Return false to manually clear dirty flags.
+            result = this.onRefresh(this.get$(), dirtyTracker.isDirty, this.isLive());
         }
 
         // Trigger the setup callback when:
         //  - Transitioning from dead to live
         //  - When live and callbacks are dirty
         if (liveStatus == CUI_LIVE_STATUS_TRANSITION_TO_LIVE || 
-                (dirtyTracker.isDirty("__callbacks") && isLive())) {
+                (dirtyTracker.isDirty("__callbacks") && this.isLive())) {
             this.setupCallbacks();
         }
 
-        liveState = isLive;
-        dirtyTracker.clearDirty();
+        if (result !== false) {
+            dirtyTracker.clearDirty();
+        }
 
         if (debug) {
             cui_debug_recursive_depth--;

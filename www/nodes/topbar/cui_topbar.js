@@ -88,7 +88,7 @@ function CuiTopbar(params) {
             itemNotSelectedClass: "cui_menu_item",
             items: items,
             onSelect: function(idx, value) {
-                console.lo("Told to select" + idx + " - " + value);
+                console.log("Told to select" + idx + " - " + value);
                 if (params.navState) {
                     var state = params.navState.get(params.navStateName);
                     if (state === undefined) {
