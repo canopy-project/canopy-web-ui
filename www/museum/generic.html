@@ -13,7 +13,7 @@
 
 <body class='museum'>
     <div class='section'>
-        <div class='title'>CuiTopbar - nodes/topbar/cui_topbar.js</div>
+        <div class='title'>CuiButton - nodes/generic/cui_button.js</div>
         <div class='desc'>Generic clickable button.</div>
         <div id=cui_button>
         </div>
@@ -38,19 +38,57 @@
         <div class='desc'>Generic 2-state button that can be toggled on/off.</div>
         <div id=cui_toggle>
         </div>
+    </div>
+    <div class='section'>
+        <div class='title'>CuiPopup - nodes/generic/cui_popup.js</div>
+        <div class='desc'>A generic popup dialog.</div>
+        (Before) <div id=cui_popup style='display: inline-block'></div> (After)
+    </div>
+    <script>
+        var toggle = new CuiToggle({
+            content : "Show/Hide",
+            baseClass : "cui_toggle",
+            onClass : "cui_toggle_on",
+            offClass : "cui_toggle_off",
+            onChange: function(value) {
+                popup.toggle(value);
+            }
+        });
+
+        $(function() {
+            $("#cui_toggle").html(toggle.get$());
+            toggle.live();
+        });
+
+        var popup = new CuiPopup({
+            content : "Pop!",
+            cssClass : "museum_popup",
+        });
+
+        $(function() {
+            $("#cui_popup").html(popup.get$());
+            button.live();
+        });
+    </script>
+
+
+    <div class='section'>
+        <div class='title'>CuiDropdown - nodes/generic/cui_dropdown.js</div>
+        <div class='desc'>Button that pops up a dialog.</div>
+        <div id=cui_button>
+        </div>
         <script>
-            var toggle = new CuiToggle({
-                content : "Toggle Me",
-                baseClass : "cui_toggle",
-                onClass : "cui_toggle_on",
-                offClass : "cui_toggle_off",
-                onChange: function(value) {
+            var button = new CuiButton({
+                content : "Click Me",
+                cssClass : "cui_button",
+                onClick: function() {
+                    alert("clicked");
                 }
             });
 
             $(function() {
-                $("#cui_toggle").html(toggle.get$());
-                toggle.live();
+                $("#cui_button").html(button.get$());
+                button.live();
             });
         </script>
     </div>

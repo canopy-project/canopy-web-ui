@@ -87,14 +87,6 @@ function CuiUserDropdown(params) {
         ]);
     }
 
-    function nthParent(e, n) {
-        if (n == 0)
-            return e;
-        if (e.parentElement)
-            return nthParent(e.parentElement, n - 1);
-        return null;
-    }
-
     this.onRefresh = function($me, dirty, live) {
         if (dirty("user")) {
             $username.html(user.username());
