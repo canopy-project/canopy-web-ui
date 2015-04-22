@@ -58,6 +58,10 @@ function CuiOption(origParams) {
     // Triggers callback.
     // Does not .refresh().
     this.select = function(_idx) {
+        if (selectedIdx == _idx) {
+            // noopt
+            return this;
+        }
         var idx = _idx;
         this.markDirty();
         if (typeof _idx != 'number') {

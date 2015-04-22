@@ -34,6 +34,7 @@ function CuiMap(params) {
     cuiInitNode(this);
 
     var map;
+    var mapCreated = false;
     var $canvas;
     var infoWindow;
     var marker;
@@ -65,13 +66,6 @@ function CuiMap(params) {
             $canvas.css("background", "#808080");
             return true;
         }
-        if (live && !map) {
-            map = new google.maps.Map($canvas[0], {
-                center: { lat: 37.769154, lng: -122.430367},
-                zoom: 12,
-                streetViewControl: false
-            });
-        }
 
         if (dirty("marker") && map && live) {
             var myLatLng = new google.maps.LatLng(markerData.lat, markerData.lng);
@@ -101,5 +95,23 @@ function CuiMap(params) {
             this.clearDirty("marker");
         }
         return false; // false = manually clear dirty flags.
+    }
+
+    this.onSetupCallbacks = function() {
+        setTimeout(function() {
+            if (!map) {
+                map = new google.maps.Map($canvas[0], {
+                    center: { lat: 37.769154, lng: -122.430367},
+                    zoom: 12,
+                    streetViewControl: false
+                });
+            }
+            self.markDirty("marker").refresh();
+        }, 1);
+    }
+
+    this.onTeardownCallbacks = function() {
+        /*map = null;
+        $canvas.html("");*/
     }
 }

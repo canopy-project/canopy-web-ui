@@ -111,7 +111,7 @@ function CuiNodeBase(name) {
             ];
             var color = colors[cui_debug_recursive_depth % colors.length];
             var align = aligns[cui_debug_recursive_depth % aligns.length];
-            console.log(new Array(cui_debug_recursive_depth*4).join(" ") + "construct " + name);
+            console.log(new Array(cui_debug_recursive_depth*4).join(" ") + "| construct " + name);
             if (this.onConstruct) {
                 $me = this.onConstruct();
                 if ($.isArray($me)) {
@@ -147,6 +147,10 @@ function CuiNodeBase(name) {
             return this.construct();
         }
         return $me;
+    }
+
+    this.isConstructed = function() {
+        return ($me !== null);
     }
 
     this.isLive = function() {
@@ -200,7 +204,7 @@ function CuiNodeBase(name) {
             var pre;
             var msg = (dirtyTracker.isDirty() ? " refresh " : " (refresh) ");
             console.log(new Array(cui_debug_recursive_depth*4).join(" ")
-                    + debugLiveStatusString(liveStatus) + msg + " " + name);
+                    + "| " + debugLiveStatusString(liveStatus) + msg + " " + name);
         }
 
         // Trigger the teardown callback when:
@@ -238,7 +242,7 @@ function CuiNodeBase(name) {
     this.setupCallbacks = function() {
         if (debug) {
             cui_debug_recursive_depth++;
-            var msg = (this.onSetupCallbacks ? "setup callbacks " : "(setup callbacks) ");
+            var msg = (this.onSetupCallbacks ? "| setup callbacks " : "(setup callbacks) ");
             console.log(new Array(cui_debug_recursive_depth*4).join(" ") + msg + name);
         }
         if (this.onSetupCallbacks) {
@@ -252,7 +256,7 @@ function CuiNodeBase(name) {
     this.teardownCallbacks = function() {
         if (debug) {
             cui_debug_recursive_depth++;
-            var msg = (this.onTeardownCallbacks ? "teardown callbacks " : "(teardown callbacks) ");
+            var msg = (this.onTeardownCallbacks ? "| teardown callbacks " : "(teardown callbacks) ");
             console.log(new Array(cui_debug_recursive_depth*4).join(" ") + msg + name);
         }
         if (this.onTeardownCallbacks) {

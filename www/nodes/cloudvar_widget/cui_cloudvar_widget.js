@@ -36,7 +36,6 @@ function CuiCloudVarWidget(params) {
 
     var cloudVar = params.cloudVar;
     var overrideName = params.overrideName;
-    var cloudVarDirty = true;
 
     function timestampString(cloudVar) {
         var secsAgo = cloudVar.lastRemoteUpdateSecondsAgo();
@@ -61,55 +60,57 @@ function CuiCloudVarWidget(params) {
 
     this.setCloudVar = function(_cloudVar) {
         cloudVar = _cloudVar;
-        cloudVarDirty = true;
-        return this;
+        return this.markDirty();
     }
  
     this.setOverrideName = function(_name) {
         overrideName = _name;
-        cloudVarDirty = true;
-        return this;
+        return this.markDirty();
     }
 
     this.onConstruct = function() {
+        this.markDirty();
         return $("<div class=cui_cloudvar></div>");
     }
 
-    this.onRefresh = function($me, force) {
-        if (cloudVarDirty || force) {
-            if (cloudVar) {
-                var name = (overrideName ? overrideName : cloudVar.name());
-                var content = cuiCompose([
-                    "<div class=cui_cloudvar_top>",
-                        "<div class=cui_cloudvar_value>",
-                            "" + cloudVar.value(),
-                        "</div>",
-                        "<div class=cui_cloudvar_update_time>",
-                            timestampString(cloudVar),
-                        "</div>",
+    this.onRefresh = function($me, dirty, live) {
+        if (cloudVar) {
+            var name = (overrideName ? overrideName : cloudVar.name());
+            var content = cuiCompose([
+                "<div class=cui_cloudvar_top>",
+                    "<div class=cui_cloudvar_value>",
+                        "" + cloudVar.value(),
                     "</div>",
-                    "<div class=cui_cloudvar_bottom>",
-                        "<div class=cui_cloudvar_name>",
-                            name,
-                        "</div>",
+                    "<div class=cui_cloudvar_update_time>",
+                        timestampString(cloudVar),
                     "</div>",
-                ]);
-            } else {
-                content = "<b style='color:#000000'>Loading...</b>";
-            }
-            $me.html(content);
+                "</div>",
+                "<div class=cui_cloudvar_bottom>",
+                    "<div class=cui_cloudvar_name>",
+                        name,
+                    "</div>",
+                "</div>",
+            ]);
+        } else {
+            content = "<b style='color:#000000'>Loading...</b>";
         }
+        $me.html(content);
     }
 
-    this.onLive = function($me) {
-        $me.off("mouseenter").on("mouseenter", function() {
+    this.onSetupCallbacks = function($me) {
+        $me.on("mouseenter", function() {
             if (params.onHover)
                 params.onHover(cloudVar);
         });
-        $me.off("mouseleave").on("mouseleave", function() {
+        $me.on("mouseleave", function() {
             if (params.onHoverOut)
                 params.onHoverOut(cloudVar);
         });
+    }
+
+    this.onTeardownCallbacks = function($me) {
+        $me.off("mouseenter");
+        $me.off("mouseleave");
     }
 }
 

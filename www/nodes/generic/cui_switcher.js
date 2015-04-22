@@ -39,6 +39,10 @@ function CuiSwitcher(params) {
     }
 
     this.select = function(name) {
+        if (selectedName == name) {
+            // noop
+            return this;
+        }
         selected = params.children[name];
         selectedName = name;
         if (!selected) {
@@ -64,13 +68,12 @@ function CuiSwitcher(params) {
                 }
             }
             $me.html(selected.get$());
-            // Mark other children as "dead"
+            // Mark all children as "dead", including the selected one (since
+            // its DOM objects got replaced).
             for (childName in params.children) {
                 if (params.children.hasOwnProperty(childName)) {
-                    if (childName !== selectedName) {
+                    if (params.children[childName].isConstructed()) {
                         params.children[childName].dead();
-                    } else {
-                        params.children[childName].live();
                     }
                 }
             }
