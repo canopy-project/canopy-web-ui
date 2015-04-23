@@ -24,6 +24,7 @@
  *      name : node
  *  }
  *  .default : name (defaults to null)
+ *  .onSelect 
  *  .navState : CuiNavState object (optional)
  *  .navStateName : If provided, this name will be added to the query string
  *      for saving/loading the navigation state.
@@ -47,6 +48,9 @@ function CuiSwitcher(params) {
         selectedName = name;
         if (!selected) {
             console.log("Switcher Error: Child not found with name " + name);
+        }
+        if (params.onSelect) {
+            params.onSelect(selectedName);
         }
         return this.markDirty();
     }

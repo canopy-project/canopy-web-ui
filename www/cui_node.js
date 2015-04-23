@@ -113,6 +113,7 @@ function CuiNodeBase(name) {
     this.construct = function() {
         if (debug) {
             cui_debug_recursive_depth++;
+            console.log(new Array(cui_debug_recursive_depth*4).join(" ") + "| construct " + name);
         }
 
         if (this.onConstruct) {
@@ -135,7 +136,6 @@ function CuiNodeBase(name) {
             ];
             var color = colors[cui_debug_recursive_depth % colors.length];
             var align = aligns[cui_debug_recursive_depth % aligns.length];
-            console.log(new Array(cui_debug_recursive_depth*4).join(" ") + "| construct " + name);
             $me.addClass("cui_debug");
             $me.css('box-shadow', "inset 0px 0px 0px 1px " + color);
             $me.css('border-top', "4px solid " + color);
@@ -283,7 +283,7 @@ function cuiInitNode(obj) {
 
 function cuiLive(children) {
     for (var i = 0; i < children.length; i++) {
-        if (children[i].live) {
+        if (children[i] && children[i].live) {
             children[i].live();
         }
     }
@@ -291,7 +291,7 @@ function cuiLive(children) {
 
 function cuiRefresh(children, live) {
     for (var i = 0; i < children.length; i++) {
-        if (children[i].refresh) {
+        if (children[i] && children[i].refresh) {
             children[i].refresh(live);
         }
     }

@@ -27,10 +27,12 @@
 
 function CuiUserDropdown(params) {
     cuiInitNode(this);
+    this.markDirty("user");
     
     var dropdown;
+    var $dropdownOuter;
     var option;
-    var user;
+    var user = params.user;
 
     this.setUser = function(_user) {
         user = _user;
@@ -46,7 +48,7 @@ function CuiUserDropdown(params) {
                 value: "logout",
             }],
             onSelect: function() {
-                params.user.remote().logout().onDone(function(result, responseData) {
+                user.remote().logout().onDone(function(result, responseData) {
                     if (result != CANOPY_SUCCESS) {
                         alert("Problem logging out");
                         return;
@@ -56,21 +58,35 @@ function CuiUserDropdown(params) {
             }
         });
 
-        dropdown = new CuiDropdown({
-            cssClass: "cui_user_dropdown",
-            buttonContent: "ntgrdemo<div style='float: right'></div>",
-            popupContent: option,
-        });
+        $dropdownOuter = $("<span/>");
 
         return [
             "<div class='cui_user_dropdown " + params.cssClass + "'>",
-                dropdown,
+                $dropdownOuter,
             "</div>"
         ];
     }
 
     this.onRefresh = function($me, dirty, live) {
-        cuiRefresh([dropdown, option], live);
+        if (dirty("user")) {
+            // TODO: non-optimal
+            if (user) {
+                if (dropdown) {
+                    dropdown.dead();
+                }
+                
+                dropdown = new CuiDropdown({
+                    cssClass: "cui_user_dropdown",
+                    buttonContent: user.username(),
+                    popupContent: option,
+                });
+
+                $dropdownOuter.html(dropdown.get$());
+            } else {
+                $dropdownOuter.html("");
+            }
+        }
+        cuiRefresh([option, dropdown], live);
     }
 }
 
