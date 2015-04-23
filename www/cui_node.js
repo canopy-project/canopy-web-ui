@@ -61,7 +61,7 @@ function CuiNodeBase(name) {
                 dirty = {};
             } else {
                 for (var i = 0; i < arguments.length; i++) {
-                    dirty[arguments[i]] = undefined;
+                    dirty[arguments[i]] = false;
                 }
             }
         }

@@ -24,6 +24,11 @@
     font-weight: 400;
     width: 125px;
 }
+
+.cui_default.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_off:hover {
+    color: #a0e0ff;
+}
+
 .cui_default.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_on {
     font-weight: 800;
     background: #585858;
@@ -51,6 +56,11 @@
     font-weight: 400;
     width: 125px;
 }
+
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_off:hover {
+    color: #3060b0;
+}
+
 .cui_topbar_submenu.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_on {
     font-weight: 800;
     background: #c0c0c0;

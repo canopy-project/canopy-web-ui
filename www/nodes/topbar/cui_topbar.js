@@ -57,12 +57,13 @@
  */
 function CuiTopbar(params) {
     cuiInitNode(this);
+    this.markDirty("breadcrumb", "user");
 
     var appDropdown;
     var optionNode;
     var userDropdown;
 
-    var user;
+    var user = params.user;
     var breadcrumb;
     var $breadcrumb;
 
@@ -88,7 +89,7 @@ function CuiTopbar(params) {
 
         userDropdown = new CuiUserDropdown({
             cssClass: "cui_default cui_topbar",
-            user: params.user
+            user: user
         });
         var $rightSection = cuiCompose([
             "<div class='cui_topbar cui_right_section'>",
@@ -141,7 +142,7 @@ function CuiTopbar(params) {
                 $rightSection, 
             "</div>"
         ]);
-        if (!params.user) {
+        if (!user) {
             userDropdown.get$().hide();
         }
         return out;
