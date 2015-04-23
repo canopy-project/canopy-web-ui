@@ -20,24 +20,34 @@
  * PARAMS:
  *  {
  *      appName : string (shows up on left side)
- *      cssClass : css class
+ *      cssClass : defaults to ""
  *      items : [{
  *          content:
  *          value:
  *      }, ...],
  *      navState: used for query-string navigation
  *      navStateName: used for query-string navigation
- *
+ *      onSelect: function(value)
+ *      showAppDropdown: boolean
  *      user : CanopyUser object, or null
  *  }
  *
  *  CSS:
+ *      params.cssClass:
+ *          ""                               - no style
+ *          "cui_default"                    - default Canopy topbar style
+ *          "cui_default cui_topbar_submenu" - default Canopy submenu style
+ *          "MYCLASS"                        - Your custom style
+ *          "cui_default MYCLASS"            - Your custom style, based on dflt
  *
- *     cssClass .cui_outer
- *     cssClass .cui_left_section
- *     cssClass .cui_middle_section
- *     cssClass .cui_right_section
- *     cssClass .cui_right_section
+ *      Customize by writing CSS for:
+ *          .MYCLASS.cui_topbar
+ *          .MYCLASS.cui_topbar .cui_topbar.cui_app_dropdown
+ *          .MYCLASS.cui_topbar .cui_topbar.cui_option
+ *          .MYCLASS.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle
+ *          .MYCLASS.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_on
+ *          .MYCLASS.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_off
+ *          .MYCLASS.cui_topbar .cui_topbar.cui_right_section
  *
  *  METHODS:
  *
@@ -63,13 +73,15 @@ function CuiTopbar(params) {
         appDropdown = new CuiAppDropdown({
             cssClass: "cui_default cui_topbar",
             items: [],
+            title: params.appName
         });
 
         userDropdown = new CuiUserDropdown({
+            cssClass: "cui_default cui_topbar",
             user: params.user
         });
         var $rightSection = cuiCompose([
-            "<div class=cui_right_section>",
+            "<div class='cui_topbar cui_right_section'>",
                 userDropdown,
             "</div>"
         ]);
@@ -113,12 +125,14 @@ function CuiTopbar(params) {
 
         var out = cuiCompose([
             "<div class='cui_topbar " + params.cssClass + "'>",
-                appDropdown, 
+                (params.showAppDropdown ? appDropdown : "<div style='font-weight: 400; padding: 8px; display:inline-block; width:264px'>" + params.appName + "</div>"), 
                 optionNode,
                 $rightSection, 
             "</div>"
         ]);
-        userDropdown.get$().hide();
+        if (!params.user) {
+            userDropdown.get$().hide();
+        }
         return out;
     }
 

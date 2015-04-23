@@ -18,6 +18,7 @@
  * App dropdown part of top bar.
  *
  *  PARAMS:
+ *      params.title
  *      params.items
  *      params.cssClass - defaults to ""
  *
@@ -35,14 +36,19 @@ function CuiAppDropdown(params) {
                 content: "Device Manager",
                 value: "device_manager",
             }, {
-                content: "CanopyCS",
+                content: "SUPPORT <span style='font-size:13px'>by Canopy</span>",
                 value: "canopy_cs",
-            }]
+            }],
+            onSelect: function(idx, value) {
+                if (value == "device_manager") {
+                    window.location = "../../";
+                }
+            }
         });
 
         dropdown = new CuiDropdown({
             cssClass: "cui_app_dropdown",
-            buttonContent: "Device Manager <div style='float: right'>&#x25bc;</div>",
+            buttonContent: params.title,
             popupContent: option,
         });
 
@@ -54,7 +60,7 @@ function CuiAppDropdown(params) {
     }
 
     this.onRefresh = function($me, dirty, live) {
-        cuiRefresh([dropdown], live);
+        cuiRefresh([dropdown, option], live);
     }
 }
 

@@ -24,7 +24,57 @@
  *
  *      .setUser
  */
+
 function CuiUserDropdown(params) {
+    cuiInitNode(this);
+    
+    var dropdown;
+    var option;
+
+    this.setUser = function(_user) {
+        user = _user;
+        this.markDirty("user");
+        return this;
+    }
+
+    this.onConstruct = function() {
+        option = new CuiOption({
+            cssClass: "cui_user_dropdown",
+            items: [{
+                content: "Logout",
+                value: "logout",
+            }],
+            onSelect: function() {
+                user.remote().logout().onDone(function(result, responseData) {
+                    if (result != CANOPY_SUCCESS) {
+                        alert("Problem logging out");
+                        return;
+                    }
+                    window.location.replace("../../login.html");
+                });
+            }
+        });
+
+        dropdown = new CuiDropdown({
+            cssClass: "cui_user_dropdown",
+            buttonContent: "ntgrdemo<div style='float: right'></div>",
+            popupContent: option,
+        });
+
+        return [
+            "<div class='cui_user_dropdown " + params.cssClass + "'>",
+                dropdown,
+            "</div>"
+        ];
+    }
+
+    this.onRefresh = function($me, dirty, live) {
+        cuiRefresh([dropdown, option], live);
+    }
+}
+
+
+/*function CuiUserDropdown(params) {
     cuiInitNode(this);
 
     var self=this;
@@ -116,5 +166,5 @@ function CuiUserDropdown(params) {
     this.onTeardownCallbacks = function($me) {
         $dialog.off('click');
     }
-}
+}*/
 

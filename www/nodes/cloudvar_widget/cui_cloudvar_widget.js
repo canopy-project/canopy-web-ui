@@ -79,7 +79,7 @@ function CuiCloudVarWidget(params) {
             var content = cuiCompose([
                 "<div class=cui_cloudvar_top>",
                     "<div class=cui_cloudvar_value>",
-                        "" + cloudVar.value(),
+                        "11", //+ cloudVar.value(),
                     "</div>",
                     "<div class=cui_cloudvar_update_time>",
                         timestampString(cloudVar),

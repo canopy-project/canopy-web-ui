@@ -5,6 +5,7 @@
     <script>
         var CUI_INCLUDE_PATH = "../"
     </script>
+    <script src="/canopy-js-client/canopy.js"></script>
     <script src="../cui_include.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link href="museum.css" rel="stylesheet" type="text/css">
@@ -86,6 +87,32 @@
             $(function() {
                 $("#cui_app_dropdown").html(appDropdown.get$());
                 appDropdown.live();
+            });
+        </script>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiUserDropdown - nodes/topbar/cui_user_dropdown.js</div>
+        <div class='desc'>User dropdown for topbar. params.cssStyle="cui_default"</div>
+        <div id=cui_user_dropdown style='width:400px'>
+        </div>
+        <script>
+            $(function() {
+                Canopy.initUserClient({
+                    host: "dev02.canopy.link",
+                }).onDone(function(result, resp) {
+                    if (result != CANOPY_SUCCESS) {
+                        $("#cui_user_dropdown").html("Error: " + result);
+                        return; 
+                    }
+                    console.log(resp);
+                    var userDropdown = new CuiUserDropdown({
+                        cssClass: "cui_default",
+                        user: resp.user
+                    });
+                    $("#cui_user_dropdown").html(userDropdown.get$());
+                    userDropdown.live();
+                });
             });
         </script>
     </div>

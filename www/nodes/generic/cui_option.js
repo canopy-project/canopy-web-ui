@@ -106,7 +106,12 @@ function CuiOption(origParams) {
                 }));
             }(i);
         }
-        var $inner = cuiCompose(toggles);
+        var $inner;
+        if (toggles.length != 1) {
+            $inner = cuiCompose(toggles);
+        } else {
+            $inner = toggles[0].get$(); // TODO: Fix this bug with cuiCompose!
+        }
         return $("<div class='cui_option " + params.cssClass + "'></div>").html($inner);
     }
 

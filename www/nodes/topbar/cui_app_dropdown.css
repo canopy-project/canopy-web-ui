@@ -21,11 +21,11 @@
     padding: 8px;
     font-weight: 400;
     font-size: 18px;
-    background: rgba(210, 210, 210, 0.9);
+    background: rgba(210, 210, 210, 0.95);
 }
 
 .cui_default.cui_app_dropdown .cui_app_dropdown.cui_option .cui_option.cui_toggle:hover {
-    background: rgba(230, 230, 230, 0.9);
+    background: rgba(230, 230, 230, 0.95);
 }
 
 /*.cui_app_dropdown .cui_dropdown {

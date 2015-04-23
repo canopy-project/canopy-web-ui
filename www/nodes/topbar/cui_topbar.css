@@ -3,7 +3,7 @@
 }
 
 .cui_default.cui_topbar .cui_topbar.cui_app_dropdown{
-    width: 240px;
+    width: 280px;
     display: inline-block;
 }
 
@@ -25,8 +25,16 @@
     background: #585858;
 }
 
+.cui_default.cui_topbar .cui_topbar.cui_right_section {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    background: #ff0000;
+}
+
 .cui_topbar_submenu.cui_topbar {
     background: #f0f0f0;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 .cui_topbar_submenu.cui_topbar .cui_topbar.cui_app_dropdown .cui_dropdown.cui_toggle{
