@@ -34,6 +34,29 @@
     <div style='position:absolute; top:100%'>
 
     <div class='section'>
+        <div class='title'>CuiHSplit3Layout - nodes/layout/cui_hsplit3_layout.js</div>
+        <div class='desc'>Divides containter into 3 panes</div>
+        <div class='quad_container' id=cui_hsplit3>
+        </div>
+        <script>
+            var hsplit3 = new CuiHSplit3Layout({
+                cssClass: "cui_thinline",
+                left: "left",
+                middle: "middle",
+                right: "right",
+                leftSize: "15%",
+                rightSize: "100px",
+            });
+
+            $(function() {
+                $("#cui_hsplit3").html(hsplit3.get$());
+                hsplit3.live();
+            });
+        </script>
+    </div>
+
+
+    <div class='section'>
         <div class='title'>CuiQuadLayout - nodes/layout/cui_quad_layout.js</div>
         <div class='desc'>Divides containter into 4 quadrants</div>
         <div class='quad_container' id=cui_quad>

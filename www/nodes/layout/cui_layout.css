@@ -62,6 +62,49 @@
     height: 100%;
 }
 
+.cui_hsplit3_layout {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.cui_hsplit3_layout.cui_left {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 33%;
+}
+
+.cui_hsplit3_layout.cui_middle {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 33%;
+    right: 33%;
+}
+
+.cui_hsplit3_layout.cui_right {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 33%;
+}
+
+.cui_hsplit3_layout.cui_cell {
+}
+
+.cui_thinline.cui_hsplit3_layout {
+    border-left: 1px solid #c0c0c0;
+    border-top: 1px solid #c0c0c0;
+}
+
+.cui_thinline.cui_hsplit3_layout .cui_hsplit3_layout.cui_cell {
+    border-bottom: 1px solid #c0c0c0;
+    border-right: 1px solid #c0c0c0;
+}
+
 .cui_u_layout {
     position: relative;
     height: 100%;

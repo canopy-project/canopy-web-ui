@@ -61,6 +61,9 @@ function CuiCanvas(params) {
                 self.refresh();
             }
         });
+        setTimeout(function() {
+            self.refresh();
+        }, 1);
     }
 
     this.onTeardownCallbacks = function($me) {

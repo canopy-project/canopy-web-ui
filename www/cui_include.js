@@ -41,11 +41,10 @@ includeJsFile("/nodes/generic/cui_switcher.js");
 includeJsFile("/nodes/generic/cui_toggle.js");
 includeJsFile("/nodes/generic/cui_wrapper.js");
 
-includeJsFile("/nodes/layout/cui_quad_layout.js");
 includeJsFile("/nodes/layout/cui_canvas.js");
+includeJsFile("/nodes/layout/cui_quad_layout.js");
 includeJsFile("/nodes/layout/cui_u_layout.js");
-includeJsFile("/nodes/test/cui_hello.js");
-includeJsFile("/nodes/test/cui_hello_list.js");
+includeJsFile("/nodes/layout/cui_hsplit3_layout.js");
 
 includeJsFile ("/nodes/cloudvar_widget/cui_cloudvar_widget.js");
 includeCssFile ("/nodes/cloudvar_widget/cui_cloudvar_widget.css");
