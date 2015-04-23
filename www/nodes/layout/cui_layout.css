@@ -25,6 +25,12 @@
     width: 100%;
 }
 
+/*.cui_canvas.cui_inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}*/
+
 .cui_quad_layout {
     position: relative;
     height: 100%;

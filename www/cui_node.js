@@ -48,6 +48,17 @@ var CUI_LIVE_STATUS_TRANSITION_TO_LIVE = 1;
 var CUI_LIVE_STATUS_LIVE = 2;
 var CUI_LIVE_STATUS_TRANSITION_TO_DEAD = 3;
 
+
+{
+    var debug = cuiNavState.get("cui_debug") == "1";
+    if (debug) {
+        var style = document.createElement("style");
+        document.head.appendChild(style);
+        style.sheet.insertRule(".cui_cell { border: 1px dashed #ff0000; }", 0);
+        style.sheet.insertRule(".cui_layout_cell { border: 1px dashed #ff0000; }", 1);
+    }
+}
+
 function CuiNodeBase(name) {
     var debug = cuiNavState.get("cui_debug") == "1";
     var $me = null;

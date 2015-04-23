@@ -40,7 +40,11 @@ function CuiCanvas(params) {
         params.refreshOnWindowResize : true;
 
     this.onConstruct = function() {
-        return ["<div class='cui_canvas'>", params.contents, "</div>"];
+        return [
+            "<div class='cui_canvas'>", 
+                params.contents, 
+            "</div>"
+        ];
     }
 
     this.onRefresh = function($me, dirty, live) {
