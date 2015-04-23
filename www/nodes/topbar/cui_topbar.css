@@ -1,3 +1,7 @@
+.cui_topbar .cui_topbar.cui_breadcrumb {
+    display: inline-block;
+}
+
 .cui_default.cui_topbar {
     background: #404040;
 }

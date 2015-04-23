@@ -51,6 +51,7 @@
  *
  *  METHODS:
  *
+ *      .setBreadcrumb
  *      .setUser
  *      .select(idxOrValue)
  */
@@ -62,6 +63,14 @@ function CuiTopbar(params) {
     var userDropdown;
 
     var user;
+    var breadcrumb;
+    var $breadcrumb;
+
+    this.setBreadcrumb = function(_breadcrumb) {
+        breadcrumb = _breadcrumb;
+        this.markDirty("breadcrumb");
+        return this;
+    }
 
     this.setUser = function(_user) {
         user = _user;
@@ -70,6 +79,7 @@ function CuiTopbar(params) {
     }
 
     this.onConstruct = function() {
+        $breadcrumb = $("<div class='cui_topbar cui_breadcrumb'>Breadcrumb</div>").hide();
         appDropdown = new CuiAppDropdown({
             cssClass: "cui_default cui_topbar",
             items: [],
@@ -126,6 +136,7 @@ function CuiTopbar(params) {
         var out = cuiCompose([
             "<div class='cui_topbar " + params.cssClass + "'>",
                 (params.showAppDropdown ? appDropdown : "<div style='font-weight: 400; padding: 8px; display:inline-block; width:264px'>" + params.appName + "</div>"), 
+                $breadcrumb,
                 optionNode,
                 $rightSection, 
             "</div>"
@@ -145,7 +156,22 @@ function CuiTopbar(params) {
                 userDropdown.get$().hide();
                 userDropdown.setUser(null);
             }
+            this.clearDirty("user");
         }
+
+        if (live && dirty("breadcrumb")) {
+            if (breadcrumb) {
+                $breadcrumb.html(breadcrumb.join(" &rarr; "));
+                $breadcrumb.show();
+                optionNode.get$().css("visibility", "hidden");
+            } else {
+                $breadcrumb.hide();
+                optionNode.get$().css("visibility", "visible");
+            }
+            this.clearDirty("breadcrumb");
+        }
+
         cuiRefresh([optionNode, appDropdown, userDropdown], live);
+        return false;
     }
 }

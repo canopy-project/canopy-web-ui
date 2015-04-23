@@ -30,6 +30,7 @@ function CuiUserDropdown(params) {
     
     var dropdown;
     var option;
+    var user;
 
     this.setUser = function(_user) {
         user = _user;
@@ -45,12 +46,12 @@ function CuiUserDropdown(params) {
                 value: "logout",
             }],
             onSelect: function() {
-                user.remote().logout().onDone(function(result, responseData) {
+                params.user.remote().logout().onDone(function(result, responseData) {
                     if (result != CANOPY_SUCCESS) {
                         alert("Problem logging out");
                         return;
                     }
-                    window.location.replace("../../login.html");
+                    window.location.replace("/mgr/login.html");
                 });
             }
         });
