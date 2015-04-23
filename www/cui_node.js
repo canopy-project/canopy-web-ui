@@ -95,9 +95,22 @@ function CuiNodeBase(name) {
         return this;
     }
 
+    this.nodeName = function() {
+        return name;
+    }
+
     this.construct = function() {
         if (debug) {
             cui_debug_recursive_depth++;
+        }
+
+        if (this.onConstruct) {
+            $me = cuiCompose(this.onConstruct());
+        } else {
+            $me = $("<div>");
+        }
+
+        if (debug) {
             var colors = [
                 "#ff0080",
                 "#00c080",
@@ -112,29 +125,13 @@ function CuiNodeBase(name) {
             var color = colors[cui_debug_recursive_depth % colors.length];
             var align = aligns[cui_debug_recursive_depth % aligns.length];
             console.log(new Array(cui_debug_recursive_depth*4).join(" ") + "| construct " + name);
-            if (this.onConstruct) {
-                $me = this.onConstruct();
-                if ($.isArray($me)) {
-                    $me = cuiCompose($me);
-                }
-            } else {
-                $me = $("<div>");
-            }
             $me.addClass("cui_debug");
             $me.css('box-shadow', "inset 0px 0px 0px 1px " + color);
             $me.css('border-top', "4px solid " + color);
             $me.prepend("<div style='position: relative; top:-0px;'><div style='position:absolute; " + align + "; padding-right:3px; display:inline-block; z-index: 10000; background: " + color + "; color: #ffffff; font-size:9px; font-weight:700; font-family: sans-serif;'>" + name + "</div></div>");
             cui_debug_recursive_depth--;
-            return $me;
         }
-        if (this.onConstruct) {
-            $me = this.onConstruct();
-            if ($.isArray($me)) {
-                $me = cuiCompose($me);
-            }
-        } else {
-            $me = $("<div>");
-        }
+
         return $me;
     }
 
@@ -290,50 +287,90 @@ function cuiRefresh(children, live) {
 }
 
 
-function cuiCompose(segments) {
-    var out = [];
-    var $out;
+/*
+ * Composes arguments into a jqDOM object.
+ */
+function cuiCompose() {
+
+    if (arguments.length == 1) {
+        // If only argument is a list, recursively call cuiCompose using the
+        // list's items as arguments.
+        if ($.isArray(arguments[0])) {
+            return cuiCompose.apply(null, arguments[0]);
+        }
+
+        // If only argument is a jqDOM object, return it.
+        if (arguments[0] instanceof jQuery) {
+            return arguments[0];
+        }
+
+        // If only argument is CuiNode, call .get$() on it.
+        if (arguments[0].get$) {
+            return arguments[0].get$();
+        }
+    }
+
+    // Special handling for more than one argument.
+    // Construct a complete HTML fragment string by concatenating the
+    // arguments, using placeholders for CuiNodes and jqDOM objects, and then
+    // potentially wrapping the result.
+    var htmlList = [];
     var placeholderCnt = 0;
     var placeholders = [];
-    for (var i = 0; i < segments.length; i++) {
-        if (typeof segments[i] === "string") {
-            /* regular string, just append to output */
-            out.push(segments[i]);
+    for (var i = 0; i < arguments.length; i++) {
+        var segment = arguments[i];
+        if (!segment) {
+            continue;
         }
-        else if (typeof segments[i] === "object") {
-            if (segments[i].construct) {
-                /* CuiNode object probably.  Create placeholder */
-                var placeholderId = "_tmpid_" + placeholderCnt;
-                out.push("<div id=" + placeholderId + "/>");
-                placeholders.push({
-                    id: placeholderId,
-                    $segment: segments[i].get$()
-                });
-                placeholderCnt++;
-            }
-            else if (segments[i] instanceof jQuery) {
-                /* jquery object.  Create placeholder */
-                var placeholderId = "_tmpid_" + placeholderCnt;
-                out.push("<div id=" + placeholderId + "/>");
-                placeholders.push({
-                    id: placeholderId,
-                    $segment: segments[i]
-                });
-                placeholderCnt++;
-            }
+
+        // If segment is a list, recursively call cuiCompose using the
+        // list's items as arguments.
+        if ($.isArray(segment)) {
+            segment = cuiCompose.apply(null, segment);
+        }
+
+        if (typeof segment === "string") {
+            // Segment is a string: just append it to output.
+            htmlList.push(segment);
+
+        } else if (segment.get$) {
+            // Segment is a CuiNode or CanoNode object: create placeholder.
+            var placeholderId = "_tmpid_" + placeholderCnt;
+            htmlList.push("<div id=" + placeholderId + "/>");
+            placeholders.push({
+                id: placeholderId,
+                $segment: segment.get$()
+            });
+            placeholderCnt++;
+
+        } else if (segment instanceof jQuery) {
+            // Segment is a jQuery object: create placeholder.
+            var placeholderId = "_tmpid_" + placeholderCnt;
+            htmlList.push("<div id=" + placeholderId + "/>");
+            placeholders.push({
+                id: placeholderId,
+                $segment: segment
+            });
+            placeholderCnt++;
         }
     }
 
-    //outString = "<span>" + out.join("") + "</span>";
-    //outString = "<div>" + out.join("") + "</div>";
-    outString =  out.join("");
-    $out = $(outString);
-    if ($out.length != 1) {
-        $out = $("<span>" + outString + "</span>");
+    // Join the string together and convert to a jqDOM object.
+    var $out;
+    var htmlString = htmlList.join("");
+    $jqResult = $(htmlString);
+
+    // If the result is not exactly 1 jqDOM object, give it a wrapper.
+    if ($jqResult.length == 1) {
+        $out = $jqResult;
+    } else {
+        $out = $("<div class='cui_compose_wrapper'>" + htmlString + "</div>");
+        //$out = $("<div class='cui_compose_wrapper'>" + htmlString + "</div>");
+        //$out = $("<dummy>" + outString + "</dummy>");
     }
 
-    /* replace placeholders with actual content */
-    for (i = 0; i < placeholderCnt; i++) {
+    // Replace placeholders with actual content
+    for (var i = 0; i < placeholderCnt; i++) {
         var id = placeholders[i].id;
         var $segment = placeholders[i].$segment;
         $out.find("#" + id).replaceWith($segment);

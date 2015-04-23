@@ -24,7 +24,8 @@ function CuiWrapper(content) {
     cuiInitNode(this);
 
     this.onConstruct = function() {
-        return cuiCompose(content);
+        console.log(content);
+        return content;
     }
 }
 
