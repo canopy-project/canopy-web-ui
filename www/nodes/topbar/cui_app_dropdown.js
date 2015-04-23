@@ -19,6 +19,7 @@
  *
  *  PARAMS:
  *      params.items
+ *      params.cssClass - defaults to ""
  *
  */
 function CuiAppDropdown(params) {
@@ -29,7 +30,7 @@ function CuiAppDropdown(params) {
 
     this.onConstruct = function() {
         option = new CuiOption({
-            outerClass: "cui_option",
+            cssClass: "cui_app_dropdown",
             items: [{
                 content: "Device Manager",
                 value: "device_manager",
@@ -40,13 +41,13 @@ function CuiAppDropdown(params) {
         });
 
         dropdown = new CuiDropdown({
+            cssClass: "cui_app_dropdown",
             buttonContent: "Device Manager &#x25bc;",
             popupContent: option,
-            uniformWidth: true
         });
 
         return [
-            "<div class='cui_app_dropdown'>",
+            "<div class='cui_app_dropdown " + params.cssClass + "'>",
                 dropdown,
             "</div>"
         ];

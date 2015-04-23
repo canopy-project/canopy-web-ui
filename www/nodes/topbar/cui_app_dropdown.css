@@ -1,4 +1,34 @@
-.cui_app_dropdown .cui_dropdown {
+.cui_default.cui_app_dropdown .cui_dropdown.cui_toggle {
+    padding: 8px;
+    background: #3060b0;
+    color: #ffffff;
+    font-weight: 400;
+}
+.cui_default.cui_app_dropdown .cui_dropdown.cui_toggle.cui_on {
+    font-weight: 800;
+    background: #3870d0;
+}
+
+.cui_default.cui_app_dropdown .cui_dropdown.cui_popup {
+    width: 100%;
+}
+.cui_default.cui_app_dropdown .cui_dropdown.cui_popup .cui_inner {
+    width: 100%;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cui_default.cui_app_dropdown .cui_app_dropdown.cui_option .cui_option.cui_toggle {
+    padding: 8px;
+    font-weight: 400;
+    font-size: 18px;
+    background: rgba(210, 210, 210, 0.8);
+}
+
+.cui_default.cui_app_dropdown .cui_app_dropdown.cui_option .cui_option.cui_toggle:hover {
+    background: rgba(230, 230, 230, 0.8);
+}
+
+/*.cui_app_dropdown .cui_dropdown {
 }
 
 .cui_app_dropdown .cui_dropdown .cui_popup {
@@ -37,4 +67,4 @@
 .cui_app_dropdown .cui_dropdown .cui_option .cui_button .cui_off {
     background: inherit;
     color: #808080;
-}
+}*/

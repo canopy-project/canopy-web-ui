@@ -25,13 +25,19 @@
  *          the size of the button.  Default: false
  *
  * CSS:
- *      Customize with:
- *          .myclass .cui_dropdown
- *          .myclass .cui_dropdown .cui_popup
- *          .myclass .cui_dropdown .cui_popup .cui_inner
- *          .myclass .cui_dropdown .cui_button
- *          .myclass .cui_dropdown .cui_off
- *          .myclass .cui_dropdown .cui_on
+ *      params.cssClass:
+ *          ""                      - no style
+ *          "cui_default"           - default canopy popup
+ *          "MYCLASS"               - Your custom style
+ *          "cui_default MYCLASS"   - Your custom style, based on the default
+ *
+ *      Customize by writing CSS for:
+ *          .MYCLASS.cui_dropdown
+ *          .MYCLASS.cui_dropdown .cui_dropdown.cui_popup
+ *          .MYCLASS.cui_dropdown .cui_dropdown.cui_popup .cui_inner
+ *          .MYCLASS.cui_dropdown .cui_dropdown..cui_toggle
+ *          .MYCLASS.cui_dropdown .cui_dropdown..cui_toggle.cui_off
+ *          .MYCLASS.cui_dropdown .cui_dropdown..cui_toggle.cui_on
  */
 function CuiDropdown(params) {
     cuiInitNode(this);
@@ -42,6 +48,7 @@ function CuiDropdown(params) {
 
     this.onConstruct = function() {
         toggle = new CuiToggle({
+            cssClass: "cui_dropdown",
             onChange: function(value) {
                 if (params.uniformWidth && self.isLive()) {
                     popup.get$().css('width', toggle.get$().width() + "px");
@@ -51,15 +58,14 @@ function CuiDropdown(params) {
             content: params.buttonContent,
         });
         popup = new CuiPopup({
+            cssClass: "cui_dropdown",
             content: params.popupContent,
         });
         return [
-            "<div class='" + params.cssClass + "'>",
-                "<div class='cui_dropdown'>",
-                    toggle,
-                    popup,
-                "</div>",
-            "</div>"
+            "<div class='cui_dropdown " + params.cssClass + "'>",
+                toggle,
+                popup,
+            "</div>",
         ];
     }
 

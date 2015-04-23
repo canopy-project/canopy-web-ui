@@ -30,7 +30,6 @@
  * CSS:
  *
  *      params.cssClass:
- *
  *          ""                      - no style
  *          "cui_default"           - default canopy popup
  *          "MYCLASS"               - Your custom style

@@ -17,24 +17,33 @@
 /*
  * Option is a sequence of DIVs, only one of which can be selected at a time.
  *
- * params:
- *      .outerClass
- *      .itemSelectedClass
- *      .itemNotSelectedClass
+ *  PARAMS:
+ *      .cssClass -- defaults to ""
  *      .onSelect
  *      .onClick -- return false to not select
  *      .items
  *          .content
  *          .value
  *      .selectedIdx
+ *
+ *  CSS:
+ *      params.cssClass:
+ *          ""                    - no style
+ *          "cui_default"         - default Canopy option style
+ *          "MYCLASS"             - Your custom style
+ *          "cui_default MYCLASS" - Your custom style, based on the default
+ *
+ *      Customize by writing CSS for:
+ *          .MYCLASS.cui_option
+ *          .MYCLASS.cui_option .cui_option.cui_toggle
+ *          .MYCLASS.cui_option .cui_option.cui_toggle.cui_on
+ *          .MYCLASS.cui_option .cui_option.cui_toggle.cui_off
  */
 function CuiOption(origParams) {
     cuiInitNode(this);
 
     var params = $.extend({}, {
-        outerClass: "",
-        itemSelectedClass: "",
-        itemNotSelectedClass: "",
+        cssClass: "",
         onSelect: null,
         onClick: null,
         selectedIdx: -1,
@@ -85,8 +94,7 @@ function CuiOption(origParams) {
             $items.push(params.items[i]);
             foo = function(idx) {
                 toggles.push(new CuiToggle({
-                    onClass: params.itemSelectedClass,
-                    offClass: params.itemNotSelectedClass,
+                    cssClass: "cui_option",
                     content: params.items[idx].content,
                     onClick: function() {
                         var value = params.items[idx].value;
@@ -99,7 +107,7 @@ function CuiOption(origParams) {
             }(i);
         }
         var $inner = cuiCompose(toggles);
-        return $("<div class='" + params.outerClass + "'></div>").html($inner);
+        return $("<div class='cui_option " + params.cssClass + "'></div>").html($inner);
     }
 
     this.onRefresh = function($me, dirty, live) {

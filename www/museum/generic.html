@@ -153,18 +153,27 @@
 
     <div class='section'>
         <div class='title'>CuiDropdown - nodes/generic/cui_dropdown.js</div>
-        <div class='desc'>Button that pops up a dialog.</div>
+        <div class='desc'>Button that pops up a dialog.  params.cssStyle=""</div>
         <div id=cui_dropdown></div>
+        <br><br><div class='desc'>params.cssStyle="cui_default"</div>
+        <div id=cui_dropdown2 style='width:400px'></div>
         <script>
             var dropdown = new CuiDropdown({
-                buttonContent : "Dropdown Dropdown",
+                buttonContent : "Unstyled Dropdown",
                 popupContent : "Option 1<br>Option 2",
-                uniformWidth: true,
+            });
+            var dropdown2 = new CuiDropdown({
+                cssClass: "cui_default",
+                buttonContent : "Canopy Default Dropdown",
+                popupContent : "<div style='padding:8px'>Option 1<br>Option 2</div>",
+                uniformWidth: false,
             });
 
             $(function() {
                 $("#cui_dropdown").html(dropdown.get$());
                 dropdown.live();
+                $("#cui_dropdown2").html(dropdown2.get$());
+                dropdown2.live();
             });
         </script>
         </div>

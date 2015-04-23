@@ -55,20 +55,20 @@ body {
     border: 1px solid #ffffff;
 }
 
-.museum .cui_option {
+.museum_option.cui_option {
     display: inline-block;
     border: 1px solid #d8d8d8;
     cursor: pointer;
 }
 
-.museum .cui_option_selected {
+.museum_option.cui_option_selected {
     padding: 16px;
     display: inline-block;
     color: #303030;
     font-weight: 800;
     background: #ffffff;
 }
-.museum .cui_option_not_selected {
+.museum_option.cui_option_not_selected {
     padding: 16px;
     display: inline-block;
     color: #808080;

@@ -65,13 +65,13 @@
 
     <div class='section'>
         <div class='title'>CuiAppDropdown - nodes/topbar/cui_app_dropdown.js</div>
-        <div class='desc'>Application dropdown for topbar</div>
-        <div id=cui_app_dropdown>
+        <div class='desc'>Application dropdown for topbar. params.cssStyle="cui_default"</div>
+        <div id=cui_app_dropdown style='width:400px'>
         </div>
         <script>
             var appDropdown = new CuiAppDropdown({
                 appName: "MyApp",
-                cssClass: "",
+                cssClass: "cui_default",
                 items : [{
                     content: "Cow App",
                     value: "cow"
