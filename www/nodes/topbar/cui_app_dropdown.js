@@ -42,7 +42,7 @@ function CuiAppDropdown(params) {
 
         dropdown = new CuiDropdown({
             cssClass: "cui_app_dropdown",
-            buttonContent: "Device Manager &#x25bc;",
+            buttonContent: "Device Manager <div style='float: right'>&#x25bc;</div>",
             popupContent: option,
         });
 

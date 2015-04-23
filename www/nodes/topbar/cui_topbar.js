@@ -47,6 +47,7 @@
 function CuiTopbar(params) {
     cuiInitNode(this);
 
+    var appDropdown;
     var optionNode;
     var userDropdown;
 
@@ -59,9 +60,10 @@ function CuiTopbar(params) {
     }
 
     this.onConstruct = function() {
-        var $appDropdown = $("<div class=cui_left_section>\
-                <div class=cui_app_dropdown>" + params.appName + "</div>\
-            </div>");
+        appDropdown = new CuiAppDropdown({
+            cssClass: "cui_default cui_topbar",
+            items: [],
+        });
 
         userDropdown = new CuiUserDropdown({
             user: params.user
@@ -83,9 +85,7 @@ function CuiTopbar(params) {
             });
         }
         optionNode = new CuiOption({
-            outerClass: "cui_middle_section",
-            itemSelectedClass: "cui_menu_item_selected",
-            itemNotSelectedClass: "cui_menu_item",
+            cssClass: "cui_topbar",
             items: items,
             onSelect: function(idx, value) {
                 console.log("Told to select" + idx + " - " + value);
@@ -112,12 +112,10 @@ function CuiTopbar(params) {
         }
 
         var out = cuiCompose([
-            "<div class='cui_topbar'>",
-                "<div class='" + params.cssClass + "'>",
-                    $appDropdown, 
-                    optionNode,
-                    $rightSection, 
-                "</div>",
+            "<div class='cui_topbar " + params.cssClass + "'>",
+                appDropdown, 
+                optionNode,
+                $rightSection, 
             "</div>"
         ]);
         userDropdown.get$().hide();
@@ -134,6 +132,6 @@ function CuiTopbar(params) {
                 userDropdown.setUser(null);
             }
         }
-        cuiRefresh([optionNode, userDropdown], live);
+        cuiRefresh([optionNode, appDropdown, userDropdown], live);
     }
 }

@@ -13,13 +13,13 @@
 <body class='museum'>
     <div class='section'>
         <div class='title'>CuiTopbar - nodes/topbar/cui_topbar.js</div>
-        <div class='desc'>Top menu bar for Canopy applications</div>
+        <div class='desc'>Top menu bar for Canopy applications.  params.cssClass="cui_default"</div>
         <div id=cui_topbar>
         </div>
         <script>
             var topbar = new CuiTopbar({
                 appName: "MyApp",
-                cssClass: "",
+                cssClass: "cui_default",
                 items : [{
                     content: "Cow",
                     value: "cow"
@@ -37,14 +37,14 @@
             });
         </script>
 
-        <div class='desc'>It can easily be styled to look like a submenu</div>
+        <div class='desc'>It can easily be styled to look like a submenu.  params.cssClass="cui_default cui_topbar_submenu"</div>
         <div id=cui_topbar2>
         </div>
 
         <script>
             var topbar2 = new CuiTopbar({
                 appName: "My Sub Menu",
-                cssClass: "cui_topbar_submenu",
+                cssClass: "cui_default cui_topbar_submenu",
                 items : [{
                     content: "Cow",
                     value: "cow"

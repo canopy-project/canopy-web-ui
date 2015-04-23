@@ -1,4 +1,51 @@
-.cui_topbar {
+.cui_default.cui_topbar {
+    background: #404040;
+}
+
+.cui_default.cui_topbar .cui_topbar.cui_app_dropdown{
+    width: 240px;
+    display: inline-block;
+}
+
+.cui_default.cui_topbar .cui_topbar.cui_option {
+    display: inline-block;
+}
+
+.cui_default.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle {
+    display: inline-block;
+    padding: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    color: #ffffff;
+    font-weight: 400;
+    width: 125px;
+}
+.cui_default.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_on {
+    font-weight: 800;
+    background: #585858;
+}
+
+.cui_topbar_submenu.cui_topbar {
+    background: #f0f0f0;
+}
+
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_app_dropdown .cui_dropdown.cui_toggle{
+    background: #f0f0f0;
+    color: #303030;
+}
+
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle {
+    color: #303030;
+    font-weight: 400;
+    width: 125px;
+}
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_on {
+    font-weight: 800;
+    background: #c0c0c0;
+    color: #404040;
+}
+
+/*.cui_topbar {
     background: #404040;
 }
 
@@ -77,7 +124,7 @@
     font-size: 18px;
     padding: 8px;
     padding-right: 64px;
-}
+}*/
 
 
 
