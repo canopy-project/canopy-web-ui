@@ -42,6 +42,7 @@
  *
  *      Customize by writing CSS for:
  *          .MYCLASS.cui_topbar
+ *          .MYCLASS.cui_topbar .cui_topbar.cui_app_name
  *          .MYCLASS.cui_topbar .cui_topbar.cui_app_dropdown
  *          .MYCLASS.cui_topbar .cui_topbar.cui_option
  *          .MYCLASS.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle
@@ -136,7 +137,8 @@ function CuiTopbar(params) {
 
         var out = cuiCompose([
             "<div class='cui_topbar " + params.cssClass + "'>",
-                (params.showAppDropdown ? appDropdown : "<div style='font-weight: 400; padding: 8px; display:inline-block; width:264px'>" + params.appName + "</div>"), 
+                (params.showAppDropdown ? appDropdown : 
+                    "<div class='cui_topbar cui_app_name'>" + params.appName + "</div>"), 
                 $breadcrumb,
                 optionNode,
                 $rightSection, 

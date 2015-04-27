@@ -14,6 +14,15 @@
     display: inline-block;
 }
 
+.cui_default.cui_topbar .cui_topbar.cui_app_name {
+    display: inline-block;
+    width: 248px;
+    padding: 8px;
+    background: #3060b0;
+    color: #ffffff;
+    font-weight: 400;
+}
+
 .cui_default.cui_topbar .cui_topbar.cui_option {
     display: inline-block;
 }

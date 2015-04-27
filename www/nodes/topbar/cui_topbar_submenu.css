@@ -7,8 +7,8 @@
     border-bottom: 1px solid #c0c0c0;
 }
 
-.cui_topbar .cui_topbar_submenu .cui_middle_section .cui_menu_item_selected {
-    background: #c8c8c8;
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_app_name {
+    background: #d8d8d8;
     color: #202020;
 }
 
