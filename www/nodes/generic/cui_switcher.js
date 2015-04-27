@@ -34,6 +34,7 @@ function CuiSwitcher(params) {
     var selected = null;
     var selectedName = null;
     var self=this;
+    this.markDirty();
 
     this.hasChild = function(name) {
         return params.children[name] !== undefined;
@@ -83,7 +84,9 @@ function CuiSwitcher(params) {
             }
         }
 
-        selected.refresh(live);
+        if (selected) {
+            selected.refresh(live);
+        }
     }
 
     // initialize

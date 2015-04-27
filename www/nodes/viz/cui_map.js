@@ -36,9 +36,8 @@ function CuiMap(params) {
     var map;
     var mapCreated = false;
     var $canvas;
-    var infoWindow;
-    var marker;
-    var markerData = null;
+    var markersData = [];
+    var paths = [];
     var self = this;
 
     this.jumpTo = function(lat, lng) {
@@ -46,20 +45,41 @@ function CuiMap(params) {
     }
 
     this.addMarker = function(lat, lng, title, infoContent) {
-        markerData = {
+        var markerData = {
             lat: lat, 
             lng: lng, 
             title: title, 
             infoContent: infoContent
         };
+
+        markersData.push(markerData);
+
         this.markDirty("marker");
+    }
+
+    this.clearMarkersAndPaths = function() {
+        markers = [];
+        paths = [];
+        this.markDirty("marker");
+    }
+
+    this.addPath = function(coords) {
+        var path = new google.maps.Polyline({
+            path: coords,
+            geodesic: true,
+            strokeColor: "#3060b0",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+        });
+        paths.push(path);
+
+        return this;
     }
 
     this.onConstruct = function() {
         $canvas = $("<div class=cui_map_canvas></div>");
         return $canvas;
     }
-    var cnt = 0;
 
     this.onRefresh = function($me, dirty, live) {
         if (params.showPlaceholder) {
@@ -68,38 +88,48 @@ function CuiMap(params) {
         }
 
         if (dirty("marker") && map && live) {
-            var myLatLng = new google.maps.LatLng(markerData.lat, markerData.lng);
+            for (var i = 0; i < markersData.length; i++) {
+                var markerLatLng = new google.maps.LatLng(markersData[i].lat, markersData[i].lng);
 
-            if (markerData.infoContent) {
-                infoWindow = new google.maps.InfoWindow({
-                    content: markerData.infoContent,
-                });
+                if (markersData[i].infoContent) {
+                    markersData[i].infoWindow = new google.maps.InfoWindow({
+                        content: markersData[i].infoContent,
+                    });
+                }
+
+                if (map) {
+                    var marker = new google.maps.Marker({
+                        position: markerLatLng,
+                        map: map,
+                        title: markersData[i].title,
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function(idx) {
+                        return function() {
+                            if (markersData[idx].infoWindow) {
+                                markersData[idx].infoWindow.open(map, marker);
+                            }
+                        }
+                    }(i));
+
+                    if (markersData[i].infoWindow) {
+                        markersData[i].infoWindow.open(map, marker);
+                    }
+                }
             }
 
-            if (map && !marker) {
-                cnt++;
-                marker = new google.maps.Marker({
-                    position: myLatLng,
-                    map: map,
-                    title: markerData.title,
-                });
-
-                google.maps.event.addListener(marker, 'click', function() {
-                    infoWindow.open(map, marker);
-                });
-
-                if (infoWindow) {
-                    infoWindow.open(map, marker);
-                }
+            for (var i = 0; i < paths.length; i++) {
+                paths[i].setMap(map);
             }
             this.clearDirty("marker");
         }
+
         return false; // false = manually clear dirty flags.
     }
 
     this.onSetupCallbacks = function() {
         setTimeout(function() {
-            if (!map) {
+            if (!map && !params.showPlaceholder) {
                 map = new google.maps.Map($canvas[0], {
                     center: { lat: 37.769154, lng: -122.430367},
                     zoom: 12,
