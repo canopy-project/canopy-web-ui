@@ -15,16 +15,22 @@
  */
 
 /*
- * CuiPaginationControl shows controls for paging through results.
+ * CuiPageControl shows controls for paging through results.
  *
  *  PARAMS:
  *
  *      .numItems
  *      .itemsPerPage
  *      .currentPage
+ *      .autoHide -- Hides control when there is a single page.  Default true.
  *
  *  METHODS:
  *
+ *      .startIdx()
+ *      .numPages()
+ *      .numItemsPerPage()
+ *      .setNumItems(numItems)
+ *      .settemsPerPage(itemsPerPage)
  *      .setPage(page)
  *      .setPageByItemIdx(idx)
  *      .onPageChange(function(page, itemsPerPage))
@@ -53,6 +59,29 @@ function CuiPageControl(params) {
     var page = (params.currentPage !== undefined ? params.currentPage : 0);
     var $pageLinks;
     var pageOption;
+    var numItems = params.numItems;
+    var itemsPerPage = params.itemsPerPage;
+    var autoHide = (params.autoHide ? params.autoHide : true);
+
+    this.setNumItems = function(_numItems) {
+        numItems = _numItems;
+        this.markDirty();
+        return this;
+    }
+
+    this.setItemsPerPage = function(_itemsPerPage) {
+        itemsPerPage = _itemsPerPage;
+        this.markDirty();
+        return this;
+    }
+
+    this.startIdx = function() {
+        return itemsPerPage*page;
+    }
+
+    this.numItemsPerPage = function() {
+        return itemsPerPage;
+    }
 
     this.onConstruct = function() {
         prevButton = new CuiButton({
@@ -65,7 +94,7 @@ function CuiPageControl(params) {
                 }
                 self.markDirty().refresh();
                 if (params.onPageChange) {
-                    params.onPageChange(page, params.itemsPerPage);
+                    params.onPageChange(page, itemsPerPage);
                 }
             }
         });
@@ -74,13 +103,13 @@ function CuiPageControl(params) {
             content: new CuiWrapper("<span>&#x25b6;</span>"),
             onClick: function() {
                 page++;
-                if (page > Math.floor(params.numItems / params.itemsPerPage) - 1) {
-                    page = Math.floor(params.numItems / params.itemsPerPage) - 1;
+                if (page > self.numPages() - 1) {
+                    page = self.numPages() - 1;
                 }
                 self.markDirty().refresh();
                 // TODO: last page
                 if (params.onPageChange) {
-                    params.onPageChange(page, params.itemsPerPage);
+                    params.onPageChange(page, itemsPerPage);
                 }
             }
         });
@@ -96,12 +125,21 @@ function CuiPageControl(params) {
         ];
     }
 
+    this.numPages = function() {
+        return Math.floor((numItems + itemsPerPage -1) / itemsPerPage );
+    }
+
     this.onRefresh = function($me, dirty, live) {
         if (dirty()) {
             if (pageOption) {
                 pageOption.dead();
             }
-            var numPages = Math.floor(params.numItems / params.itemsPerPage);
+            var numPages = this.numPages();
+            if (autoHide && numPages <= 1) {
+                this.get$().hide();
+            } else {
+                this.get$().show();
+            }
             var items = [];
             for (var i = 0; i < numPages; i++) {
                 items.push({
@@ -115,7 +153,7 @@ function CuiPageControl(params) {
                 onSelect: function(idx, value) {
                     page = value;
                     if (params.onPageChange) {
-                        params.onPageChange(page, params.itemsPerPage);
+                        params.onPageChange(page, itemsPerPage);
                     }
                 }
             });

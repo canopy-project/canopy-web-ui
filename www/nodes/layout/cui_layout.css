@@ -83,12 +83,12 @@
     width: 50%;
 }
 
-.cui_hsplit3_layout.cui_right {
+.cui_hsplit_layout.cui_right {
     position: absolute;
     top: 0px;
     bottom: 0px;
+    left: 50%;
     right: 0px;
-    width: 50%;
 }
 
 .cui_thinline.cui_hsplit_layout {

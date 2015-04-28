@@ -54,7 +54,7 @@ function CuiCanvas(params) {
         } else {
             $prev = params.preceededBy;
         }
-        var startY = $prev.offset().top + $prev.height();
+        var startY = $prev.offset().top + $prev.outerHeight() + 1;
         $me.css("top", startY + "px");
         cuiRefresh([params.contents], live);
     }
