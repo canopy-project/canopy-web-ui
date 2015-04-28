@@ -4,23 +4,24 @@
 }
 
 .cui_default.cui_page_control .cui_page_control.cui_button {
-    padding: 4px;
+    padding: 2px;
     background: #d8d8d8;
     color: #404040;
-    border-radius: 4px;
+    border-radius: 3px;
+    font-size: 16px;
 }
 
 .cui_default.cui_page_control .cui_page_control.cui_button.cui_left {
     border-right: 0px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
-    padding-right: 8px;
+    padding-right: 6px;
 }
 
 .cui_default.cui_page_control .cui_page_control.cui_button.cui_right {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    padding-left: 8px;
+    padding-left: 6px;
 }
 
 .cui_default.cui_page_control .cui_page_control.cui_button:hover {

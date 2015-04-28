@@ -25,6 +25,7 @@
  *
  *  PARAMS
  *
+ *      params.relativeTo : container node or jqDOM element.
  *      params.preceededBy : node or jqDOM element.
  *
  *      params.refreshOnWindowResize : Boolean - auto-refresh when the window
@@ -50,11 +51,22 @@ function CuiCanvas(params) {
     this.onRefresh = function($me, dirty, live) {
         var $prev;
         if (params.preceededBy.get$) {
-            var $prev = params.preceededBy.get$();
+            $prev = params.preceededBy.get$();
         } else {
             $prev = params.preceededBy;
         }
+
         var startY = $prev.offset().top + $prev.outerHeight() + 1;
+
+        if (params.relativeTo) {
+            var $container;
+            if (params.relativeTo.get$) {
+                $container = params.relativeTo.get$();
+            } else {
+                $container = params.relativeTo;
+            }
+            startY -= $container.offset().top;
+        }
         $me.css("top", startY + "px");
         cuiRefresh([params.contents], live);
     }
