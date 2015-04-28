@@ -62,5 +62,6 @@ includeJsFile ("/nodes/viz/cui_map.js");
 includeCssFile("/nodes/viz/cui_map.css");
 
 includeCssFile("/nodes/layout/cui_layout.css");
+includeCssFile("/nodes/layout/cui_responsive_layout.css");
 
 includeCssFile("/cui_base.css");

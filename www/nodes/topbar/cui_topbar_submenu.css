@@ -17,3 +17,35 @@
         display: none
     }
 }
+
+.cui_topbar_submenu.cui_topbar {
+    background: #f0f0f0;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_app_dropdown .cui_dropdown.cui_toggle{
+    background: #f0f0f0;
+    color: #303030;
+}
+
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle {
+    color: #909090;
+    width: 125px;
+}
+
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_off:hover {
+    color: #303030;
+}
+
+.cui_topbar_submenu.cui_topbar .cui_topbar.cui_option .cui_option.cui_toggle.cui_on {
+    font-weight: 400;
+    color: #000000;
+    background: #f4f4f4;
+}
+
+@media (max-width : 720px) {
+    .cui_topbar_submenu.cui_topbar .cui_resp_left_side {
+        display: none;
+    }
+}
+

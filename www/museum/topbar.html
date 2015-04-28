@@ -17,6 +17,9 @@
         <div class='desc'>Top menu bar for Canopy applications.  params.cssClass="cui_default"</div>
         <div id=cui_topbar>
         </div>
+        <div class='desc'>With app dropdown and user dropdown.</div>
+        <div id=cui_topbar2>
+        </div>
         <script>
             var topbar = new CuiTopbar({
                 appName: "MyApp",
@@ -36,14 +39,34 @@
                 $("#cui_topbar").html(topbar.get$());
                 topbar.live();
             });
+
+            var topbar2 = new CuiTopbar({
+                appName: "MyApp",
+                cssClass: "cui_default",
+                items : [{
+                    content: "Cow",
+                    value: "cow"
+                }, {
+                    content: "Horse",
+                    value: "horse"
+                }, {
+                    content: "Fox",
+                    value: "fox"
+                }],
+                showAppDropdown: true,
+            });
+            $(function() {
+                $("#cui_topbar2").html(topbar2.get$());
+                topbar2.live();
+            });
         </script>
 
         <div class='desc'>It can easily be styled to look like a submenu.  params.cssClass="cui_default cui_topbar_submenu"</div>
-        <div id=cui_topbar2>
+        <div id=cui_topbar3>
         </div>
 
         <script>
-            var topbar2 = new CuiTopbar({
+            var topbar3 = new CuiTopbar({
                 appName: "My Sub Menu",
                 cssClass: "cui_default cui_topbar_submenu",
                 items : [{
@@ -58,8 +81,8 @@
                 }],
             });
             $(function() {
-                $("#cui_topbar2").html(topbar2.get$());
-                topbar2.live();
+                $("#cui_topbar3").html(topbar3.get$());
+                topbar3.live();
             });
         </script>
     </div>
@@ -110,6 +133,7 @@
                         cssClass: "cui_default",
                         user: resp.user
                     });
+                    topbar2.setUser(resp.user).refresh();
                     $("#cui_user_dropdown").html(userDropdown.get$());
                     userDropdown.live();
                 });

@@ -1,11 +1,12 @@
 .cui_default.cui_user_dropdown {
     padding-right: 60px;
 }
+
 .cui_default.cui_user_dropdown .cui_dropdown.cui_toggle {
     padding: 8px;
     padding-left: 63px;
     padding-right: 63px;
-    background: #383838;
+    background: #303030;
     color: #ffffff;
     font-weight: 400;
 }
@@ -37,56 +38,15 @@
     background: rgba(255, 255, 255, 0.95);
 }
 
-/*.cui_user_dropdown {
-    padding-right: 90px;
-}
-.cui_user_dropdown .cui_popup{
-    display: inline-block;
-    position: relative;
-    padding: 8px;
-    width: 160px;
-    background: rgba(64, 128, 255, 0.8);
-    border: 1px single #a0a0a0;
-    box-shadow: 8px 8px 10px rgba(48, 96, 172, 0.3);
-    color: #ffffff;
-    font-weight: 400;
-    text-align: left;
-    cursor: pointer;
-}
-.cui_user_dropdown .cui_popup .cui_inner{
-    padding-left: 8px;
-}
-.cui_user_dropdown .cui_popup .cui_inner:hover{
-    padding-left: 8px;
-    color: #b0e0ff;
-}
-.cui_user_dropdown .cui_menu_item {
-    background: #404040;
-    font-weight: 400;
-    display: inline-block;
-    height: 42px;
-    color: #ffffff;
-    width: 100%;
-    max-width: 175px;
-    cursor: pointer;
-    vertical-align: top;
-    text-align: center;
-}
 
-.cui_user_dropdown .cui_menu_item_inner {
-    padding: 8px;
-    padding-right: 16px;
-}
-
-.cui_user_dropdown .cui_menu_item_selected {
-    background: #505050;
-    font-weight: 800;
-    display: inline-block;
-    height: 42px;
+@media (max-width : 960px) {
+    .cui_default.cui_user_dropdown {
+        padding-right: 20px
+    }
+    .cui_default.cui_user_dropdown .cui_dropdown.cui_toggle {
+    padding-left: 30px;
+    padding-right: 30px;
+    background: #303030;
     color: #ffffff;
-    width: 100%;
-    max-width: 175px;
-    cursor: pointer;
-    vertical-align: top;
-    text-align: center;
-}*/
+}
+}

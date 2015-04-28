@@ -77,6 +77,9 @@ function CuiSwitcher(params) {
             // its DOM objects got replaced).
             for (childName in params.children) {
                 if (params.children.hasOwnProperty(childName)) {
+                    if (!params.children[childName].isConstructed) {
+                        alert(childName);
+                    }
                     if (params.children[childName].isConstructed()) {
                         params.children[childName].dead();
                     }

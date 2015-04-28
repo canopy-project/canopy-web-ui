@@ -109,7 +109,7 @@ function CuiTopbar(params) {
             });
         }
         optionNode = new CuiOption({
-            cssClass: "cui_topbar",
+            cssClass: "cui_topbar cui_menu",
             items: items,
             onSelect: function(idx, value) {
                 console.log("Told to select" + idx + " - " + value);
@@ -137,10 +137,14 @@ function CuiTopbar(params) {
 
         var out = cuiCompose([
             "<div class='cui_topbar " + params.cssClass + "'>",
-                (params.showAppDropdown ? appDropdown : 
-                    "<div class='cui_topbar cui_app_name'>" + params.appName + "</div>"), 
-                $breadcrumb,
-                optionNode,
+                "<div class='cui_resp_left_side'>",
+                    (params.showAppDropdown ? appDropdown : 
+                        "<div class='cui_topbar cui_app_name'>" + params.appName + "</div>"), 
+                "</div>",
+                "<div class='cui_resp_middle'>",
+                    $breadcrumb,
+                    optionNode,
+                "</div>",
                 $rightSection, 
             "</div>"
         ]);

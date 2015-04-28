@@ -44,7 +44,7 @@ function CuiUserDropdown(params) {
         option = new CuiOption({
             cssClass: "cui_user_dropdown",
             items: [{
-                content: "Logout",
+                content: "LOGOUT",
                 value: "logout",
             }],
             onSelect: function() {
