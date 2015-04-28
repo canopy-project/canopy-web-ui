@@ -15,7 +15,7 @@
  */
 
 /*
- *  CuiHSplit3Layout breaks the containing element into two vertical panes.
+ *  CuiHSplitLayout breaks the containing element into two vertical panes.
  *
  *      +----+----------+
  *      |    |          |
@@ -42,41 +42,31 @@
  *
  *      Customize by writing CSS for:
  *          .MYCLASS.cui_hsplit_layout
- *          .MYCLASS.cui_hsplit_layout .cui_hsplit3_layout.cui_cell
- *          .MYCLASS.cui_hsplit_layout .cui_hsplit3_layout.cui_left
- *          .MYCLASS.cui_hsplit_layout .cui_hsplit3_layout.cui_right
+ *          .MYCLASS.cui_hsplit_layout .cui_hsplit_layout.cui_cell
+ *          .MYCLASS.cui_hsplit_layout .cui_hsplit_layout.cui_left
+ *          .MYCLASS.cui_hsplit_layout .cui_hsplit_layout.cui_right
  */
 function CuiHSplitLayout(params) {
     cuiInitNode(this);
 
     this.onConstruct = function() {
         var leftStyle = [];
-        var middleStyle = [];
         var rightStyle = [];
 
         if (params.leftSize) {
             leftStyle.push(["width: " + params.leftSize]);
-            middleStyle.push(["left: " + params.leftSize]);
-        }
-
-        if (params.rightSize) {
-            middleStyle.push(["right: " + params.rightSize]);
-            rightStyle.push(["width: " + params.rightSize]);
+            rightStyle.push(["left: " + params.leftSize]);
         }
 
         leftStyle = "style='" + leftStyle.join(";") + "'";
-        middleStyle = "style='" + middleStyle.join(";") + "'";
         rightStyle = "style='" + rightStyle.join(";") + "'";
 
         return [
-            "<div class='cui_hsplit3_layout " + params.cssClass + "'>",
-                "<div class='cui_hsplit3_layout cui_cell cui_left' " + leftStyle + ">",
+            "<div class='cui_hsplit_layout " + params.cssClass + "'>",
+                "<div class='cui_hsplit_layout cui_cell cui_left' " + leftStyle + ">",
                     params.left,
                 "</div>",
-                "<div class='cui_hsplit3_layout cui_cell cui_middle' " + middleStyle + ">",
-                    params.middle,
-                "</div>",
-                "<div class='cui_hsplit3_layout cui_cell cui_right' " + rightStyle + ">",
+                "<div class='cui_hsplit_layout cui_cell cui_right' " + rightStyle + ">",
                     params.right,
                 "</div>",
             "</div>"

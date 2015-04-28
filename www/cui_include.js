@@ -33,6 +33,9 @@ includeAbsCssFile("//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400
 includeJsFile("/cui_nav_state.js");
 includeJsFile("/cui_node.js");
 
+includeJsFile("/nodes/controls/cui_page_control.js");
+includeCssFile("/nodes/controls/cui_page_control.css");
+
 includeJsFile("/nodes/generic/cui_button.js");
 includeJsFile("/nodes/generic/cui_dropdown.js");
 includeJsFile("/nodes/generic/cui_option.js");
@@ -44,6 +47,7 @@ includeJsFile("/nodes/generic/cui_wrapper.js");
 includeJsFile("/nodes/layout/cui_canvas.js");
 includeJsFile("/nodes/layout/cui_quad_layout.js");
 includeJsFile("/nodes/layout/cui_u_layout.js");
+includeJsFile("/nodes/layout/cui_hsplit_layout.js");
 includeJsFile("/nodes/layout/cui_hsplit3_layout.js");
 
 includeJsFile ("/nodes/cloudvar_widget/cui_cloudvar_widget.js");

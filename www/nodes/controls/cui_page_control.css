@@ -1,0 +1,40 @@
+.cui_page_control,
+.cui_page_control.cui_page_links {
+    display: inline-block;
+}
+
+.cui_default.cui_page_control .cui_page_control.cui_button {
+    padding: 4px;
+    background: #d8d8d8;
+    color: #404040;
+    border-radius: 4px;
+}
+
+.cui_default.cui_page_control .cui_page_control.cui_button.cui_left {
+    border-right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding-right: 8px;
+}
+
+.cui_default.cui_page_control .cui_page_control.cui_button.cui_right {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding-left: 8px;
+}
+
+.cui_default.cui_page_control .cui_page_control.cui_button:hover {
+    background: #f0f0f0;
+    color: #505050;
+}
+
+.cui_page_control .cui_option,
+.cui_page_control .cui_option.cui_toggle {
+    display: inline-block;
+}
+.cui_default.cui_page_control .cui_option.cui_toggle.cui_on {
+    font-weight: 800;
+}
+.cui_default.cui_page_control .cui_option.cui_toggle.cui_off:hover {
+    color: #3060c0;
+}

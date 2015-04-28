@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <title>CUI Museum</title>
+    <script>
+        var CUI_INCLUDE_PATH = "../"
+    </script>
+    <script src="../cui_include.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link href="museum.css" rel="stylesheet" type="text/css">
+    <link href="museum_layout.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class='museum'>
+    <div class='section'>
+        <div class='title'>Page Control - nodes/controls/cui_page_control.js</div>
+        <div class='desc'>Control for pagination.  params.cssClass = ""</div>
+        <div id=page_control>
+        </div>
+        <div class='desc'>Control for pagination.  params.cssClass = "cui_default"</div>
+        <div id=page_control_2>
+        </div>
+        <script>
+            var pageControl = new CuiPageControl({
+                numItems: 348,
+                itemsPerPage: 100,
+                cssClass: "",
+                onPageChange: function(page) {
+                    alert("Page " + page);
+                }
+            });
+            var pageControl2 = new CuiPageControl({
+                numItems: 348,
+                itemsPerPage: 100,
+                cssClass: "cui_default",
+            });
+
+            $(function() {
+                $("#page_control").html(pageControl.get$());
+                pageControl.live();
+                $("#page_control_2").html(pageControl2.get$());
+                pageControl2.live();
+            });
+        </script>
+    </div>
+</body>
+</html>

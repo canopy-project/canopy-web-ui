@@ -69,6 +69,38 @@
     height: 100%;
 }
 
+.cui_hsplit_layout {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.cui_hsplit_layout.cui_left {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 50%;
+}
+
+.cui_hsplit3_layout.cui_right {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 50%;
+}
+
+.cui_thinline.cui_hsplit_layout {
+    border-left: 1px solid #c0c0c0;
+    border-top: 1px solid #c0c0c0;
+}
+
+.cui_thinline.cui_hsplit_layout .cui_hsplit_layout.cui_cell {
+    border-bottom: 1px solid #c0c0c0;
+    border-right: 1px solid #c0c0c0;
+}
+
 .cui_hsplit3_layout {
     position: relative;
     height: 100%;

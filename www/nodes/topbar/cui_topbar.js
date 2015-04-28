@@ -170,10 +170,10 @@ function CuiTopbar(params) {
             if (breadcrumb) {
                 $breadcrumb.html(breadcrumb.join(" &rarr; "));
                 $breadcrumb.show();
-                optionNode.get$().css("visibility", "hidden");
+                optionNode.get$().hide();
             } else {
                 $breadcrumb.hide();
-                optionNode.get$().css("visibility", "visible");
+                optionNode.get$().show();
             }
             this.clearDirty("breadcrumb");
         }
