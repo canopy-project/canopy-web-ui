@@ -31,7 +31,8 @@
  *      .left           - cuiComposeable content
  *      .right          - abid
  *
- *      .leftSize       - % or px from left
+ *      .leftSize       - % or px from left (for left half)
+ *      .rightSize       - % or px from right (for right half)
  *
  *  CSS:
  *      params.cssClass:
@@ -46,20 +47,41 @@
  *          .MYCLASS.cui_hsplit_layout .cui_hsplit_layout.cui_left
  *          .MYCLASS.cui_hsplit_layout .cui_hsplit_layout.cui_right
  */
+function myJoin(arr, sep) {
+    /*
+     * For some reason that is beyond me the builtin .join doesn't seem to
+     * work.  It always uses "," as the separator.
+     */
+    out = "FFFF";
+    for (var i = 0; i < arr.length; i++) {
+        if (i != 0) {
+            out += sep;
+        }
+        out += arr[i];
+    }
+    return out;
+}
 function CuiHSplitLayout(params) {
     cuiInitNode(this);
 
     this.onConstruct = function() {
-        var leftStyle = [];
-        var rightStyle = [];
+        var leftStyle = new Array();
+        var rightStyle = new Array();
 
         if (params.leftSize) {
             leftStyle.push(["width: " + params.leftSize]);
             rightStyle.push(["left: " + params.leftSize]);
+        } else if (params.rightSize) {
+            leftStyle.push(["left: 0px"]);
+            leftStyle.push(["width: auto"]);
+            leftStyle.push(["right: " + params.rightSize ]);
+            rightStyle.push(["left: auto"]);
+            rightStyle.push(["width: " + params.rightSize]);
+            rightStyle.push(["right: 0px"]);
         }
 
-        leftStyle = "style='" + leftStyle.join(";") + "'";
-        rightStyle = "style='" + rightStyle.join(";") + "'";
+        leftStyle = "style='" + leftStyle.join(';') + "'";
+        rightStyle = "style='" + rightStyle.join(';') + "'";
 
         return [
             "<div class='cui_hsplit_layout " + params.cssClass + "'>",

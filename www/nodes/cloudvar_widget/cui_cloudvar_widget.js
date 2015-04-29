@@ -76,10 +76,14 @@ function CuiCloudVarWidget(params) {
     this.onRefresh = function($me, dirty, live) {
         if (cloudVar) {
             var name = (overrideName ? overrideName : cloudVar.name());
+            var value = " " + Math.round(cloudVar.value()*1000)/1000;
+            if (cloudVar.value() === undefined || cloudVar.value() == null) {
+                value = "?";
+            }
             var content = cuiCompose([
                 "<div class=cui_cloudvar_top>",
                     "<div class=cui_cloudvar_value>",
-                        "11", //+ cloudVar.value(),
+                        value,
                     "</div>",
                     "<div class=cui_cloudvar_update_time>",
                         timestampString(cloudVar),

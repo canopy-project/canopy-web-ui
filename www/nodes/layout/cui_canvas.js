@@ -56,7 +56,7 @@ function CuiCanvas(params) {
             $prev = params.preceededBy;
         }
 
-        var startY = $prev.offset().top + $prev.outerHeight() + 1;
+        var startY = $prev.offset().top + $prev.outerHeight();
 
         if (params.relativeTo) {
             var $container;

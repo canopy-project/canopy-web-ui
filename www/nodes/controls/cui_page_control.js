@@ -26,6 +26,7 @@
  *
  *  METHODS:
  *
+ *      .endIdx()
  *      .startIdx()
  *      .numPages()
  *      .numItemsPerPage()
@@ -75,9 +76,24 @@ function CuiPageControl(params) {
         return this;
     }
 
+    // 1 past the end
+    this.endIdx = function() {
+        var end = itemsPerPage*(page + 1);
+        if (end >= numItems) {
+            return numItems;
+        }
+        return end;
+    }
+
+
     this.startIdx = function() {
         return itemsPerPage*page;
     }
+
+    this.numItems = function() {
+        return numItems;
+    }
+
 
     this.numItemsPerPage = function() {
         return itemsPerPage;
