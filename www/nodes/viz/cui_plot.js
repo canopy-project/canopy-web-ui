@@ -19,6 +19,12 @@
  *
  *  PARAMS:
  *
+ *      params.height
+ *      params.width
+ *      params.onDrawFinish
+ *      params.appendUncertainValue -- Set to true to add an uncertain sample
+ *      at the current time.
+ *
  *  CSS:
  *
  *  METHODS:
@@ -27,7 +33,10 @@
  */
 function CuiPlot(params) {
     cuiInitNode(this);
+    this.markDirty();
     var dataTable;
+    var chart;
+    var animating;
 
     this.setTimeseriesData = function(samples) {
         dataTable = new google.visualization.DataTable();
@@ -39,17 +48,24 @@ function CuiPlot(params) {
         for (i = 0; i < samples.length; i++) {
             var t0 = (i > 0 ? Date.parse(samples[i-1].t) : null);
             var t1 = Date.parse(samples[i].t);
-            if (t0 !== null && (t1 - t0 > 2*60*1000)) // TODO: re-enable this?
+            if (t0 !== null && (t1 - t0 > 3*60*1000)) // TODO: re-enable this?
             {
                 dataTable.addRows([
-                    [new Date(t0 + 1), samples[i-1].v, false, 'fill-opacity:0; stroke-color:#b0b0b0;'],
-                    [new Date(t1 - 1), samples[i-1].v, true, 'fill-opacity:0; stroke-color:#b0b0b0;'],
-                    [new Date(t1), samples[i].v, true, '']
+                    [new Date(t0 + 1), samples[i-1].v, false, 'fill-opacity:0;'],
+                    [new Date(t1 - 1), samples[i-1].v, true, 'stroke-opacity:0; stroke-width:5; fill-opacity:0;'],
+                    [new Date(t1), samples[i].v, true, 'stroke-opacity:0; stroke-width:0; fill-color:#3060b0; stroke-color:#3060b0;']
                 ]);
             } else {
-                dataTable.addRows([[new Date(t1), samples[i].v, true, '']]);
+                dataTable.addRows([[new Date(t1), samples[i].v, true, 'fill-color:#3060b0; stroke-color:#3060b0']]);
             }
         }
+        if (samples.length > 0 && params.appendUncertainValue) {
+            dataTable.addRows([
+                [new Date(), samples[samples.length-1].v, false, 'fill-opacity:0;']
+            ]);
+        }
+        this.markDirty();
+        return this;
     }
 
     this.onConstruct = function() {
@@ -59,26 +75,52 @@ function CuiPlot(params) {
     }
 
     this.onRefresh = function($me, dirty, live) {
-        if (live) {
-
+        var redraw = false;
+        if (live && dirty() && !animating) {
+            redraw = true;
+        }
+        if (redraw) {
+            if (chart) {
+                animating = true;
+            } else {
+                if (params.onDrawFinish) {
+                    params.onDrawFinish();
+                }
+            }
             var options = {
                 title: params.title,
                 legend: { position: 'none' },
                 fontName : "Source Sans Pro",
                 fontSize : 12,
-                hAxis: {baselineColor: "#d8d8d8", textStyle:{color:"black"}, format: "h:mm a", gridlines: {color: 'transparent'}},
+                series: [{color:"#c0c0c0", areaOpacity: 0.3}],
+                animation: {
+                    duration: 300,
+                    easing: 'out',
+                },
+                hAxis: {baselineColor: "#d8d8d8", textStyle:{color:"black"}, format: "h:mm a", gridlines: {color: '#d0d0d0'}},
                 vAxis: {baselineColor: "#000000", textStyle:{color:"black"}, format: params.vAxisFormat, gridlines: {color: 'transparent'}},
-                chartArea:{left:50,top:10,width:params.width-40,height:params.height-40},
-                lineWidth: 1,
-                height: params.height,
                 width: params.width,
+                height: params.height,
+                theme: "maximized",
+                lineWidth: 2,
                 backgroundColor: 'transparent',
-                pointSize: 4,
+                pointSize: 2,
             };
 
-            var chart = new google.visualization.AreaChart($me[0]);
+            if (!chart) {
+                chart = new google.visualization.AreaChart($me[0]);
+                google.visualization.events.addListener(chart, 'animationfinish', function() {
+                    animating = false;
+                    if (params.onDrawFinish) {
+                        params.onDrawFinish();
+                    }
+                });
+            }
+            this.clearDirty();
+            console.log("chart.draw");
             chart.draw(dataTable, options);
         }
+        return false;
     }
 }
 

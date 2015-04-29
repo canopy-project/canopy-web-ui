@@ -21,6 +21,7 @@
         var CUI_INCLUDE_PATH = "../"
     </script>
     <script src="../cui_include.js"></script>
+    <script src="/canopy-js-client/canopy.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link href="museum.css" rel="stylesheet" type="text/css">
     <link href="museum_layout.css" rel="stylesheet" type="text/css">
@@ -28,9 +29,9 @@
 
 <body class='museum'>
     <div class='section'>
-        <div class='title'>Line plot</div>
+        <div class='title'>CuiPlot - nodes/viz/cui_plot.js </div>
         <div class='desc'>Timeseries plot</div>
-        <div id=plot>
+        <div id=plot></div>
         <script>
             var plot = new CuiPlot({ });
 
@@ -38,19 +39,19 @@
                 { t: "2014-08-06T08:01:47Z", v: 0},
                 { t: "2014-08-06T08:11:47Z", v: 5},
                 { t: "2014-08-06T08:21:47Z", v: 8},
-                { t: "2014-08-06T08:40:47Z", v: -5},
+                { t: "2014-08-06T08:40:47Z", v: 5},
                 { t: "2014-08-06T08:41:47Z", v: 3.4},
                 { t: "2014-08-06T08:42:47Z", v: 9.4},
                 { t: "2014-08-06T08:43:47Z", v: 4.2},
-                { t: "2014-08-06T09:11:47Z", v: -1},
+                { t: "2014-08-06T09:11:47Z", v: 1},
                 { t: "2014-08-06T09:21:47Z", v: 1.5},
             ]);
             setTimeout(function() {
                 plot.setTimeseriesData([
                     { t: "2014-08-06T08:11:47Z", v: 5},
                     { t: "2014-08-06T08:21:47Z", v: 8},
-                    { t: "2014-08-06T08:31:47Z", v: -5},
-                    { t: "2014-08-06T08:40:47Z", v: -5},
+                    { t: "2014-08-06T08:31:47Z", v: 5},
+                    { t: "2014-08-06T08:40:47Z", v: 5},
                     { t: "2014-08-06T08:41:47Z", v: 3.4},
                     { t: "2014-08-06T08:42:47Z", v: 9.4},
                     { t: "2014-08-06T08:43:47Z", v: 4.2},
@@ -63,6 +64,46 @@
             $(function() {
                 $("#plot").html(plot.get$());
                 plot.live();
+            });
+        </script>
+    </div>
+
+    <div class='section'>
+        <div class='title'>CuiCloudVarPlot - nodes/cloudvar_widget/cui_cloudvar_plot.js </div>
+        <div class='desc'>Timeseries plot of cloud variable value</div>
+        <div id=cloudvar_plot>
+        <script>
+            var cloudVarPlot = new CuiCloudVarPlot({
+                autoRefreshInterval: 20000,
+            });
+
+            $(function() {
+                Canopy.initUserClient({
+                    host: "dev02.canopy.link",
+                }).onDone(function(result, resp) {
+                    if (result != CANOPY_SUCCESS) {
+                        $("#cloudvar_plot").html("Error: " + result);
+                        return; 
+                    }
+                    resp.user.devices().getMany(0, 1).onDone(function(result, resp) {
+                        if (result != CANOPY_SUCCESS) {
+                            $("#cloudvar_plot").html("Error: " + result);
+                            return; 
+                        }
+                        if (resp.devices.length == 0) {
+                            $("#cloudvar_plot").html("No devices");
+                            return; 
+                        }
+                        var device = resp.devices[0];
+                        if (device.vars().length == 0) {
+                            $("#cloudvar_plot").html("No vars");
+                            return; 
+                        }
+                        cloudVarPlot.setCloudVar(device.vars()[0]);
+                        $("#cloudvar_plot").html(cloudVarPlot.get$());
+                        cloudVarPlot.live();
+                    });
+                });
             });
         </script>
     </div>

@@ -51,8 +51,10 @@ includeJsFile("/nodes/layout/cui_u_layout.js");
 includeJsFile("/nodes/layout/cui_hsplit_layout.js");
 includeJsFile("/nodes/layout/cui_hsplit3_layout.js");
 
+includeJsFile ("/nodes/cloudvar_widget/cui_cloudvar_plot.js");
 includeJsFile ("/nodes/cloudvar_widget/cui_cloudvar_widget.js");
 includeCssFile ("/nodes/cloudvar_widget/cui_cloudvar_widget.css");
+
 includeJsFile ("/nodes/topbar/cui_topbar.js");
 includeJsFile ("/nodes/topbar/cui_app_dropdown.js");
 includeJsFile ("/nodes/topbar/cui_user_dropdown.js");
