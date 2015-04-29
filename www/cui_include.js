@@ -27,7 +27,8 @@ function includeCssFile(filename) {
     );
 }
 
-includeAbsJsFile("https://maps.googleapis.com/maps/api/js?key=AIzaSyCRMz0xxBvCrYp4K_iYu1ncN8lHM6ITnYY");
+includeAbsJsFile("//www.google.com/jsapi");
+includeAbsJsFile("//maps.googleapis.com/maps/api/js?key=AIzaSyCRMz0xxBvCrYp4K_iYu1ncN8lHM6ITnYY");
 includeAbsCssFile("//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700|ABeeZee|Titillium+Web:200,300,400,700");
 
 includeJsFile("/cui_nav_state.js");
@@ -62,6 +63,8 @@ includeCssFile("/nodes/topbar/cui_user_dropdown.css");
 
 includeCssFile("/nodes/generic/cui_generic.css");
 
+includeJsFile ("/nodes/viz/cui_plot.js");
+includeCssFile("/nodes/viz/cui_plot.css");
 includeJsFile ("/nodes/viz/cui_map.js");
 includeCssFile("/nodes/viz/cui_map.css");
 
