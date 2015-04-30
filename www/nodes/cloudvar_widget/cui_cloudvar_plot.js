@@ -21,6 +21,7 @@
  *
  *      params.cloudVar -- optional CanopyVariable object.
  *      params.autoRefreshInterval -- Number of milliseconds between autorefresh. default: 20000
+ *      params.onAutoRefresh -- function()
  *      params.width
  *      params.height
  *
@@ -93,6 +94,9 @@ function CuiCloudVarPlot(params) {
         if (!interval) {
             interval = setInterval(function() {
                 self.refresh();
+                if (params.onAutoRefresh) {
+                    params.onAutoRefresh();
+                }
             }, autoRefreshInterval);
         }
     }

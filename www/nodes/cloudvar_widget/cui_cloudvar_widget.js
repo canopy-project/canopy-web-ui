@@ -33,13 +33,23 @@
 function CuiCloudVarWidget(params) {
     cuiInitNode(this);
     var self=this;
+    this.markDirty();
+
 
     var cloudVar = params.cloudVar;
     var overrideName = params.overrideName;
 
-    function timestampString(cloudVar) {
-        var secsAgo = cloudVar.lastRemoteUpdateSecondsAgo();
-        if (cloudVar.lastRemoteUpdateSecondsAgo() == null) {
+    var cachedCloudVar;
+    var cachedValue;
+    var cachedSecsAgo;
+    var cachedName;
+
+    var $name;
+    var $timestamp;
+    var $value;
+
+    function timestampString(secsAgo) {
+        if (secsAgo == null) {
             // Variable has never been set
             return "<span style='color:#50b0ff'>New Var</span>"
         }
@@ -69,36 +79,51 @@ function CuiCloudVarWidget(params) {
     }
 
     this.onConstruct = function() {
-        this.markDirty();
-        return $("<div class=cui_cloudvar></div>");
+        $value = $("<div class='cui_cloudvar_value'></div>");
+        $timestamp = $("<div class='cui_cloudvar_update_time'></div>");
+        $name = $("<div class='cui_cloudvar_name'></div>");
+
+        return [
+            "<div class=cui_cloudvar>",
+                "<div class=cui_cloudvar_top>",
+                    $value,
+                    $timestamp,
+                "</div>",
+                "<div class=cui_cloudvar_bottom>",
+                    $name,
+                "</div>",
+            "</div>"
+        ];
     }
 
     this.onRefresh = function($me, dirty, live) {
-        if (cloudVar) {
-            var name = (overrideName ? overrideName : cloudVar.name());
-            var value = " " + Math.round(cloudVar.value()*1000)/1000;
-            if (cloudVar.value() === undefined || cloudVar.value() == null) {
-                value = "?";
+        if (dirty() && cloudVar) {
+            if (cachedValue !== cloudVar.value()) {
+                cachedValue = cloudVar.value();
+                var value = " " + Math.round(cachedValue*1000)/1000;
+                if (cachedValue === undefined || cachedValue == null) {
+                    value = "?";
+                }
+                $value.html(value);
+                if (cachedCloudVar && cachedCloudVar == cloudVar) {
+                    $value.css("color", "#ffff00");
+                    $value.animate({color: "#ffffff"}, 333);
+                }
+                cachedCloudVar = cloudVar;
             }
-            var content = cuiCompose([
-                "<div class=cui_cloudvar_top>",
-                    "<div class=cui_cloudvar_value>",
-                        value,
-                    "</div>",
-                    "<div class=cui_cloudvar_update_time>",
-                        timestampString(cloudVar),
-                    "</div>",
-                "</div>",
-                "<div class=cui_cloudvar_bottom>",
-                    "<div class=cui_cloudvar_name>",
-                        name,
-                    "</div>",
-                "</div>",
-            ]);
-        } else {
-            content = "<b style='color:#000000'>Loading...</b>";
+            if (cachedSecsAgo !== cloudVar.lastRemoteUpdateSecondsAgo()) {
+                cachedSecsAgo = cloudVar.lastRemoteUpdateSecondsAgo();
+                $timestamp.html(timestampString(cachedSecsAgo));
+            }
+            if (cachedName !== cloudVar.name()) {
+                cachedName = cloudVar.name();
+                $name.html(cachedName);
+            }
+        } else if (dirty() && !cloudVar) {
+            $value.html("?");
+            $name.html("?");
+            $timestamp.html("?");
         }
-        $me.html(content);
     }
 
     this.onSetupCallbacks = function($me) {

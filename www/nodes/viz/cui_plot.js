@@ -76,7 +76,7 @@ function CuiPlot(params) {
 
     this.onRefresh = function($me, dirty, live) {
         var redraw = false;
-        if (live && dirty() && !animating) {
+        if (live && dirty()) {
             redraw = true;
         }
         if (redraw) {
