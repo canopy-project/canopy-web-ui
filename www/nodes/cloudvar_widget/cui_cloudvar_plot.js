@@ -55,7 +55,7 @@ function CuiCloudVarPlot(params) {
         });
         $loading = cuiCompose([
             "<div style='position:relative; background:#ff0000;'>",
-                "<div style='z-index: 100000; position:absolute; text-align: center;top: 0px; height: " + params.height + "px; left: 0px; right: 0px;  background:rgba(255, 255, 255, 0.8); font-weight:400'>",
+                "<div style='z-index: 100000; position:absolute; text-align: center;top: 0px; height: " + params.height + "px; left: 0px; right: 0px;  background:rgba(255, 255, 255, 0.5); font-weight:400'>",
                     "<br>LOADING...",
                 "</div>",
             "</div>",
@@ -74,10 +74,16 @@ function CuiCloudVarPlot(params) {
         }
         if (cloudVar) {
             cloudVar.historicData().onDone(function(result, resp) {
-                resp.samples.push({
-                    "v" : cloudVar.lastRemoteValue(),
-                    "t" : cloudVar.lastRemoteUpdateTime(),
-                });
+                // TODO: this sometimes causes problems!
+                // It is because the history is being grabbed, but the device
+                // object is not being refreshed.
+                // This if is a WAR:
+                if (resp.samples.length < 2) {
+                    resp.samples.push({
+                        "v" : cloudVar.lastRemoteValue(),
+                        "t" : cloudVar.lastRemoteUpdateTime(),
+                    });
+                }
                 plot.setTimeseriesData(resp.samples).refresh(live);
             });
         }

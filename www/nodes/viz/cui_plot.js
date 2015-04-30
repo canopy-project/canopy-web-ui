@@ -94,7 +94,7 @@ function CuiPlot(params) {
                 fontSize : 12,
                 series: [{color:"#c0c0c0", areaOpacity: 0.3}],
                 animation: {
-                    duration: 300,
+                    duration: 250,
                     easing: 'out',
                 },
                 hAxis: {baselineColor: "#d8d8d8", textStyle:{color:"black"}, format: "h:mm a", gridlines: {color: '#d0d0d0'}},
