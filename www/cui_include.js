@@ -39,6 +39,7 @@ includeCssFile("/nodes/controls/cui_page_control.css");
 
 includeJsFile("/nodes/generic/cui_button.js");
 includeJsFile("/nodes/generic/cui_dropdown.js");
+includeJsFile("/nodes/generic/cui_editable_text.js");
 includeJsFile("/nodes/generic/cui_option.js");
 includeJsFile("/nodes/generic/cui_popup.js");
 includeJsFile("/nodes/generic/cui_switcher.js");

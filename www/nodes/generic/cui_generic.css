@@ -102,4 +102,25 @@
     background: rgba(255, 255, 255, 0.8);
 }
 
+.cui_default.cui_editable_text .cui_value{
+    padding: 4px;
+}
+.cui_default.cui_editable_text .cui_value:hover {
+    padding: 3px;
+    border: 1px dashed #606060;
+    cursor: pointer;
+}
 
+.cui_default.cui_editable_text input {
+    font-family: "Source Sans Pro", Helvetica,arial,freesans,clean,sans-serif;
+    line-height: 1.33;
+    font-weight: 300;
+    letter-spacing: 0.0px;
+    font-size: 20px;
+    color: #000000;
+    padding: 3px;
+    width: 97%;
+    border: 1px solid #808080;
+    background: #ffffff;
+    cursor: pointer;
+}

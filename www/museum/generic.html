@@ -258,5 +258,31 @@
             });
         </script>
     </div>
+
+    <div class='section'>
+        <div class='title'>CuiEditableText - nodes/generic/cui_editable_text.js</div>
+        <div class='desc'>Contextual editable text.  params.cssClass=""</div>
+        <div id=cui_editable_text>
+        </div>
+        <div class='desc'>Contextual editable texti. params.cssClass='cui_default'</div>
+        <div id=cui_editable_text2>
+        </div>
+        <script>
+            var editableText = new CuiEditableText({
+                cssClass: "",
+                value: "Edit me",
+            });
+            var editableText2 = new CuiEditableText({
+                cssClass: "cui_default",
+                value: "Edit me",
+            });
+            $(function() {
+                $("#cui_editable_text").html(editableText.get$());
+                editableText.live();
+                $("#cui_editable_text2").html(editableText2.get$());
+                editableText2.live();
+            });
+        </script>
+    </div>
 </body>
 </html>
