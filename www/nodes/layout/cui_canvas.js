@@ -72,7 +72,7 @@ function CuiCanvas(params) {
     }
 
     this.onSetupCallbacks = function($me) {
-        $(window).on("resize", function() {
+        cuiRegisterResizeListener(this, function() {
             if (autoRefresh) {
                 self.refresh();
             }
@@ -83,6 +83,6 @@ function CuiCanvas(params) {
     }
 
     this.onTeardownCallbacks = function($me) {
-        $(window).off("resize");
+        cuiRemoveResizeListener(this);
     }
 }
