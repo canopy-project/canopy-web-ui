@@ -76,6 +76,9 @@ function CuiPlot(params) {
 
     this.onRefresh = function($me, dirty, live) {
         var redraw = false;
+        if (this.liveStatus() == CUI_LIVE_STATUS_TRANSITION_TO_LIVE) {
+            redraw = true;
+        }
         if (live && dirty()) {
             redraw = true;
         }

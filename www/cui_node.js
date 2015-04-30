@@ -64,6 +64,26 @@ function CuiNodeBase(name) {
     var $me = null;
     var liveState = false;
 
+    var liveStatus = CUI_LIVE_STATUS_DEAD;
+
+    this.liveStatus = function() {
+        return liveStatus;
+    }
+
+    function updateLiveStatus(newState) {
+        if (liveState == false) {
+            liveStatus = (newState ? 
+                CUI_LIVE_STATUS_TRANSITION_TO_LIVE :
+                CUI_LIVE_STATUS_DEAD
+            );
+        } else {
+            liveStatus = (newState ? 
+                CUI_LIVE_STATUS_LIVE :
+                CUI_LIVE_STATUS_TRANSITION_TO_DEAD
+            );
+        }
+    }
+
     function DirtyTracker() {
         var dirty = {};
 
@@ -169,20 +189,6 @@ function CuiNodeBase(name) {
         return this.refresh(true);
     }
 
-    function getLiveStatus(prev, current) {
-        if (prev == false && current == false) {
-            return CUI_LIVE_STATUS_DEAD;
-        } else if (prev == false && current == true) {
-            return CUI_LIVE_STATUS_TRANSITION_TO_LIVE;
-        } else if (prev == true && current == false) {
-            return CUI_LIVE_STATUS_TRANSITION_TO_DEAD;
-        } else if (prev == true && current == true) {
-            return CUI_LIVE_STATUS_LIVE;
-        }
-        console.log("Bad live state: " + prev + " -> " + current);
-        return CUI_LIVE_STATUS_DEAD;
-    }
-
     function debugLiveStatusString(liveStatus) {
         if (liveStatus == CUI_LIVE_STATUS_DEAD) {
             return " D ";
@@ -200,11 +206,11 @@ function CuiNodeBase(name) {
     this.refresh = function(isLive) {
         var result;
 
+        // BY default don't change live state
         if (isLive == undefined) {
             isLive = liveState;
         }
-        var liveStatus = getLiveStatus(liveState, isLive);
-
+        updateLiveStatus(isLive);
         liveState = isLive;
 
         if (debug) {
