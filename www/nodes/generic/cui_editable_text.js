@@ -44,6 +44,9 @@ function CuiEditableText(params) {
     var self = this;
     var $text;
     var $input;
+
+    var cachedValue;
+
     var value = (params.value !== undefined) ? params.value : "";
 
     this.onConstruct = function() {
@@ -78,8 +81,11 @@ function CuiEditableText(params) {
     }
     
     this.onRefresh = function($me, dirty, live) {
-        $text.html(value + "&nbsp;");
-        $input.val(value);
+        if (cachedValue !== value) {
+            cachedValue = value;
+            $text.html(cachedValue + "&nbsp;");
+            $input.val(cachedValue);
+        }
     }
 
     this.onSetupCallbacks = function($me) {
