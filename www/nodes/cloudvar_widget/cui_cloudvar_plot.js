@@ -35,7 +35,7 @@ function CuiCloudVarPlot(params) {
 
     var plot;
     var interval;
-    var autoRefreshInterval = (params.autoRefreshInterval ? params.autoRefreshInterval : 20000);
+    var autoRefreshInterval = (params.autoRefreshInterval !== undefined ? params.autoRefreshInterval : 20000);
     var cloudVar;
     var _cloudVar = params.cloudVar;
     var $loading;
@@ -106,7 +106,7 @@ function CuiCloudVarPlot(params) {
     }
 
     this.onSetupCallbacks = function($me) {
-        if (!interval) {
+        if ((autoRefreshInterval > 0) && !interval) {
             interval = setInterval(function() {
                 self.refresh();
                 if (params.onAutoRefresh) {

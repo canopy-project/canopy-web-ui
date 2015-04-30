@@ -119,9 +119,9 @@ function CuiPlot(params) {
                     }
                 });
             }
-            this.clearDirty();
             console.log("chart.draw");
             chart.draw(dataTable, options);
+            this.clearDirty();
         }
         return false;
     }
