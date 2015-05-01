@@ -127,12 +127,19 @@ function CuiMap(params) {
             return;
         }
 
-        if (!map && !params.showPlaceholder) {
-            map = new google.maps.Map($canvas[0], {
-                center: { lat: 37.769154, lng: -122.430367},
-                zoom: 12,
-                streetViewControl: false
-            });
+        //if (!map && !params.showPlaceholder) {
+        if (this.liveStatus() == CUI_LIVE_STATUS_TRANSITION_TO_LIVE 
+                && !params.showPlaceholder
+        ) {
+            if (!map) {
+                map = new google.maps.Map($canvas[0], {
+                    center: { lat: 37.769154, lng: -122.430367},
+                    zoom: 12,
+                    streetViewControl: false
+                });
+            } else {
+                google.maps.event.trigger(map,'resize');
+            }
         }
 
         if (params.showPlaceholder) {
