@@ -58,8 +58,12 @@ function CuiMap(params) {
             lat: lat, 
             lng: lng, 
             title: title, 
-            infoContent: infoContent
         };
+        if (infoContent) {
+            markers[id].infoWindow = new google.maps.InfoWindow({
+                content: infoContent,
+            });
+        }
         return this;
     }
 
@@ -94,7 +98,7 @@ function CuiMap(params) {
     }
 
     // Returns google marker
-    function addGoogleMarker(map, lat, lng, title) {
+    function addGoogleMarker(map, lat, lng, title, infoWindow) {
         var latLng = new google.maps.LatLng(lat, lng);
 
         var marker = new google.maps.Marker({
@@ -104,8 +108,8 @@ function CuiMap(params) {
         });
 
         google.maps.event.addListener(marker, 'click', function() {
-            if (marker.infoWindow) {
-                marker.infoWindow.open(map, marker);
+            if (infoWindow) {
+                infoWindow.open(map, marker);
             }
         });
 
@@ -144,7 +148,8 @@ function CuiMap(params) {
                     map, 
                     added.lat, 
                     added.lng, 
-                    added.title
+                    added.title,
+                    added.infoWindow
                 );
                 cachedMarkers[addedKey] = added;
                 cachedMarkers[addedKey].googleMarker = googleMarker;
