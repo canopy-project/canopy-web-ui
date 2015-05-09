@@ -1,2 +1,3 @@
-# canopy-web-ui
-(Experimental) Web UI Framework for Canopy
+Web UI Framework for Canopy
+---------------------------------------------------
+
