@@ -48,8 +48,6 @@
 }
 .cui_cloudvar_value {
     font-size: 28px;
-    line-height: 1;
-    
 }
 .cui_cloudvar_update_time {
     font-weight: 400;
@@ -59,4 +57,20 @@
 .cui_cloudvar_name {
     font-size: 14px;
     line-height: 1;
+}
+
+.cui_cloudvar_value.cui_editable_text,
+.cui_cloudvar_value.cui_editable_text .cui_value {
+    padding-top: 0px;
+    display: inline-block;
+    min-width: 50px;
+    font-size: 22px;
+    line-height: 1;
+}
+.cui_cloudvar_value.cui_editable_text .cui_input {
+    display: inline-block;
+    font-size: 22px;
+    width: 50px;
+    line-height: 1;
+    background: #808080;
 }

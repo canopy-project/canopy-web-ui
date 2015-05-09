@@ -40,6 +40,7 @@ function CuiCloudVarWidget(params) {
     var overrideName = params.overrideName;
 
     var cachedCloudVar;
+    var cachedDirection;
     var cachedValue;
     var cachedSecsAgo;
     var cachedName;
@@ -47,6 +48,7 @@ function CuiCloudVarWidget(params) {
     var $name;
     var $timestamp;
     var $value;
+    var editValue;
 
     function timestampString(secsAgo) {
         if (secsAgo == null) {
@@ -83,10 +85,26 @@ function CuiCloudVarWidget(params) {
         $timestamp = $("<div class='cui_cloudvar_update_time'></div>");
         $name = $("<div class='cui_cloudvar_name'></div>");
 
+        editValue = new CuiEditableText({
+            cssClass: "cui_default cui_cloudvar_value",
+            value: "?",
+            onChange: function(value, userEdited) {
+                if (userEdited) {
+                    // TODO: handle other cloudvar datatypes
+                    cachedCloudVar.value(parseFloat(value));
+                    cachedCloudVar.device().syncWithRemote().onDone(function() {
+                        self.markDirty();
+                        self.refresh();
+                    });
+                }
+            }
+        });
+
         return [
             "<div class=cui_cloudvar>",
                 "<div class=cui_cloudvar_top>",
                     $value,
+                    editValue,
                     $timestamp,
                 "</div>",
                 "<div class=cui_cloudvar_bottom>",
@@ -105,25 +123,46 @@ function CuiCloudVarWidget(params) {
                     value = "?";
                 }
                 $value.html(value);
+                editValue.setValue(value);
                 if (cachedCloudVar && cachedCloudVar == cloudVar) {
                     $value.css("color", "#ffff00");
                     $value.animate({color: "#ffffff"}, 333);
                 }
                 cachedCloudVar = cloudVar;
             }
+
             if (cachedSecsAgo !== cloudVar.lastRemoteUpdateSecondsAgo()) {
                 cachedSecsAgo = cloudVar.lastRemoteUpdateSecondsAgo();
                 $timestamp.html(timestampString(cachedSecsAgo));
             }
+
             if (cachedName !== cloudVar.name()) {
                 cachedName = cloudVar.name();
                 $name.html(cachedName);
             }
+
+            if (cachedDirection !== cloudVar.direction()) {
+                cachedDirection = cloudVar.direction();
+                if (cachedDirection == "in" || cachedDirection == "inout") {
+                    editValue.get$().show();
+                    $value.hide();
+                    editValue.refresh(live);
+                } else {
+                    editValue.get$().hide();
+                    $value.show();
+                    editValue.dead();
+                }
+            }
         } else if (dirty() && !cloudVar) {
+            editValue.get$().hide();
             $value.html("?");
             $name.html("?");
             $timestamp.html("?");
         }
+
+        // Force callbacks to be re-setup.  TODO: Why is this necessary
+        cuiRefresh([editValue], false);
+        cuiRefresh([editValue], live);
     }
 
     this.onSetupCallbacks = function($me) {
