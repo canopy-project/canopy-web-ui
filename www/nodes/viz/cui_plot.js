@@ -21,6 +21,7 @@
  *
  *      params.height
  *      params.width
+ *      params.sparkLine -- If true, hides gridlines and labels
  *      params.onDrawFinish
  *      params.appendUncertainValue -- Set to true to add an uncertain sample
  *      at the current time.
@@ -109,6 +110,14 @@ function CuiPlot(params) {
                 backgroundColor: 'transparent',
                 pointSize: 2,
             };
+
+            if (params.sparkLine === true) {
+                options.lineWidth = 1;
+                options.pointSize = 0;
+                options.hAxis = {baselineColor: 'transparent', textStyle: {color: "transparent"}, gridlines: {color: 'transparent'}};
+                options.vAxis = {baselineColor: 'transparent', textStyle: {color: "transparent"}, gridlines: {color: 'transparent'}};
+                options.series = [{color:"#c0c0c0", areaOpacity: 0.1}];
+            }
 
             if (!chart) {
                 chart = new google.visualization.AreaChart($me[0]);

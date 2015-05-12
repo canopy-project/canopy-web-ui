@@ -24,6 +24,7 @@
  *      params.onAutoRefresh -- function()
  *      params.width
  *      params.height
+ *      params.sparkLine -- If true, hides gridlines and labels
  *
  * METHODS:
  *
@@ -39,6 +40,7 @@ function CuiCloudVarPlot(params) {
     var cloudVar;
     var _cloudVar = params.cloudVar;
     var $loading;
+    var $noData;
 
     this.setCloudVar = function(__cloudVar) {
         _cloudVar = __cloudVar;
@@ -50,6 +52,7 @@ function CuiCloudVarPlot(params) {
             appendUncertainValue: true,
             width: params.width,
             height: params.height,
+            sparkLine: params.sparkLine,
             onDrawFinish: function() {
                 $loading.hide();
             }
