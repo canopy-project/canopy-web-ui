@@ -22,6 +22,7 @@
  *      params.cloudVar -- optional CanopyVariable object.
  *      params.onHover -- function(cloudVar)
  *      params.overrideName -- string
+ *      params.onDisplay -- function(value) returning modified value
  *
  *
  * METHODS:
@@ -122,7 +123,11 @@ function CuiCloudVarWidget(params) {
                 if (cachedValue === undefined || cachedValue == null) {
                     value = "?";
                 }
-                $value.html(value);
+                var displayValue = value;
+                if (value !== "?" && params.onDisplay) {
+                    displayValue = params.onDisplay(value);
+                }
+                $value.html(displayValue);
                 editValue.setValue(value);
                 if (cachedCloudVar && cachedCloudVar == cloudVar) {
                     $value.css("color", "#ffff00");
@@ -139,6 +144,9 @@ function CuiCloudVarWidget(params) {
             if (cachedName !== cloudVar.name()) {
                 cachedName = cloudVar.name();
                 $name.html(cachedName);
+                if (params.overrideName) {
+                    $name.html(params.overrideName);
+                }
             }
 
             if (cachedDirection !== cloudVar.direction()) {
@@ -161,7 +169,7 @@ function CuiCloudVarWidget(params) {
         }
 
         // Force callbacks to be re-setup.  TODO: Why is this necessary
-        cuiRefresh([editValue], false);
+        //cuiRefresh([editValue], false);
         cuiRefresh([editValue], live);
     }
 

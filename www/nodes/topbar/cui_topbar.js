@@ -80,6 +80,11 @@ function CuiTopbar(params) {
         return this;
     }
 
+    this.select = function(idx) {
+        optionNode.select(idx);
+        return this;
+    }
+
     this.onConstruct = function() {
         $breadcrumb = $("<div class='cui_topbar cui_breadcrumb'>Breadcrumb</div>").hide();
         appDropdown = new CuiAppDropdown({
