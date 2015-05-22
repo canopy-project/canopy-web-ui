@@ -38,6 +38,10 @@
  *          .MYCLASS.cui_option .cui_option.cui_toggle
  *          .MYCLASS.cui_option .cui_option.cui_toggle.cui_on
  *          .MYCLASS.cui_option .cui_option.cui_toggle.cui_off
+ *
+ *  METHODS:
+ *
+ *      .setItems
  */
 function CuiOption(origParams) {
     cuiInitNode(this);
@@ -61,6 +65,9 @@ function CuiOption(origParams) {
 
     this.hasChild = function(name) {
         return (valueToIdx[name] !== undefined);
+    }
+
+    this.setItems = function() {
     }
 
     // Select by name or value.

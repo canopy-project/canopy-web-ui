@@ -1,0 +1,35 @@
+.cui_default.cui_org_dropdown .cui_dropdown.cui_toggle {
+    padding: 8px;
+    background: #d8d8d8;
+    color: #202020;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+.cui_default.cui_org_dropdown .cui_dropdown.cui_toggle.cui_off:hover {
+    background: #d8d8d8;
+    color: #202020;
+}
+.cui_default.cui_org_dropdown .cui_dropdown.cui_toggle.cui_on {
+    font-weight: 800;
+    background: #c0c0c0;
+}
+
+.cui_default.cui_org_dropdown .cui_dropdown.cui_popup {
+    width: 100%;
+}
+.cui_default.cui_org_dropdown .cui_dropdown.cui_popup .cui_inner {
+    width: 100%;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #a0a0a0;
+}
+
+.cui_default.cui_org_dropdown .cui_org_dropdown.cui_option .cui_option.cui_toggle {
+    padding: 8px;
+    font-weight: 400;
+    font-size: 18px;
+    background: rgba(240, 240, 240, 0.95);
+}
+
+.cui_default.cui_org_dropdown .cui_org_dropdown.cui_option .cui_option.cui_toggle:hover {
+    background: rgba(255, 255, 255, 0.95);
+}
