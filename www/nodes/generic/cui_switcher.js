@@ -23,7 +23,7 @@
  *  .children : {
  *      name : node
  *  }
- *  .default : name (defaults to null)
+ *  .dflt : name (defaults to null)
  *  .onSelect 
  *  .navState : CuiNavState object (optional)
  *  .navStateName : If provided, this name will be added to the query string
@@ -100,8 +100,8 @@ function CuiSwitcher(params) {
             return;
         }
     }
-    if (params.default) {
-        self.select(params.default);
+    if (params.dflt) {
+        self.select(params.dflt);
     }
 }
 
