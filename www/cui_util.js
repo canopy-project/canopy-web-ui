@@ -52,3 +52,44 @@ function cuiObjectDiff(obj0, obj1, fnAdd, fnUpdate, fnRemove) {
         }
     }
 }
+
+/*
+ * Shallow list comparison
+ */
+function cuiListModified(list0, list1) {
+    if (list0.length != list1.length)
+        return true;
+
+    for (var i = 0; i < list0.length; i++) {
+        if (list0[i] !== list1[i])
+            return true;
+    }
+
+    return false;
+}
+
+/*
+ * Compares <list0> to <list1>.
+ *
+ * For each idx in <list0> that has changed in <list1>, calls fnUpdate.
+ * For each idx in <list0> that is not in <list1>, calls fnRemove
+ * For each idx in <list1> that is not in <list0>, calls fnAdd
+ */
+function cuiListDiff(list0, list1, fnAdd, fnUpdate, fnRemove) {
+    for (var i = 0; i < list0.length; i++) {
+        var item0 = list0[i];
+        var item1 = list1[i];
+        if (item1 === undefined) {
+            fnRemove(i, item0);
+        } else {
+            fnUpdate(i, item0, item1);
+        }
+    }
+    for (var i = list0.length; i < list1.length; i++) {
+        var item0 = list0[i];
+        var item1 = list1[i];
+        if (item0 === undefined) {
+            fnAdd(key, item1);
+        }
+    }
+}

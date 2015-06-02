@@ -60,10 +60,12 @@ includeCssFile ("/nodes/cloudvar_widget/cui_cloudvar_widget.css");
 
 includeJsFile ("/nodes/topbar/cui_topbar.js");
 includeJsFile ("/nodes/topbar/cui_app_dropdown.js");
+includeJsFile ("/nodes/topbar/cui_org_dropdown.js");
 includeJsFile ("/nodes/topbar/cui_user_dropdown.js");
 includeCssFile("/nodes/topbar/cui_topbar.css");
 includeCssFile("/nodes/topbar/cui_topbar_submenu.css");
 includeCssFile("/nodes/topbar/cui_app_dropdown.css");
+includeCssFile("/nodes/topbar/cui_org_dropdown.css");
 includeCssFile("/nodes/topbar/cui_user_dropdown.css");
 
 includeCssFile("/nodes/generic/cui_generic.css");

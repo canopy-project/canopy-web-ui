@@ -38,87 +38,113 @@
  *          .MYCLASS.cui_option .cui_option.cui_toggle
  *          .MYCLASS.cui_option .cui_option.cui_toggle.cui_on
  *          .MYCLASS.cui_option .cui_option.cui_toggle.cui_off
+ *
+ *  METHODS:
+ *
+ *      .hasChild
+ *      .setItems
+ *      .select
  */
-function CuiOption(origParams) {
+
+
+function CuiOption(params) {
     cuiInitNode(this);
-
-    var params = $.extend({}, {
-        cssClass: "",
-        onSelect: null,
-        onClick: null,
-        selectedIdx: -1,
-        pendingSelectIdx: -1
-    }, origParams);
-
+    var cachedItems;
+    var items = params.items;
     var self=this;
-    var $items;
-    var toggles;
-    var selectedIdx = params.selectedIdx;
-    var valueToIdx = {};
-    for (var i = 0; i < params.items.length; i++) {
-        valueToIdx[params.items[i].value] = i;
+
+    var cachedIdx;
+    var idx = params.selectedIdx;
+
+    var $content;
+    var toggles = []
+
+    function valueToIdx(value) {
+        for (i = 0; i < items.length; i++) {
+            if (items[i].value == value) {
+                return i;
+            }
+        }
+
+        return undefined;
     }
 
     this.hasChild = function(name) {
-        return (valueToIdx[name] !== undefined);
+        return (valueToIdx(name) !== undefined);
     }
 
     // Select by name or value.
     // Triggers callback.
-    // Does not .refresh().
+    // Requires refresh for display to update.
     this.select = function(_idx) {
-        if (selectedIdx == _idx) {
-            // noopt
-            return this;
-        }
-        var idx = _idx;
-        this.markDirty();
+        idx = _idx;
         if (typeof _idx != 'number') {
-            idx = valueToIdx[idx];
+            idx = valueToIdx(_idx);
         }
         if (idx === undefined) {
             return this;
         }
-        selectedIdx = idx;
-        var value = params.items[idx].value;
-        if (params.onSelect) {
-            params.onSelect(idx, value);
+        if (items[idx] !== undefined) {
+            var value = items[idx].value;
+            if (params.onSelect) {
+                params.onSelect(idx, value);
+            }
         }
         return this;
     }
 
+    // Requires refresh
+    this.setItems = function(_items) {
+        items = _items;
+        return this;
+    }
+
     this.onConstruct = function() {
-        $items = [];
-        toggles = [];
-        for (var i = 0; i < params.items.length; i++) {
-            $items.push(params.items[i]);
-            foo = function(idx) {
+        $content = $("<div class='cui_option " + params.cssClass + "'></div>");
+        return [
+            $content
+        ];
+    }
+
+    this.onRefresh = function($me, dirty, live) {
+        // Did list of items change?
+        if (!cachedItems || cuiListModified(cachedItems, items)) {
+            // Cleanup old toggle buttons
+            if (cachedItems !== undefined) {
+                for (var i = 0; i < cachedItems.length; i++) {
+                    toggles[i].dead();
+                }
+            }
+
+            // Re-generate all toggle buttons
+            toggles = [];
+            var fn = function(idx) {
                 toggles.push(new CuiToggle({
                     cssClass: "cui_option",
-                    content: params.items[idx].content,
+                    content: items[idx].content,
                     onClick: function() {
-                        var value = params.items[idx].value;
+                        var value = items[idx].value;
                         if (!params.onClick || params.onClick(idx, value)) {
                             self.select(idx).refresh();
                         }
                         return false; 
                     }
                 }));
-            }(i);
+            }
+            for (var i = 0; i < items.length; i++) {
+                fn(i);
+            }
+            $content.html("");
+            for (var i = 0; i < toggles.length; i++) {
+                $content.append(toggles[i].get$());
+            }
+            cachedItems = items;
         }
-        var $inner;
-        if (toggles.length != 1) {
-            $inner = cuiCompose(toggles);
-        } else {
-            $inner = toggles[0].get$(); // TODO: Fix this bug with cuiCompose!
-        }
-        return $("<div class='cui_option " + params.cssClass + "'></div>").html($inner);
-    }
 
-    this.onRefresh = function($me, dirty, live) {
+        // Update and refresh toggles
         for (var i = 0; i < toggles.length; i++) {
-            toggles[i].toggle((selectedIdx === i)).refresh(live);
+            toggles[i].toggle((idx === i)).refresh(live);
         }
+        cachedIdx = idx;
     }
 }
-

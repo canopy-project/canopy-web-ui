@@ -28,7 +28,8 @@
  *      navState: used for query-string navigation
  *      navStateName: used for query-string navigation
  *      onSelect: function(value)
- *      showAppDropdown: boolean
+ *      showDropdown: null, "app", or "org"
+ *      showUserDropdown: true/false
  *      user : CanopyUser object, or null
  *  }
  *
@@ -63,6 +64,8 @@ function CuiTopbar(params) {
     var appDropdown;
     var optionNode;
     var userDropdown;
+    var dropdown;
+    var orgDropdown;
 
     var user = params.user;
     var breadcrumb;
@@ -95,6 +98,13 @@ function CuiTopbar(params) {
             apps: apps,
             cssClass: "cui_default cui_topbar",
             title: params.appName
+        });
+
+        orgDropdown = new CuiOrgDropdown({
+            cssClass: "cui_default cui_topbar",
+            items: [],
+            title: user ? user.username() : "-",
+            user: user
         });
 
         userDropdown = new CuiUserDropdown({
@@ -144,11 +154,17 @@ function CuiTopbar(params) {
             }
         }
 
+        dropdown = $("<div class='cui_topbar cui_app_name'>" + params.appName + "</div>");
+        if (params.showDropdown == "app") {
+            dropdown = appDropdown;
+        } else if (params.showDropdown == "org") {
+            dropdown = orgDropdown;
+        }
+
         var out = cuiCompose([
             "<div class='cui_topbar " + params.cssClass + "'>",
                 "<div class='cui_resp_left_side'>",
-                    (params.showAppDropdown ? appDropdown : 
-                        "<div class='cui_topbar cui_app_name'>" + params.appName + "</div>"), 
+                    dropdown,
                 "</div>",
                 "<div class='cui_resp_middle'>",
                     $breadcrumb,
@@ -157,7 +173,7 @@ function CuiTopbar(params) {
                 $rightSection, 
             "</div>"
         ]);
-        if (!user) {
+        if (!(params.showUserDropdown && user)) {
             userDropdown.get$().hide();
         }
         return out;
@@ -165,7 +181,7 @@ function CuiTopbar(params) {
 
     this.onRefresh = function($me, dirty, live) {
         if (dirty("user")) {
-            if (user) {
+            if (params.showUserDropdown && user) {
                 userDropdown.get$().show();
                 userDropdown.setUser(user);
             } else {
@@ -187,7 +203,7 @@ function CuiTopbar(params) {
             this.clearDirty("breadcrumb");
         }
 
-        cuiRefresh([optionNode, appDropdown, userDropdown], live);
+        cuiRefresh([optionNode, dropdown, userDropdown], live);
         return false;
     }
 }
