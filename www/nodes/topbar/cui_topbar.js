@@ -87,9 +87,13 @@ function CuiTopbar(params) {
 
     this.onConstruct = function() {
         $breadcrumb = $("<div class='cui_topbar cui_breadcrumb'>Breadcrumb</div>").hide();
+        var apps = [];
+        if (typeof gCanopyWebAppConfiguration !== 'undefined') {
+            apps = gCanopyWebAppConfiguration.apps;
+        }
         appDropdown = new CuiAppDropdown({
+            apps: apps,
             cssClass: "cui_default cui_topbar",
-            items: [],
             title: params.appName
         });
 

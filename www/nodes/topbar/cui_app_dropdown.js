@@ -19,8 +19,12 @@
  *
  *  PARAMS:
  *      params.title
- *      params.items
+ *      params.apps
  *      params.cssClass - defaults to ""
+ *
+ *  METHODS:
+ *
+ *      setApps
  *
  */
 function CuiAppDropdown(params) {
@@ -28,21 +32,28 @@ function CuiAppDropdown(params) {
     
     var dropdown;
     var option;
+    var apps = params.apps;
+    var cachedApps;
+    this.markDirty("apps");
+
+    /* <apps> is list of objects:
+     *
+     *  [ {
+     *      "name" : "My App"
+     *      "href" : "//dev02.canopy.link/mgr/myapp",
+     *  }, ...]
+     */
+    this.setApps = function(_apps) {
+        apps = _apps;
+        return this.markDirty("apps");
+    }
 
     this.onConstruct = function() {
         option = new CuiOption({
             cssClass: "cui_app_dropdown",
-            items: [{
-                content: "Device Manager",
-                value: "device_manager",
-            }, {
-                content: "SUPPORT <span style='font-size:13px'>by Canopy</span>",
-                value: "canopy_cs",
-            }],
+            items: [],
             onSelect: function(idx, value) {
-                if (value == "device_manager") {
-                    window.location = "../../";
-                }
+                window.location = value;
             }
         });
 
@@ -60,6 +71,19 @@ function CuiAppDropdown(params) {
     }
 
     this.onRefresh = function($me, dirty, live) {
+        if (dirty("apps")) {
+            var items = [];
+            if (apps) {
+                for (var i = 0; i < apps.length; i++) {
+                    items.push({
+                        content: apps[i].name,
+                        value: apps[i].href
+                    });
+                }
+            }
+            option.setItems(items);
+            cachedApps = apps;
+        }
         cuiRefresh([dropdown, option], live);
     }
 }
