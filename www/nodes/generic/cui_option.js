@@ -121,9 +121,9 @@ function CuiOption(params) {
             var fn = function(idx) {
                 toggles.push(new CuiToggle({
                     cssClass: "cui_option",
-                    content: params.items[idx].content,
+                    content: items[idx].content,
                     onClick: function() {
-                        var value = params.items[idx].value;
+                        var value = items[idx].value;
                         if (!params.onClick || params.onClick(idx, value)) {
                             self.select(idx).refresh();
                         }

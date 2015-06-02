@@ -99,7 +99,8 @@ function CuiTopbar(params) {
         orgDropdown = new CuiOrgDropdown({
             cssClass: "cui_default cui_topbar",
             items: [],
-            title: user ? user.username() : "-"
+            title: user ? user.username() : "-",
+            user: user
         });
 
         userDropdown = new CuiUserDropdown({

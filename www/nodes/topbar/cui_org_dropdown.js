@@ -19,7 +19,7 @@
  *
  *  PARAMS:
  *      params.title
- *      params.items
+ *      params.user
  *      params.cssClass - defaults to ""
  *
  */
@@ -32,18 +32,15 @@ function CuiOrgDropdown(params) {
     this.onConstruct = function() {
         option = new CuiOption({
             cssClass: "cui_org_dropdown",
-            items: [{
-                content: "Buddy",
-                value: "device_manager",
-            }, {
-                content: "MomCorp",
-                value: "canopy_cs",
-            }],
             onSelect: function(idx, value) {
                 if (value == "device_manager") {
                     window.location = "../../";
                 }
-            }
+            },
+            items: [{
+                content: "Loading...",
+                value: "loading",
+            }]
         });
 
         dropdown = new CuiDropdown({
@@ -60,6 +57,32 @@ function CuiOrgDropdown(params) {
     }
 
     this.onRefresh = function($me, dirty, live) {
+        console.log(params.user.username());
+        if (params.user) {
+            params.user.organizations().onDone(function(result, data) {
+                if (result != CANOPY_SUCCESS) {
+                    option.setItems(
+                        [{
+                            content: "Error",
+                            value: "error",
+                        }]
+                    );
+                }
+
+                var items = [{
+                    content: params.user.username(),
+                    value: params.user.username(),
+                }];
+                for (var i = 0; i < data.orgs.length; i++) {
+                    var org = data.orgs[i];
+                    items.push({
+                        content: org.name(),
+                        value: org.name()
+                    });
+                }
+                option.setItems(items).refresh();
+            });
+        }
         cuiRefresh([dropdown, option], live);
     }
 }
