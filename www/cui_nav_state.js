@@ -60,7 +60,10 @@ function CuiNavState() {
         if (queryObj[name] !== value) {
             queryObj[name] = value;
             queryString = encodeQueryString(queryObj);
-            history.pushState({}, "CANOPY", "?" + queryString);
+            if (history && history.pushState) {
+                // TODO: fallback for IE8/9
+                history.pushState({}, "CANOPY", "?" + queryString);
+            }
         }
     }
 
@@ -68,7 +71,10 @@ function CuiNavState() {
         if (queryObj[name] !== value) {
             queryObj[name] = value;
             queryString = encodeQueryString(queryObj);
-            history.replaceState({}, "CANOPY", "?" + queryString);
+            if (history && history.pushState) {
+                // TODO: fallback for IE8/9
+                history.replaceState({}, "CANOPY", "?" + queryString);
+            }
         }
     }
 

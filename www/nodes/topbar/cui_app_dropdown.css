@@ -26,10 +26,12 @@
     padding: 8px;
     font-weight: 400;
     font-size: 18px;
+    background: #f0f0f0;
     background: rgba(240, 240, 240, 0.95);
 }
 
 .cui_default.cui_app_dropdown .cui_app_dropdown.cui_option .cui_option.cui_toggle:hover {
+    background: #ffffff;
     background: rgba(255, 255, 255, 0.95);
 }
 

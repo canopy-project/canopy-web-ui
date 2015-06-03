@@ -23,7 +23,7 @@
  *      .onChange
  *      .onClick -- return false to not toggle
  *      .content -- $div, node, or "html string".
- *      .default -- true/false.  The default defaults to false.
+ *      .dflt -- true/false.  The default defaults to false.
  *
  *  CSS:
  *      params.cssClass:
@@ -41,7 +41,7 @@ function CuiToggle(params) {
     cuiInitNode(this);
 
     var self = this;
-    var value = params.default;
+    var value = params.dflt;
 
     // Marks dirty, does not refresh
     this.toggle = function(newValue) {
@@ -60,11 +60,11 @@ function CuiToggle(params) {
 
     this.onConstruct = function() {
         this.markDirty();
-        return cuiCompose([
+        return [
             "<div class='cui_toggle " + params.cssClass + "'>",
                 params.content,
             "</div>"
-        ]);
+        ]
     }
 
     this.onRefresh = function($me, dirty, live) {
