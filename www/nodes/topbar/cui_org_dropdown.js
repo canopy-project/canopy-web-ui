@@ -21,6 +21,7 @@
  *      params.title
  *      params.user
  *      params.cssClass - defaults to ""
+ *      params.onSelect(viewerName)
  *
  */
 function CuiOrgDropdown(params) {
@@ -33,8 +34,8 @@ function CuiOrgDropdown(params) {
         option = new CuiOption({
             cssClass: "cui_org_dropdown",
             onSelect: function(idx, value) {
-                if (value == "device_manager") {
-                    window.location = "../../";
+                if (params.onSelect) {
+                    params.onSelect(value);
                 }
             },
             items: [{

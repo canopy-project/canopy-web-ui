@@ -72,6 +72,16 @@ function CuiNavState() {
         }
     }
 
+    // Updates a nav state variable and opens a new tab if the variable changed
+    this.newTab = function(name, value) {
+        if (queryObj[name] !== value) {
+            queryObj[name] = value;
+            queryString = encodeQueryString(queryObj);
+            var win = window.open("?" + queryString);
+            win.focus();
+        }
+    }
+
     this.get = function(name) {
         return queryObj[name];
     }
